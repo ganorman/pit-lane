@@ -1,0 +1,103 @@
+# Plantillas GAUNTLET
+
+## 1. Contrato (Fase 0)
+
+```markdown
+# Contrato GAUNTLET — [nombre corto del trabajo]
+
+## TAREA
+[Qué se va a hacer, en una o dos frases.]
+Es para: [usuario o audiencia, y en qué contexto lo va a usar].
+Debe incluir:
+- [...]
+- [...]
+
+## MÉTODO
+Loop autónomo: planificar → construir → probar → árbitro → corregir.
+Árbitro: subagente nuevo por ronda | pase separado (AUDITORÍA NO INDEPENDIENTE).
+Rondas máximas: 3.
+Skills que se usan: [docx, pptx, xlsx, exam-builder, branding-…].
+Fuentes: [rutas o descripción].
+
+## LISTÓN
+Referencia de calidad: [estándar o ejemplo, traducido a rasgos observables].
+
+| ID | Se exige (PASA / NO PASA) | Método de verificación | Evidencia esperada |
+|---|---|---|---|
+| L1 | ... | ... | ... |
+| L2 | ... | ... | ... |
+
+Listón base aplicable: B1, B2, B5, B6  (B3/B4 no aplican porque …)
+Criterios de revisión humana (el árbitro no bloquea por ellos): [ID, o "ninguno"].
+
+## ENTREGABLE
+- Archivos: [nombre.ext, ruta]
+- Formato y estructura: [...]
+- Restricciones: [...]
+- No usar: [...]
+- Al final: resumen de auditoría + bitácora `auditoria-gauntlet.md`.
+
+## Decisiones tomadas (vétalas si no te sirven)
+- [Ambigüedad menor] → [decisión] — [por qué]
+
+**¿Apruebas el contrato?** El loop arranca con tu aprobación y no se detiene hasta entregar.
+```
+
+### Ejemplos de criterios: mal y bien
+
+| Mal (vago) | Bien (verificable) |
+|---|---|
+| El examen es de buena calidad | Cada pregunta tiene exactamente 4 opciones y una sola correcta según la clave · Método: conteo en el DOCX y cotejo con la clave · Evidencia: tabla pregunta → opciones → clave |
+| Las fórmulas funcionan | Tras recalcular, ninguna celda devuelve #REF!, #DIV/0!, #VALUE! o #NAME? y ninguna fórmula queda sin valor · Método: recalcular una copia con `recalc.py` de la skill xlsx y correr `verificar_office.py copia.xlsx` · Evidencia: `celdas_con_error: 0` y `formulas_sin_valor_cacheado: 0` |
+| Las citas son correctas | Cada cita bíblica coincide palabra por palabra con la RV1960 · Método: cotejo cita por cita · Evidencia: tabla cita → texto RV1960 → coincide sí/no |
+| Que se vea profesional | Ninguna diapositiva tiene texto que se salga del cuadro ni fuente menor de 18 pt · Método: render a PNG + inspección de cada imagen · Evidencia: lista de diapositivas revisadas |
+| Al nivel de un SOP de Barrick | Tiene propósito, alcance, responsables, EPP, pasos numerados con puntos de LOTO y registro de revisión · Método: buscar cada sección · Evidencia: título de sección encontrado por cada rasgo |
+
+---
+
+## 2. Bitácora — `auditoria-gauntlet.md`
+
+```markdown
+# Bitácora GAUNTLET — [trabajo] — [AAAA-MM-DD]
+
+## Contrato
+Aprobado el [fecha] · Listón: L1–Ln + [B…] · Rondas máx: 3 · Árbitro: [modo]
+
+## Decisiones
+- [AAAA-MM-DD] [decisión] — [por qué]
+
+## Ronda 1
+Construido: [archivos/versión]
+Pruebas del constructor: [qué corrió y resultado]
+Informe del árbitro: [pegar el informe completo]
+Correcciones planificadas: [...]
+
+## Ronda 2
+...
+
+## Disputas
+- [ID] constructor dice … / árbitro dice … / resolución …
+```
+
+---
+
+## 3. Resumen de auditoría (Fase 2, en el chat)
+
+```markdown
+## Resumen de auditoría GAUNTLET
+[Si aplica, primera línea: **AUDITORÍA NO INDEPENDIENTE**]
+
+**Resultado:** APROBADO en ronda N de M | ENTREGADO CON PENDIENTES tras M rondas
+
+| Ronda | Rechazó | Errores encontrados | Corregido |
+|---|---|---|---|
+| 1 | L2, L5 | [hallazgo concreto, una línea] | sí |
+| 2 | — | — | — |
+
+**Pendientes:** [criterios que no pasaron, con el porqué] | ninguno
+**Disputas:** [resumen] | ninguna
+**Fuera del listón (observaciones):** [lo que el árbitro vio y no bloqueaba]
+**Revisa tú:** [lista corta de lo que solo un humano puede confirmar]
+
+Detalle completo: `auditoria-gauntlet.md`
+```
