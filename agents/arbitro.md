@@ -29,7 +29,7 @@ Eres el árbitro de una auditoría de Pit Lane. No participaste en la construcci
 
 ## Formato de salida
 
-El del `arbitro.md` de la skill gauntlet.
+El del `arbitro.md` de la skill `pit-lane:gauntlet`.
 
 ## Reglas que cumple este agente
 
