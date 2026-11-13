@@ -26,6 +26,8 @@ FASE 2 — ENTREGA + RESUMEN DE AUDITORÍA + qué debe revisar el humano
 
 ## Fase 0 — Contrato
 
+**Si el trabajo tiene un `pit-lane/contrato.md` con la línea "Aprobado:", ese archivo es el contrato y la Fase 0 se omite.** El listón que se audita es el de los IDs del encargo en curso, y la bitácora se escribe en `pit-lane/auditorias/<ID del encargo>.md` en vez de junto al entregable. En la auditoría de coherencia, que no tiene encargo, se auditan los criterios de coherencia del contrato y la bitácora es `pit-lane/auditorias/coherencia.md`.
+
 El contrato es el plan. Aprobarlo autoriza el loop completo sin más paradas: sustituye la regla de "mostrar cada paso y esperar validación" para esta tarea, y cumple la regla de "plan antes del documento", porque ningún archivo se genera antes de la aprobación.
 
 1. **Reúne contexto antes de escribir nada:** fuentes que dio el usuario, skills que aplican al entregable (docx, pptx, xlsx, exam-builder, branding…), y las reglas permanentes del usuario (memoria, `agents.md`, preferencias).
@@ -73,6 +75,8 @@ Si el entorno tiene reglas permanentes nuevas (memoria, `agents.md`), súmalas c
    - las rutas de las fuentes originales, para cotejar datos;
    - desde la ronda 2: la tabla de fallos de la ronda anterior (ID, hallazgo) y las disputas registradas.
 
+   Al lanzar el árbitro se declaran siempre modelo y esfuerzo: los de la línea "Árbitro:" del encargo en curso; si no hay encargo, los que fije el contrato en MÉTODO; y si el contrato no los fija, Sonnet con esfuerzo medio, u Opus con esfuerzo alto cuando el error es costoso. Si el agente `pit-lane:arbitro` está disponible, se lanza ese agente.
+
    **No le pases** el plan, el razonamiento del constructor ni un "esto es lo que hice". Un árbitro que lee las justificaciones del constructor tiende a aceptarlas; eso es justo lo que se quiere evitar.
 5. **Decidir.**
    - Todos los criterios PASA → sal del loop. Ninguna versión sale sin al menos una auditoría, pero una primera versión que la pasa puede entregarse: rehacerla por regla solo produce cambios cosméticos. Esto vale también en modo degradado, siempre que el resumen lo declare.
@@ -80,6 +84,7 @@ Si el entorno tiene reglas permanentes nuevas (memoria, `agents.md`), súmalas c
 
 ### Reglas del loop
 
+- **Un árbitro que falla o no entrega informe se reintenta una vez.** Si vuelve a fallar, la ronda se registra como "árbitro no ejecutado", nunca como aprobación.
 - **Árbitro nuevo en cada ronda.** Uno que ya aprobó algo tiende a seguir aprobándolo. El nuevo recibe los fallos previos para comprobar que se corrigieron.
 - **Cada ronda re-audita todo el listón**, no solo lo que falló. Una corrección puede romper lo que antes pasaba (regresión).
 - **Mismo criterio falla dos rondas seguidas → cambia de enfoque**, no repitas el mismo arreglo. Anota en la bitácora qué cambió.
