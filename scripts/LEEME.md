@@ -29,11 +29,11 @@ Luego abre una sesión nueva y comprueba que existe `~/.claude/pit-lane-uso.json
 
 ## En la app de escritorio
 
-El script funciona (probado a mano el 2026-11-14), pero la status line configurada no escribió el archivo en la app de escritorio. Allí el Jefe de pits lee el uso con la herramienta `get_usage` de la app, que devuelve el porcentaje de la ventana de 5 horas; este script queda como respaldo para la terminal (R-30).
+El script funciona (probado a mano el 2026-11-14), pero en el piloto la status line configurada no escribió el archivo en la app de escritorio: la hipótesis H3 falló. Por eso el freno lee el uso en este orden (R-30):
 
-## Si no corre en la app de escritorio
-
-No está confirmado que la status line se ejecute dentro de la app de escritorio (hipótesis H3; en la práctica no lo hizo). Si `pit-lane-uso.json` no aparece o no se actualiza ahí, el freno queda manual: Gerardo escribe la palabra "freno" y no se despacha nada nuevo (R-30).
+1. La herramienta `get_usage` de la app, que devuelve el porcentaje de la ventana de 5 horas.
+2. `~/.claude/pit-lane-uso.json`, que este script mantiene cuando Claude Code corre en la terminal.
+3. Si ninguno responde, o el archivo no se actualiza, el freno queda manual: Gerardo escribe la palabra "freno" y no se despacha nada nuevo.
 
 ## Probarlo sin tocar la configuración
 

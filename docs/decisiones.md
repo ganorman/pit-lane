@@ -39,7 +39,26 @@ Una decisión por línea, con fecha AAAA-MM-DD.
 
 ## Marcadores [CONFIRMAR] del informe (L6): los cuatro confirmados por Gerardo
 
-2026-11-14 · CONFIRMADO por Gerardo · `references/enrutamiento.md:29` · Regla 6 (la columna de esfuerzo es hipótesis): queda sin ID; es una nota de calibración, no una regla de comportamiento.
-2026-11-14 · CONFIRMADO por Gerardo · `references/enrutamiento.md:31` · Regla 7 (plan Pro, Fable fuera): "Fable va fuera". Sigue sin ID en la sección 6.14; queda como regla de enrutamiento confirmada.
-2026-11-14 · CONFIRMADO por Gerardo · `references/modos-de-ejecucion.md:100` · Modos C y D: sin pasos definidos; el C queda por evaluar (H7) y el D está fuera de la v1.
-2026-11-14 · CONFIRMADO por Gerardo · `references/plantillas.md:108` · Formato de `estado.md`: se acepta la propuesta tal cual (funcionó en todo el piloto).
+2026-11-14 · CONFIRMADO por Gerardo · `references/enrutamiento.md`, Reglas, punto 6 · Regla 6 (la columna de esfuerzo es hipótesis): queda sin ID; es una nota de calibración, no una regla de comportamiento.
+2026-11-14 · CONFIRMADO por Gerardo · `references/enrutamiento.md`, Reglas, punto 7 · Regla 7 (plan Pro, Fable fuera): "Fable va fuera". Sigue sin ID en la sección 6.14; queda como regla de enrutamiento confirmada.
+2026-11-14 · CONFIRMADO por Gerardo · `references/modos-de-ejecucion.md`, sección "Modos C y D" · Modos C y D: sin pasos definidos; el C queda por evaluar (H7) y el D está fuera de la v1.
+2026-11-14 · CONFIRMADO por Gerardo · `references/plantillas.md`, sección 3 · Formato de `estado.md`: se acepta la propuesta tal cual (funcionó en todo el piloto).
+
+2026-11-14 · Manual de uso en `docs/manual-de-uso.md`, pedido por Gerardo. Documento nuevo fuera del contrato de AGENTS.md, solo para lectura; se versiona con la revisión integral (ver abajo).
+
+## Revisión integral del repo (2026-11-14): 14 hallazgos, todos aprobados por Gerardo ("Sí, todas")
+
+2026-11-14 · APROBADO por Gerardo · gauntlet · `skills/gauntlet/scripts/verificar_office.py`: la salida se fuerza a UTF-8. En Windows, con la salida redirigida (como la corre el árbitro), el "⚠" de las alertas rompía el script con UnicodeEncodeError, salida 1 y ALERTAS vacía. Probado con un DOCX con "PVDC" y en-US: antes se caía, ahora reporta las 3 alertas.
+2026-11-14 · APROBADO por Gerardo · gauntlet · `verificar_office.py`: un tipo no soportado, o un PDF sin `--render`, ahora deja una alerta en vez de "ninguna"; un XLSX sin `xl/workbook.xml` ya no se cae y lo avisa; las diapositivas o notas ilegibles se saltan.
+2026-11-14 · APROBADO por Gerardo · Diseño 6.4 (fila Mecánico), 6.10 (paso 0) y 6.14 (R-39) alineados con la decisión R-39/H10 ya aprobada: en modo A el Jefe de pits lanza los árbitros; en modo B, el mecánico. Se corrige la errata "lanzal Jefe".
+2026-11-14 · APROBADO por Gerardo · `references/modos-de-ejecucion.md`: pasos 5 y 6 del modo A sin repetición; el modo B y la tabla de R-39 dicen que el árbitro usa la línea "Árbitro:" del encargo (no el modelo del mecánico, R-36); se quita el resto anterior a H10.
+2026-11-14 · APROBADO por Gerardo · Árbitro de tamaño M: `skills/pit-lane/SKILL.md` (tabla de tamaños) y diseño 6.3 dicen "el que fije MÉTODO" en vez de "árbitro de rutina"; queda igual que gauntlet V2.1.
+2026-11-14 · APROBADO por Gerardo · Lectores de XL: `agents/lector-critico.md` pasa a opus · high y `agents/lector-ingenuo.md` a sonnet · high, porque solo corren en XL y la tabla 6.7 fija esos valores para XL; `lector-ejecucion` sigue en sonnet · medium (en XL el despacho declara high). Diseño, sección 7, actualizado.
+2026-11-14 · APROBADO por Gerardo · Los cuatro marcadores [CONFIRMAR] ya confirmados se reemplazan por la nota de confirmación en `references/`. Las líneas de arriba citan secciones en vez de números de línea.
+2026-11-14 · APROBADO por Gerardo · Fuentes externas en el contrato: `references/plantillas.md` y diseño 6.5 dicen "curl o WebFetch, o la lista de Drive", como gauntlet V2.1.
+2026-11-14 · APROBADO por Gerardo · Diseño versión 0.7: cabecera con el estado real y sección 7 con `.gitattributes` y `docs/manual-de-uso.md`. AGENTS.md: pasos 0 a 10 hechos, cambios posteriores vía decisiones, hipótesis validadas.
+2026-11-14 · APROBADO por Gerardo · `scripts/LEEME.md`: se juntan las dos secciones sobre la app de escritorio en una, con el orden del freno (get_usage, archivo, manual).
+2026-11-14 · APROBADO por Gerardo · `.gitattributes` nuevo (`* text=auto eol=lf`) para que no se mezclen finales de línea.
+2026-11-14 · APROBADO por Gerardo · `agents/mecanico-auxiliar.md`: R-13 en orden en la lista de reglas.
+2026-11-14 · APROBADO por Gerardo · `README.md` con instalación, tabla de uso y ejemplo; `docs/manual-de-uso.md` sin ruta personal, con la auditoría de coherencia y la aclaración de que `agents/arbitro.md` es un envoltorio, no una copia.
+2026-11-14 · Auditoría de la revisión: `pit-lane:arbitro` (opus · high, R-36) APROBADO en ronda 1, 11 de 11 criterios. Se aplican cinco de sus observaciones: R-39 en `SKILL.md` incluye el caso del mecánico de modo B que no puede lanzar subagentes; nota en la sección 8 del diseño (los encargos son registro histórico; vale la sección 6); `verificar_office.py` avisa de las diapositivas o notas ilegibles; `LEEME.md` recupera "o el archivo no se actualiza"; el manual dice "oleadas de hasta 2". Las demás quedan como están, por ejemplo: "gauntlet" sin prefijo en `references/` es anterior y está fuera del alcance de la regla 3.
