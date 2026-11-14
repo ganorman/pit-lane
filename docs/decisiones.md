@@ -8,7 +8,8 @@ Una decisión por línea, con fecha AAAA-MM-DD.
 2026-11-14 · Paso 10 · APROBADO por Gerardo · R-39/H10: en modo A el Jefe de pits lanza siempre `pit-lane:arbitro`; en modo B lo siguen lanzando los mecánicos (`SKILL.md`, `references/modos-de-ejecucion.md`, `references/plantillas.md`, 3 agentes mecánico). Es la salida que prevé H10 en el diseño.
 2026-11-14 · Paso 10 · APLICADO por recomendación delegada de Gerardo · `agents/arbitro.md` y plantilla de contrato: las fuentes externas llevan una comprobación ejecutable (curl o lista de Drive); sin ella, NO VERIFICABLE (R-35).
 2026-11-14 · Paso 10 · NO APLICADO · verificación por tipo para prompts/instrucciones en `skills/gauntlet/`: es skill de Gerardo (regla 4 de AGENTS.md); queda como pendiente hasta su aprobación expresa.
-2026-11-14 · Paso 10 · SIN CAMBIO · R-30 (freno): el piloto reportó que `~/.claude/pit-lane-uso.json` no existía; no trae propuesta de ajuste, solo verificar que `scripts/uso-statusline.ps1` esté activo.
+2026-11-14 · Paso 10 · RESUELTO · Contradicción R-01 con la sección 6.3: se actualizó `docs/analisis-y-diseno.md` (fila de fuentes, excepción y descripción de L).
+2026-11-14 · Paso 10 · APLICADO a pedido de Gerardo · R-30 (freno): el piloto reportó que `~/.claude/pit-lane-uso.json` no existía. El script funciona a mano, pero la status line no lo corre en la app de escritorio (H3 falla). El Jefe de pits lee el uso con `get_usage` de la app (probado: devuelve "5-hour limit" en %); el archivo queda como respaldo; si ninguno responde, freno manual. No hace falta un mod.
 
 ## Pendientes de Gerardo (marcadores [CONFIRMAR] del informe, L6)
 

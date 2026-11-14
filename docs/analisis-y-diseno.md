@@ -164,12 +164,12 @@ F6 CIERRE      → entregables, resumen de auditoría, "revisa tú", candidatos 
 
 ### 6.3 Triage
 
-Se evalúan seis señales y **gana el nivel más alto** que alcance cualquiera. El Jefe de pits lo declara en una línea y Gerardo puede vetarlo.
+Se evalúan seis señales y **gana el nivel más alto** que alcance cualquiera. El Jefe de pits lo declara en una línea y Gerardo puede vetarlo. Excepción (decisión 2026-11-14, piloto): las fuentes externas por sí solas suben a L, no a XL; llegan a XL solo si el costo del error también es alto.
 
 | Señal | S | M | L | XL |
 |---|---|---|---|---|
 | Entregables | 1 | 1 con varias partes | 2 a 5 | más de 5, o el diseño es un entregable |
-| Fuentes a cotejar | 0 a 1 | 2 a 3 | varias | muchas o externas |
+| Fuentes a cotejar | 0 a 1 | 2 a 3 | varias, o externas | muchas |
 | Dependencia entre partes | ninguna | interna | datos compartidos | cadenas de dependencia |
 | Costo del error | bajo, reversible | se proyecta o se usa | sale a terceros | difícil de revertir |
 | Duración estimada | minutos | menos de 1 hora | horas | días |
@@ -179,7 +179,7 @@ Se evalúan seis señales y **gana el nivel más alto** que alcance cualquiera. 
 |---|---|
 | **S** | Se hace y se dice qué se hizo. Sin contrato |
 | **M** | Es gauntlet tal como lo usas hoy: contrato corto en el chat (listón de 5 a 8, sin bloque PLAN), la sesión construye y lanza el árbitro, loop de hasta 3 rondas con árbitro de rutina (Sonnet 5.5, medio), bitácora junto al entregable. Sin carpeta `pit-lane/` |
-| **L** | Contrato, plan con encargos revisado por el lector de ejecución, mecánicos en paralelo, auditoría de cada encargo lanzada por su mecánico y auditoría de coherencia entre entregables lanzada por el Jefe de pits |
+| **L** | Contrato, plan con encargos revisado por el lector de ejecución, mecánicos en paralelo, auditoría de cada encargo lanzada por el Jefe de pits en modo A (por su mecánico en modo B, decisión 2026-11-14) y auditoría de coherencia entre entregables lanzada por el Jefe de pits |
 | **XL** | Como L, más revisión del plan con tres lectores y aprobación en dos tiempos |
 
 ### 6.4 Roles
