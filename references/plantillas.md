@@ -20,16 +20,20 @@ proyectos/<área>/AAAA-MM-DD_Tema/
 
 ## 1. Contrato — `pit-lane/contrato.md`
 
-Es el contrato de gauntlet completo, con cinco añadidos (marcados con ✚). Lo aprueba Gerardo; al aprobarse, el listón queda congelado y solo Gerardo lo cambia (R-05). En M, L y XL nada se construye sin contrato aprobado (R-03). Una aprobación por tarea; dos en XL (R-08).
+Es el contrato de gauntlet completo, con siete añadidos (marcados con ✚). Antes de aprobar, Gerardo lee INSTRUCCIONES ORIGINALES y el LISTÓN: es su único veto. Lo aprueba Gerardo; al aprobarse, el listón queda congelado y solo Gerardo lo cambia (R-05). En M, L y XL nada se construye sin contrato aprobado (R-03). Una aprobación por tarea; dos en XL (R-08).
 
 ```markdown
 # Contrato — [trabajo] — tamaño [M | L | XL]
 Aprobado: AAAA-MM-DD   ← lo escribe el Jefe de pits cuando Gerardo aprueba
 ## TAREA            qué, para quién, qué debe incluir
+## INSTRUCCIONES ORIGINALES ✚  el pedido de Gerardo, literal y numerado (P1, P2…), sin resumir
 ## FRONTERA ✚       qué no se toca y qué no se debe hacer
 ## MÉTODO           fuentes (rutas), skills que se usan, modo, modelo y esfuerzo del árbitro, rondas máx. 3
 ## LISTÓN           ID | se exige (PASA / NO PASA) | método | evidencia esperada
                     + listón base B1…B6 que aplique
+                    + completitud ✚: cada punto P1, P2… aparece en el entregable, o su ausencia es una
+                      decisión anotada y vetable; corregir un criterio no elimina contenido pedido
+                      (lo no verificable se marca pendiente, no se borra)
                     + criterios de revisión humana (el árbitro no bloquea por ellos)
                     + fuentes externas: cada una con su comprobación ejecutable (curl o lista de Drive)
                     + criterios de coherencia entre entregables (solo L y XL) ✚

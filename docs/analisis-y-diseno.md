@@ -200,16 +200,20 @@ Tres lectores, tomados de las personas de EGM y reescritos para trabajo general:
 
 ### 6.5 Contrato
 
-Es el contrato de gauntlet completo, con cinco añadidos (marcados con ✚):
+Es el contrato de gauntlet completo, con siete añadidos (marcados con ✚; INSTRUCCIONES ORIGINALES y completitud, decisión 2026-11-14):
 
 ```markdown
 # Contrato — [trabajo] — tamaño [M | L | XL]
 Aprobado: AAAA-MM-DD   ← lo escribe el Jefe de pits cuando Gerardo aprueba
 ## TAREA            qué, para quién, qué debe incluir
+## INSTRUCCIONES ORIGINALES ✚  el pedido de Gerardo, literal y numerado (P1, P2…), sin resumir
 ## FRONTERA ✚       qué no se toca y qué no se debe hacer
 ## MÉTODO           fuentes (rutas), skills que se usan, modo, modelo y esfuerzo del árbitro, rondas máx. 3
 ## LISTÓN           ID | se exige (PASA / NO PASA) | método | evidencia esperada
                     + listón base B1…B6 que aplique
+                    + completitud ✚: cada punto P1, P2… aparece en el entregable, o su ausencia es una
+                      decisión anotada y vetable; corregir un criterio no elimina contenido pedido
+                      (lo no verificable se marca pendiente, no se borra)
                     + criterios de revisión humana (el árbitro no bloquea por ellos)
                     + criterios de coherencia entre entregables (solo L y XL) ✚
 ## ENTREGABLE       archivos, formato, restricciones

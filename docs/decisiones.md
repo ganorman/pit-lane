@@ -11,6 +11,9 @@ Una decisión por línea, con fecha AAAA-MM-DD.
 2026-11-14 · Paso 10 · RESUELTO · Contradicción R-01 con la sección 6.3: se actualizó `docs/analisis-y-diseno.md` (fila de fuentes, excepción y descripción de L).
 2026-11-14 · Paso 10 · APLICADO a pedido de Gerardo · R-30 (freno): el piloto reportó que `~/.claude/pit-lane-uso.json` no existía. El script funciona a mano, pero la status line no lo corre en la app de escritorio (H3 falla). El Jefe de pits lee el uso con `get_usage` de la app (probado: devuelve "5-hour limit" en %); el archivo queda como respaldo; si ninguno responde, freno manual. No hace falta un mod.
 
+2026-11-14 · Paso 10 · APROBADO por Gerardo · Plantilla de contrato (`references/plantillas.md` y sección 6.5 del diseño): se añaden INSTRUCCIONES ORIGINALES (literales, numeradas) y un criterio de completitud para que corregir no recorte lo pedido. Son dos añadidos ✚ más (siete en total).
+2026-11-14 · Paso 10 · PENDIENTE · Mejoras a `skills/gauntlet/`: Gerardo las aplicará en un chat aparte con instrucciones preparadas; no se tocó la skill aquí.
+
 ## Pendientes de Gerardo (marcadores [CONFIRMAR] del informe, L6)
 
 2026-11-13 · PENDIENTE [CONFIRMAR] · `references/enrutamiento.md:29` · Regla 6 (la columna de esfuerzo es hipótesis): el documento no asigna ID de la sección 6.14 a esta regla; queda sin ID.
