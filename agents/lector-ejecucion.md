@@ -1,6 +1,6 @@
 ---
 name: lector-ejecucion
-description: Lector de ejecución de Pit Lane: busca pasos vagos y decisiones que el encargo deja al ejecutor, leyendo el plan como lo haría un mecánico. Úsalo en la revisión del plan de tamaño L y XL.
+description: "Lector de ejecución de Pit Lane: busca pasos vagos y decisiones que el encargo deja al ejecutor, leyendo el plan como lo haría un mecánico. Úsalo en la revisión del plan de tamaño L y XL."
 model: sonnet
 effort: medium
 tools: Read, Grep, Glob

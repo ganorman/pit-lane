@@ -26,6 +26,8 @@ Una decisión por línea, con fecha AAAA-MM-DD.
 2026-11-14 · APROBADO por Gerardo · V2.1 · `agents/lector-ejecucion.md`: instrucción 4, pasabilidad de cada criterio e IDs B por encargo (bajo R-23).
 2026-11-14 · APROBADO por Gerardo · V2.1 · AGENTS.md regla 4: `skills/gauntlet/` es la única fuente de gauntlet; la copia de la cuenta de claude.ai se exporta desde aquí y reemplaza la V1.
 
+2026-11-14 · Corrección tras revisar V2.1 · `agents/lector-ejecucion.md`: la descripción del frontmatter va entre comillas porque `claude plugin validate` fallaba al parsearla (contiene ": "). Sin cambio de contenido.
+
 ## Cierre del paso 10: respuestas de Gerardo a la sección 10 del diseño y a "Revisa tú"
 
 2026-11-14 · CONFIRMADO por Gerardo · Decisiones 2, 3 y 4 de la sección 10: dos skills, aprobación en dos tiempos solo para XL, modos A y B en la v1 (C a evaluar, D fuera). Decisión 1 y 5 ya estaban cerradas (plan Pro verificado con `get_usage`).
