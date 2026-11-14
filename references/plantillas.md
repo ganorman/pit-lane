@@ -13,7 +13,7 @@ proyectos/<área>/AAAA-MM-DD_Tema/
     ├── datos-maestros.md
     ├── estado.md             ← una línea por encargo; solo la escribe el Jefe de pits
     ├── encargos/E01-….md
-    └── auditorias/           ← E01.md, E02.md… (cada mecánico la suya) y coherencia.md (el Jefe de pits)
+    └── auditorias/           ← E01.md, E02.md… (una por encargo: la lleva el Jefe de pits en modo A y el mecánico en modo B) y coherencia.md (el Jefe de pits)
 ```
 
 ---
@@ -31,6 +31,7 @@ Aprobado: AAAA-MM-DD   ← lo escribe el Jefe de pits cuando Gerardo aprueba
 ## LISTÓN           ID | se exige (PASA / NO PASA) | método | evidencia esperada
                     + listón base B1…B6 que aplique
                     + criterios de revisión humana (el árbitro no bloquea por ellos)
+                    + fuentes externas: cada una con su comprobación ejecutable (curl o lista de Drive)
                     + criterios de coherencia entre entregables (solo L y XL) ✚
 ## ENTREGABLE       archivos, formato, restricciones
 ## DATOS MAESTROS ✚ ruta del archivo único con cifras, fechas, nombres y precios compartidos
@@ -63,7 +64,7 @@ Depende de: — | E0x
 ## Objetivo
 ## Entradas                 rutas (incluye normas y datos-maestros.md)
 ## Superficie de escritura  únicas rutas que puede crear o modificar
-                            (incluye su bitácora: pit-lane/auditorias/E01.md)
+                            (en modo B incluye su bitácora: pit-lane/auditorias/E01.md)
 ## Frontera                 qué no tocar ni decidir
 ## Listón aplicable         IDs, con su método
 ## Decisiones ya tomadas

@@ -37,12 +37,12 @@ F6 CIERRE      → entregables, resumen de auditoría, "revisa tú", candidatos 
 
 ## F0 — Triage
 
-- **R-01** Evalúa las seis señales; **gana el nivel más alto** que alcance cualquiera. Decláralo en una línea, con la señal que decidió, y sigue salvo que Gerardo lo vete. *Por qué:* basta una señal alta para que el error cueste caro, y una línea vetable deja a Gerardo al mando sin sumar una parada.
+- **R-01** Evalúa las seis señales; **gana el nivel más alto** que alcance cualquiera. Decláralo en una línea, con la señal que decidió, y sigue salvo que Gerardo lo vete. *Por qué:* basta una señal alta para que el error cueste caro, y una línea vetable deja a Gerardo al mando sin sumar una parada. **Excepción:** las fuentes externas por sí solas suben a L, no a XL; llegan a XL solo si el costo del error también es alto (L o XL en esa fila). *Por qué:* en el piloto, una investigación web que solo produce análisis pasó a XL y costó dos aprobaciones y tres lectores de más.
 
 | Señal | S | M | L | XL |
 |---|---|---|---|---|
 | Entregables | 1 | 1 con varias partes | 2 a 5 | más de 5, o el diseño es un entregable |
-| Fuentes a cotejar | 0 a 1 | 2 a 3 | varias | muchas o externas |
+| Fuentes a cotejar | 0 a 1 | 2 a 3 | varias, o externas | muchas |
 | Dependencia entre partes | ninguna | interna | datos compartidos | cadenas de dependencia |
 | Costo del error | bajo, reversible | se proyecta o se usa | sale a terceros | difícil de revertir |
 | Duración estimada | minutos | menos de 1 hora | horas | días |
@@ -118,7 +118,7 @@ Lo que hace cada mecánico está en su agente; tú vigilas y coordinas.
 
 El loop es el de `pit-lane:gauntlet`; quién lo lanza, en `references/modos-de-ejecucion.md`.
 
-- **R-39** Dueño de cada auditoría: en M, tú (la sesión que construye); en L y XL, cada mecánico lanza `pit-lane:arbitro` para su encargo y lleva su bitácora en `pit-lane/auditorias/E0x.md`. Tú lanzas la de coherencia y la de cualquier mecánico que devuelva "auditoría: pendiente". *Por qué:* cada auditoría necesita un dueño claro, y la coherencia solo la puede pedir quien ve todos los entregables.
+- **R-39** Dueño de cada auditoría: en M, tú (la sesión que construye); en L y XL, modo A, tú lanzas `pit-lane:arbitro` para cada encargo y llevas su bitácora en `pit-lane/auditorias/E0x.md`; en modo B, cada mecánico lanza el suyo y lleva su bitácora. Tú lanzas siempre la de coherencia. *Por qué:* en el piloto nadie había comprobado que un subagente pudiera lanzar a otro (H10), y un dueño único evita auditorías que no corren.
 - **Auditoría de coherencia** (L y XL): cuando todos los encargos están terminados, lanza `pit-lane:arbitro` con `pit-lane:gauntlet` sobre los criterios de coherencia del contrato (R-29), con el modelo y el esfuerzo que fije MÉTODO y la ruta absoluta de `skills/gauntlet/agents/arbitro.md`. La bitácora es `pit-lane/auditorias/coherencia.md`.
 - **R-24** Árbitro nuevo en cada ronda, sin el plan ni el razonamiento del constructor, sobre todo el listón, máximo 3 rondas. *Por qué:* un árbitro con el razonamiento del constructor repite su error; re-auditar todo detecta regresiones, y el tope acota el gasto.
 - **R-25** Un árbitro que falló o no corrió se reintenta una vez; si vuelve a fallar, se registra "no ejecutado", nunca "sin hallazgos". *Por qué:* un silencio no es una aprobación.

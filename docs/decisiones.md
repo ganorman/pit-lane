@@ -4,6 +4,12 @@ Una decisión por línea, con fecha AAAA-MM-DD.
 
 2026-11-13 · Corrección L9 (auditoría paso 7): `agents/arbitro.md:32` ahora nombra la skill como `pit-lane:gauntlet`, con prefijo.
 
+2026-11-14 · Paso 10 · APROBADO por Gerardo · R-01: las fuentes externas suben a L, no a XL, salvo que el costo del error también sea alto (`skills/pit-lane/SKILL.md`). Contradice la fila "muchas o externas" de la sección 6.3 del diseño, que no se editó: queda por actualizar.
+2026-11-14 · Paso 10 · APROBADO por Gerardo · R-39/H10: en modo A el Jefe de pits lanza siempre `pit-lane:arbitro`; en modo B lo siguen lanzando los mecánicos (`SKILL.md`, `references/modos-de-ejecucion.md`, `references/plantillas.md`, 3 agentes mecánico). Es la salida que prevé H10 en el diseño.
+2026-11-14 · Paso 10 · APLICADO por recomendación delegada de Gerardo · `agents/arbitro.md` y plantilla de contrato: las fuentes externas llevan una comprobación ejecutable (curl o lista de Drive); sin ella, NO VERIFICABLE (R-35).
+2026-11-14 · Paso 10 · NO APLICADO · verificación por tipo para prompts/instrucciones en `skills/gauntlet/`: es skill de Gerardo (regla 4 de AGENTS.md); queda como pendiente hasta su aprobación expresa.
+2026-11-14 · Paso 10 · SIN CAMBIO · R-30 (freno): el piloto reportó que `~/.claude/pit-lane-uso.json` no existía; no trae propuesta de ajuste, solo verificar que `scripts/uso-statusline.ps1` esté activo.
+
 ## Pendientes de Gerardo (marcadores [CONFIRMAR] del informe, L6)
 
 2026-11-13 · PENDIENTE [CONFIRMAR] · `references/enrutamiento.md:29` · Regla 6 (la columna de esfuerzo es hipótesis): el documento no asigna ID de la sección 6.14 a esta regla; queda sin ID.
