@@ -114,15 +114,24 @@ def pptx_info(z):
                         v = el.get(attr)
                         if v:
                             langs[v] += 1
+    ilegibles = []
     for i, s in enumerate(slides, 1):
         root = read_xml(z, s)
+        if root is None:
+            ilegibles.append(s)
+            continue
         t = " | ".join((x.text or "").strip() for x in root.iter(A + "t") if (x.text or "").strip())
         texts.append(f"[Diapositiva {i}] {t}")
     extra = []
     for n in notes:
         root = read_xml(z, n)
+        if root is None:
+            ilegibles.append(n)
+            continue
         extra.append(" ".join(x.text or "" for x in root.iter(A + "t")))
     struct = {"diapositivas": len(slides), "diapositivas_con_notas": sum(1 for e in extra if e.strip())}
+    if ilegibles:
+        struct["partes_ilegibles"] = ilegibles
     return langs, struct, texts, extra
 
 
@@ -136,6 +145,7 @@ def xlsx_info(path):
     formulas, sin_valor, errores, texts, nombres = 0, [], [], [], []
     with zipfile.ZipFile(path) as z:
         wb = read_xml(z, "xl/workbook.xml")
+        hojas = wb.find(S + "sheets") if wb is not None else None
         rels = read_xml(z, "xl/_rels/workbook.xml.rels")
         relmap = {r.get("Id"): r.get("Target") for r in rels} if rels is not None else {}
         shared = []
@@ -143,7 +153,7 @@ def xlsx_info(path):
         if sst is not None:
             for si in sst.findall(S + "si"):
                 shared.append("".join(t.text or "" for t in si.iter(S + "t")))
-        for sh in wb.find(S + "sheets"):
+        for sh in (hojas if hojas is not None else []):
             nombre = sh.get("name")
             nombres.append(nombre)
             target = relmap.get(sh.get(R + "id"), "")
@@ -208,6 +218,12 @@ def main():
     ap.add_argument("--prohibido", action="append", default=None)
     ap.add_argument("--idioma", default="es-DO")
     args = ap.parse_args()
+    # En Windows la salida redirigida usa cp1252, que no tiene "⚠": sin esto el script se cae justo al imprimir las alertas.
+    for flujo in (sys.stdout, sys.stderr):
+        try:
+            flujo.reconfigure(encoding="utf-8", errors="replace")
+        except (AttributeError, ValueError):
+            pass
     prohibidos = args.prohibido or ["PVDC"]
     path = args.archivo
     ext = os.path.splitext(path)[1].lower()
@@ -258,7 +274,11 @@ def main():
         print("\n## Estructura")
         for k, v in struct.items():
             print(f"- {k}: {v}")
+        if struct.get("partes_ilegibles"):
+            alertas.append(f"{len(struct['partes_ilegibles'])} parte(s) del paquete no se pudieron leer y no se revisaron")
         if ext == ".xlsx":
+            if not struct.get("hojas"):
+                alertas.append("El libro no tiene xl/workbook.xml legible o no declara hojas: no se revisó ninguna celda")
             if struct.get("celdas_con_error"):
                 alertas.append(f"{struct['celdas_con_error']} celda(s) con error de Excel")
             if struct.get("formulas_sin_valor_cacheado"):
@@ -283,6 +303,9 @@ def main():
                     print(f"[Notas/encabezados] {e.strip()}")
     elif ext != ".pdf":
         print(f"Tipo {ext} no soportado por este script; usa el método de references/verificacion-por-tipo.md")
+        alertas.append(f"Tipo {ext} no soportado: este script no revisó nada del contenido")
+    elif not args.render:
+        alertas.append("PDF sin --render: este script no revisó nada; usa pdftotext y pdfinfo (verificacion-por-tipo.md §4)")
 
     if args.render:
         print("\n## Render")
