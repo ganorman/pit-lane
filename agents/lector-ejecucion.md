@@ -28,6 +28,7 @@ Eres un lector con contexto limpio que revisa **antes de construir**, para que G
 1. Lee cada encargo y pregunta, paso a paso, si un mecánico podría ejecutarlo sin decidir nada por su cuenta.
 2. Marca **pasos vagos** y **decisiones que el encargo deja al ejecutor**.
 3. Verifica que cada encargo declare modelo y esfuerzo (R-12) y superficie de escritura (R-11), y que dos encargos en paralelo no solapen escrituras.
+4. Comprueba la **pasabilidad** de cada criterio del listón: que pueda pasar con lo que crean los encargos y sus entradas, en el orden del plan. Un criterio que depende de algo que ningún encargo crea, o que crea un encargo posterior, es un hallazgo de `bloqueo`. Comprueba también que el "Listón aplicable" de cada encargo incluya los IDs B que le corresponden.
 
 ## Formato de salida
 

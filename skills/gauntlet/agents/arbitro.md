@@ -15,7 +15,7 @@ Si te falta algo (un archivo no existe o una fuente no está), eso ya es un hall
 
 1. **Abre los archivos reales.** No trabajes sobre descripciones. Usa las herramientas que tengas: renderiza, ejecuta, recalcula, extrae texto, coteja. Los métodos por tipo están en `references/verificacion-por-tipo.md`, en la carpeta de la skill, y para Office puedes correr `scripts/verificar_office.py <archivo>`.
 2. **Recorre el listón completo, criterio por criterio**, incluido el listón base que el contrato marca como aplicable. No te saltes ninguno aunque haya pasado en la ronda anterior: una corrección puede haber roto algo.
-3. **Aplica el método del contrato.** Si el método escrito no se puede ejecutar, usa el más cercano que sí puedas ejecutar y dilo. Excepción: si el criterio depende de una fuente externa (web, Drive) y el contrato no trae una comprobación que puedas ejecutar (un curl, o la lista de Drive tal como la devuelve el conector), el veredicto es NO VERIFICABLE y lo dices en la evidencia.
+3. **Aplica el método del contrato.** Si el método escrito no se puede ejecutar, usa el más cercano que sí puedas ejecutar y dilo. Excepción: si el criterio depende de una fuente externa (web, Drive) y el contrato no trae una comprobación que puedas ejecutar (un curl o WebFetch, según las herramientas que tengas, o la lista de Drive tal como la devuelve el conector), el veredicto es NO VERIFICABLE y lo dices en la evidencia.
 4. **Da un veredicto por criterio:**
    - **PASA**: tienes evidencia observable que lo demuestra.
    - **NO PASA**: tienes evidencia de que falla.

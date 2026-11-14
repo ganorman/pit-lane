@@ -1,6 +1,6 @@
 ---
 name: gauntlet
-description: Modo de trabajo exhaustivo con árbitro adversarial independiente. Primero un contrato (TAREA, LISTÓN verificable, ENTREGABLE) que el usuario aprueba; después un loop autónomo construir → probar → auditar con un subagente árbitro nuevo en cada ronda → corregir, máximo 3 rondas, verificando el archivo real y cerrando con resumen de auditoría. Úsala cuando el usuario pida explícitamente trabajo exhaustivo o a prueba de fallos — "modo gauntlet", "pásalo por el gauntlet", "hazlo a fondo", "trabajo exhaustivo", "con árbitro", "audítalo hasta que pase", "no me entregues la primera versión", "quiero esto blindado". No la uses para tareas simples, para planificar un proyecto normal (eso es superpowers) ni para un fact-check puntual de un texto ya hecho (eso es verificador-datos).
+description: Modo de trabajo exhaustivo con árbitro adversarial independiente. Primero un contrato (TAREA, LISTÓN verificable, ENTREGABLE) que el usuario aprueba; después un loop autónomo construir → probar → auditar con un subagente árbitro nuevo en cada ronda → corregir, máximo 3 rondas, verificando el archivo real y cerrando con resumen de auditoría. Úsala cuando el usuario pida explícitamente trabajo exhaustivo o a prueba de fallos — "modo gauntlet", "pásalo por el gauntlet", "hazlo a fondo", "trabajo exhaustivo", "con árbitro", "audítalo hasta que pase", "no me entregues la primera versión", "quiero esto blindado". No la uses para tareas simples, para un trabajo con varios entregables, fuentes cruzadas o mecánicos en paralelo (eso es pit-lane:pit-lane; si es código, superpowers) ni para un fact-check puntual de un texto ya hecho (eso es verificador-datos).
 ---
 
 # GAUNTLET
@@ -34,7 +34,7 @@ El contrato es el plan. Aprobarlo autoriza el loop completo sin más paradas: su
 2. **Clasifica las ambigüedades.**
    - **Crítica**: cambia qué se entrega, para quién, o produce algo irreversible (enviar, borrar, publicar). → Pregúntala ahora, máximo 4 preguntas, con opciones y una recomendada.
    - **Menor**: cualquier otra. → Decide, y anótala en el contrato como "Decisión tomada" para que el usuario pueda vetarla al aprobar.
-3. **Escribe el contrato** con la plantilla de `references/plantillas.md`: TAREA, MÉTODO, LISTÓN, ENTREGABLE, rondas máximas y modo del árbitro. Tras TAREA añade la sección **INSTRUCCIONES ORIGINALES**: el pedido del usuario copiado literal y numerado (P1, P2…), sin resumir. El usuario lee esa sección y el listón antes de aprobar, porque es su único veto.
+3. **Escribe el contrato** con la plantilla de `references/plantillas.md`: TAREA, MÉTODO, LISTÓN, ENTREGABLE, rondas máximas y modo del árbitro. Tras TAREA añade la sección **INSTRUCCIONES ORIGINALES**: el pedido del usuario copiado literal y numerado (P1, P2…), sin resumir. Los adjuntos y documentos pegados largos no se copian: se citan por nombre o ruta y se numera lo que el usuario pide sobre ellos. El usuario lee esa sección y el listón antes de aprobar, porque es su único veto.
 4. **Valida el listón antes de presentarlo.** Cada criterio debe tener:
    - **Qué se exige**, en forma que admita solo PASA o NO PASA.
    - **Método**: cómo se comprueba (comando, render, conteo, cotejo con la fuente X).
@@ -44,7 +44,7 @@ El contrato es el plan. Aprobarlo autoriza el loop completo sin más paradas: su
 
    Antes de presentarlo, comprueba además tres cosas:
    - **Pasabilidad.** Cada criterio debe poder pasar con lo que existirá cuando se audite: los archivos, las fuentes y las herramientas que tendrá el árbitro. Un criterio que exige algo que nada va a crear, o que depende de algo inaccesible, se corrige o se elimina antes de pedir la aprobación.
-   - **Fuentes externas.** Si el contrato cita fuentes externas (web, Drive), cada criterio que dependa de ellas trae una comprobación que el árbitro pueda ejecutar: un curl, o la lista de Drive tal como la devuelve el conector. Sin ella, el árbitro lo marca NO VERIFICABLE y lo dice.
+   - **Fuentes externas.** Si el contrato cita fuentes externas (web, Drive), cada criterio que dependa de ellas trae una comprobación que el árbitro pueda ejecutar con sus propias herramientas: un curl o WebFetch, o la lista de Drive tal como la devuelve el conector. Sin ella, el árbitro lo marca NO VERIFICABLE y lo dice.
    - **Completitud.** El listón lleva un criterio que exige que cada punto P1, P2… de INSTRUCCIONES ORIGINALES aparezca en el entregable, o que su ausencia sea una decisión anotada y vetable en "Decisiones tomadas". Método: tabla punto → ubicación en el entregable. Cuenta entre los 5 y 12 criterios.
 5. **Presenta el contrato en el chat y detente.** Hasta la aprobación, el contrato vive solo en el chat: no crees ningún archivo, ni siquiera la bitácora. Solo una aprobación explícita arranca la Fase 1. Si pide cambios, ajusta y vuelve a presentar.
    - **Excepción: aprobación anticipada.** Si el usuario ya dijo en su pedido que aprueba de antemano o que arranques sin preguntar, no te detengas. Crea la bitácora con el contrato completo, muéstralo al inicio de tu respuesta para que pueda revisarlo, y sigue con el loop. Las ambigüedades críticas pasan a ser decisiones anotadas, salvo las irreversibles, que siguen deteniendo el trabajo.
@@ -80,7 +80,7 @@ Si el entorno tiene reglas permanentes nuevas (memoria, `agents.md`), súmalas c
    - las rutas de las fuentes originales, para cotejar datos;
    - desde la ronda 2: la tabla de fallos de la ronda anterior (ID, hallazgo) y las disputas registradas.
 
-   Al lanzar el árbitro se declaran siempre modelo y esfuerzo: los de la línea "Árbitro:" del encargo en curso; si no hay encargo, los que fije el contrato en MÉTODO; y si el contrato no los fija, Sonnet con esfuerzo medio, u Opus con esfuerzo alto cuando el error es costoso. Si el agente `pit-lane:arbitro` está disponible, se lanza ese agente.
+   Al lanzar el árbitro se declaran siempre modelo y esfuerzo: los de la línea "Árbitro:" del encargo en curso; si no hay encargo, los que fije el contrato en MÉTODO; y si el contrato no los fija, Opus con esfuerzo alto cuando el entregable sale a terceros, se proyecta en público o es difícil de revertir, y Sonnet con esfuerzo medio en el resto. Si el agente `pit-lane:arbitro` está disponible, se lanza ese agente.
 
    **No le pases** el plan, el razonamiento del constructor ni un "esto es lo que hice". Un árbitro que lee las justificaciones del constructor tiende a aceptarlas; eso es justo lo que se quiere evitar.
 5. **Decidir.**

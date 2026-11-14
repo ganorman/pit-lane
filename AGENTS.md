@@ -41,7 +41,7 @@ pit-lane/
 1. **Reglas con ID.** Las reglas del sistema son R-01 a R-39 (sección 6.14 del diseño). Toda regla que aparece en la skill, en `references/` o en un agente lleva su ID, por ejemplo "(R-12)". No se inventan reglas: si falta algo, se marca **[CONFIRMAR]** y se lleva a `docs/decisiones.md` como pendiente de Gerardo.
 2. **Sin duplicados.** Cada contenido vive en un solo archivo y los demás remiten a él. La verificación por tipo y el resumen de auditoría son de `skills/gauntlet/`; las plantillas y la tabla de enrutamiento, de `references/`.
 3. **Prefijo siempre.** Ninguna skill ni agente nombra a un agente ni a la skill gauntlet sin el prefijo `pit-lane:`. Excepciones: el campo `name` del frontmatter, las rutas de archivo y el contenido original de `skills/gauntlet/`.
-4. **`skills/gauntlet/` no se reescribe.** Es la skill de Gerardo con tres ajustes (paso 2 del plan). Cualquier otro cambio necesita su aprobación.
+4. **`skills/gauntlet/` no se reescribe.** Es la skill de Gerardo con los ajustes registrados en `docs/decisiones.md` (paso 2, paso 10 y V2.1). Cualquier otro cambio necesita su aprobación. Es la única fuente de gauntlet: la copia de la cuenta de claude.ai se exporta desde aquí.
 5. **Límites de tamaño.** `skills/pit-lane/SKILL.md`, menos de 250 líneas; este archivo, menos de 100.
 6. **Idioma.** Español latinoamericano, con los términos técnicos en inglés. `LICENSE`, `NOTICE`, las claves de JSON y frontmatter, los nombres de archivo y el código quedan fuera de esta regla.
 7. **Texto propio.** Se toman ideas y estructuras de las fuentes, no archivos.

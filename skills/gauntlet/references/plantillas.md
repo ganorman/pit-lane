@@ -13,13 +13,14 @@ Debe incluir:
 - [...]
 
 ## INSTRUCCIONES ORIGINALES
-El pedido del usuario, literal y numerado, sin resumir:
+El pedido del usuario, literal y numerado, sin resumir (los adjuntos largos se citan por nombre o ruta, no se copian):
 - P1. [...]
 - P2. [...]
 
 ## MÉTODO
 Loop autónomo: planificar → construir → probar → árbitro → corregir.
-Árbitro: subagente nuevo por ronda | pase separado (AUDITORÍA NO INDEPENDIENTE).
+Árbitro: subagente nuevo por ronda | pase separado (AUDITORÍA NO INDEPENDIENTE) · modelo [opus | sonnet] · esfuerzo [high | medium]
+  (opus · high si sale a terceros, se proyecta en público o es difícil de revertir; sonnet · medium en el resto).
 Rondas máximas: 3.
 Skills que se usan: [docx, pptx, xlsx, exam-builder, branding-…].
 Fuentes: [rutas o descripción].

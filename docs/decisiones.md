@@ -18,6 +18,14 @@ Una decisión por línea, con fecha AAAA-MM-DD.
 2026-11-14 · APROBADO por Gerardo · gauntlet · Protección contra recorte al corregir: `SKILL.md` (Reglas del loop) y `agents/arbitro.md` (Límites); el árbitro reporta contenido desaparecido como observación fuera del listón, sin bloquear.
 2026-11-14 · APROBADO por Gerardo · gauntlet · Fuentes externas verificables: `SKILL.md` (Fase 0 paso 4) y `agents/arbitro.md` (Cómo auditas, paso 3); sin comprobación ejecutable (curl o lista de Drive), NO VERIFICABLE.
 
+2026-11-14 · APROBADO por Gerardo · gauntlet V2.1 · Plantilla de contrato de gauntlet: la línea "Árbitro:" de MÉTODO declara modelo y esfuerzo (antes solo el modo); cubre el tamaño M y la gauntlet de la cuenta.
+2026-11-14 · APROBADO por Gerardo · gauntlet V2.1 · Árbitro por defecto: opus · high si el entregable sale a terceros, se proyecta en público o es difícil de revertir; sonnet · medium en el resto. Reemplaza "cuando el error es costoso" en `skills/gauntlet/SKILL.md`, `references/plantillas.md` (encargo) y sección 6.6 del diseño.
+2026-11-14 · APROBADO por Gerardo · gauntlet V2.1 · Descripción de gauntlet: el trabajo con varios entregables remite a `pit-lane:pit-lane` (si es código, superpowers).
+2026-11-14 · APROBADO por Gerardo · gauntlet V2.1 · Fuentes externas: la comprobación puede ser curl o WebFetch, según las herramientas del árbitro; los adjuntos largos se citan por nombre o ruta en INSTRUCCIONES ORIGINALES, no se copian.
+2026-11-14 · APROBADO por Gerardo · V2.1 · Contrato de Pit Lane (`references/plantillas.md` y sección 6.5): el LISTÓN incluye la pasabilidad de gauntlet; el encargo (sección 6.6) exige que "Listón aplicable" incluya los IDs B que apliquen. Cierra el hueco que dejaba omitir la Fase 0 de gauntlet.
+2026-11-14 · APROBADO por Gerardo · V2.1 · `agents/lector-ejecucion.md`: instrucción 4, pasabilidad de cada criterio e IDs B por encargo (bajo R-23).
+2026-11-14 · APROBADO por Gerardo · V2.1 · AGENTS.md regla 4: `skills/gauntlet/` es la única fuente de gauntlet; la copia de la cuenta de claude.ai se exporta desde aquí y reemplaza la V1.
+
 ## Cierre del paso 10: respuestas de Gerardo a la sección 10 del diseño y a "Revisa tú"
 
 2026-11-14 · CONFIRMADO por Gerardo · Decisiones 2, 3 y 4 de la sección 10: dos skills, aprobación en dos tiempos solo para XL, modos A y B en la v1 (C a evaluar, D fuera). Decisión 1 y 5 ya estaban cerradas (plan Pro verificado con `get_usage`).

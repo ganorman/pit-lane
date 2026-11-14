@@ -214,6 +214,9 @@ Aprobado: AAAA-MM-DD   ← lo escribe el Jefe de pits cuando Gerardo aprueba
                     + completitud ✚: cada punto P1, P2… aparece en el entregable, o su ausencia es una
                       decisión anotada y vetable; corregir un criterio no elimina contenido pedido
                       (lo no verificable se marca pendiente, no se borra)
+                    + pasabilidad (gauntlet, Fase 0 paso 4): cada criterio puede pasar con lo que existirá
+                      al auditar (archivos, fuentes y herramientas del árbitro); si no, se corrige o se elimina
+                      antes de pedir la aprobación
                     + criterios de revisión humana (el árbitro no bloquea por ellos)
                     + criterios de coherencia entre entregables (solo L y XL) ✚
 ## ENTREGABLE       archivos, formato, restricciones
@@ -233,14 +236,15 @@ Un archivo por encargo en `pit-lane/encargos/E01-nombre.md`. Fusiona el brief de
 # E01 — [nombre]
 Estado: pendiente | en curso | en auditoría | terminado | espera decisión
 Modelo: sonnet · Esfuerzo: medium · Modo: subagente | sesión
-Árbitro: sonnet · medium   (u opus · high si el error es costoso)
+Árbitro: sonnet · medium   (opus · high si sale a terceros, se proyecta en público o es difícil de revertir)
 Depende de: — | E0x
 ## Objetivo
 ## Entradas                 rutas (incluye normas y datos-maestros.md)
 ## Superficie de escritura  únicas rutas que puede crear o modificar
                             (incluye su bitácora: pit-lane/auditorias/E01.md)
 ## Frontera                 qué no tocar ni decidir
-## Listón aplicable         IDs, con su método
+## Listón aplicable         IDs, con su método; incluye los IDs B del listón base
+                            que apliquen a este entregable
 ## Decisiones ya tomadas
 ## Qué devolver             estado (HECHO | HECHO CON DUDAS | BLOQUEADO | FALTA CONTEXTO),
                             auditoría (aprobada en ronda N | con pendientes | pendiente),
