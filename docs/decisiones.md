@@ -12,7 +12,12 @@ Una decisión por línea, con fecha AAAA-MM-DD.
 2026-11-14 · Paso 10 · APLICADO a pedido de Gerardo · R-30 (freno): el piloto reportó que `~/.claude/pit-lane-uso.json` no existía. El script funciona a mano, pero la status line no lo corre en la app de escritorio (H3 falla). El Jefe de pits lee el uso con `get_usage` de la app (probado: devuelve "5-hour limit" en %); el archivo queda como respaldo; si ninguno responde, freno manual. No hace falta un mod.
 
 2026-11-14 · Paso 10 · APROBADO por Gerardo · Plantilla de contrato (`references/plantillas.md` y sección 6.5 del diseño): se añaden INSTRUCCIONES ORIGINALES (literales, numeradas) y un criterio de completitud para que corregir no recorte lo pedido. Son dos añadidos ✚ más (siete en total).
-2026-11-14 · Paso 10 · PENDIENTE · Mejoras a `skills/gauntlet/`: Gerardo las aplicará en un chat aparte con instrucciones preparadas; no se tocó la skill aquí.
+2026-11-14 · Paso 10 · APLICADO · Mejoras a `skills/gauntlet/`: Gerardo las aprobó y se aplicaron en un chat aparte (ver las cinco líneas "APROBADO por Gerardo · gauntlet" siguientes). Reemplaza la línea "NO APLICADO" de verificación por tipo para prompts.
+2026-11-14 · APROBADO por Gerardo · gauntlet · Verificación por tipo "instrucciones o prompts": §12 nueva en `references/verificacion-por-tipo.md` (repaso en orden de ejecución; un criterio que nunca puede pasar es fallo del entregable) y mención en `SKILL.md`.
+2026-11-14 · APROBADO por Gerardo · gauntlet · Pasabilidad del listón: `SKILL.md`, Fase 0 paso 4; cada criterio debe poder pasar con lo que existirá al auditar, o se corrige o elimina antes de pedir aprobación.
+2026-11-14 · APROBADO por Gerardo · gauntlet · Instrucciones originales y completitud: `SKILL.md`, Fase 0 (paso 3 y paso 4); el pedido va literal y numerado (P1, P2…) y el listón lleva criterio de completitud. `skills/gauntlet/references/plantillas.md` no se tocó (fuera de la superficie de escritura): queda sin la sección INSTRUCCIONES ORIGINALES, pendiente de decisión de Gerardo.
+2026-11-14 · APROBADO por Gerardo · gauntlet · Protección contra recorte al corregir: `SKILL.md` (Reglas del loop) y `agents/arbitro.md` (Límites); el árbitro reporta contenido desaparecido como observación fuera del listón, sin bloquear.
+2026-11-14 · APROBADO por Gerardo · gauntlet · Fuentes externas verificables: `SKILL.md` (Fase 0 paso 4) y `agents/arbitro.md` (Cómo auditas, paso 3); sin comprobación ejecutable (curl o lista de Drive), NO VERIFICABLE.
 
 ## Pendientes de Gerardo (marcadores [CONFIRMAR] del informe, L6)
 

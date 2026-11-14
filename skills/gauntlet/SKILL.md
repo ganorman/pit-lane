@@ -34,13 +34,18 @@ El contrato es el plan. Aprobarlo autoriza el loop completo sin más paradas: su
 2. **Clasifica las ambigüedades.**
    - **Crítica**: cambia qué se entrega, para quién, o produce algo irreversible (enviar, borrar, publicar). → Pregúntala ahora, máximo 4 preguntas, con opciones y una recomendada.
    - **Menor**: cualquier otra. → Decide, y anótala en el contrato como "Decisión tomada" para que el usuario pueda vetarla al aprobar.
-3. **Escribe el contrato** con la plantilla de `references/plantillas.md`: TAREA, MÉTODO, LISTÓN, ENTREGABLE, rondas máximas y modo del árbitro.
+3. **Escribe el contrato** con la plantilla de `references/plantillas.md`: TAREA, MÉTODO, LISTÓN, ENTREGABLE, rondas máximas y modo del árbitro. Tras TAREA añade la sección **INSTRUCCIONES ORIGINALES**: el pedido del usuario copiado literal y numerado (P1, P2…), sin resumir. El usuario lee esa sección y el listón antes de aprobar, porque es su único veto.
 4. **Valida el listón antes de presentarlo.** Cada criterio debe tener:
    - **Qué se exige**, en forma que admita solo PASA o NO PASA.
    - **Método**: cómo se comprueba (comando, render, conteo, cotejo con la fuente X).
    - **Evidencia esperada**: qué debe mostrar el árbitro para dar PASA.
 
    Reescribe o elimina cualquier criterio vago ("profesional", "claro", "bonito", "completo"). Si el usuario da una referencia ("al nivel de X"), tradúcela a 2–4 rasgos observables de X. Entre 5 y 12 criterios específicos más el listón base: con menos de 5 la auditoría no discrimina; con más de 12, el loop se diluye en detalles.
+
+   Antes de presentarlo, comprueba además tres cosas:
+   - **Pasabilidad.** Cada criterio debe poder pasar con lo que existirá cuando se audite: los archivos, las fuentes y las herramientas que tendrá el árbitro. Un criterio que exige algo que nada va a crear, o que depende de algo inaccesible, se corrige o se elimina antes de pedir la aprobación.
+   - **Fuentes externas.** Si el contrato cita fuentes externas (web, Drive), cada criterio que dependa de ellas trae una comprobación que el árbitro pueda ejecutar: un curl, o la lista de Drive tal como la devuelve el conector. Sin ella, el árbitro lo marca NO VERIFICABLE y lo dice.
+   - **Completitud.** El listón lleva un criterio que exige que cada punto P1, P2… de INSTRUCCIONES ORIGINALES aparezca en el entregable, o que su ausencia sea una decisión anotada y vetable en "Decisiones tomadas". Método: tabla punto → ubicación en el entregable. Cuenta entre los 5 y 12 criterios.
 5. **Presenta el contrato en el chat y detente.** Hasta la aprobación, el contrato vive solo en el chat: no crees ningún archivo, ni siquiera la bitácora. Solo una aprobación explícita arranca la Fase 1. Si pide cambios, ajusta y vuelve a presentar.
    - **Excepción: aprobación anticipada.** Si el usuario ya dijo en su pedido que aprueba de antemano o que arranques sin preguntar, no te detengas. Crea la bitácora con el contrato completo, muéstralo al inicio de tu respuesta para que pueda revisarlo, y sigue con el loop. Las ambigüedades críticas pasan a ser decisiones anotadas, salvo las irreversibles, que siguen deteniendo el trabajo.
 6. **Al aprobarse, el listón queda congelado.** Solo el usuario lo cambia. Ni el constructor ni el árbitro añaden criterios a mitad del loop: así se evita mover la portería.
@@ -88,6 +93,7 @@ Si el entorno tiene reglas permanentes nuevas (memoria, `agents.md`), súmalas c
 - **Árbitro nuevo en cada ronda.** Uno que ya aprobó algo tiende a seguir aprobándolo. El nuevo recibe los fallos previos para comprobar que se corrigieron.
 - **Cada ronda re-audita todo el listón**, no solo lo que falló. Una corrección puede romper lo que antes pasaba (regresión).
 - **Mismo criterio falla dos rondas seguidas → cambia de enfoque**, no repitas el mismo arreglo. Anota en la bitácora qué cambió.
+- **Corregir no es recortar.** Al corregir un fallo, el constructor no elimina contenido pedido para que un criterio pase. Lo que no se pueda verificar o no tenga fuente se marca como pendiente, no se borra. Si el árbitro nota que desapareció contenido respecto a la ronda anterior, lo reporta como observación fuera del listón; no bloquea, porque el listón está congelado.
 - **Tope: 3 rondas** (o lo que diga el contrato). Al llegar al tope, entrega con los pendientes a la vista. Nunca maquilles un NO PASA como PASA.
 - **Disputas.** Si el constructor cree que el árbitro se equivoca, no lo ignora: registra la disputa con evidencia en la bitácora. El árbitro siguiente la resuelve, y el usuario la ve en el resumen.
 - **Sin paradas.** Una ambigüedad menor que aparezca en el loop se decide y se anota. Solo se detiene el loop por algo irreversible o que invalide el contrato (por ejemplo, la fuente contradice la TAREA); en ese caso se presenta el problema con opciones.
@@ -102,7 +108,7 @@ Si el entorno no tiene herramienta para lanzar subagentes, el árbitro se ejecut
 
 El árbitro audita el **artefacto**, no la descripción del artefacto. Una evidencia válida es algo observable: salida de un comando, una celda con su valor, una página renderizada, un fragmento citado de la fuente. "El constructor dice que…" no es evidencia. Si un criterio no se puede verificar con las herramientas disponibles, el veredicto es **NO VERIFICABLE**, que bloquea igual que NO PASA salvo que el contrato lo haya marcado como "revisión humana".
 
-Métodos por tipo (DOCX, PPTX, XLSX, PDF, código, web, datos, citas bíblicas, imágenes): `references/verificacion-por-tipo.md`.
+Métodos por tipo (DOCX, PPTX, XLSX, PDF, código, web, datos, citas bíblicas, imágenes, instrucciones o prompts): `references/verificacion-por-tipo.md`.
 
 ## Bitácora
 

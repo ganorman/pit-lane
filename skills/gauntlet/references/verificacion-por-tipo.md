@@ -19,6 +19,7 @@ Script de apoyo: `scripts/verificar_office.py ARCHIVO [--render DIR] [--texto]`.
 | Imágenes, diagramas, renders | §9 |
 | Texto en el chat (sin archivo) | §10 |
 | Material de entrenamiento o procedimiento técnico (SOP, OJT, examen) | §11 |
+| Instrucciones o prompts (pasos que otro ejecutará) | §12 |
 
 ---
 
@@ -113,3 +114,15 @@ Recórrelo como un aprendiz que no sabe nada, paso por paso.
 6. **Nivel:** adecuado al público declarado (por ejemplo, aprendiz del Sistema Dual frente a técnico con experiencia).
 
 Lo técnico de seguridad que no se pueda cotejar con un procedimiento del sitio o una norma disponible es NO VERIFICABLE y va a "Revisa tú": un SOP de LOTO nunca se aprueba solo por el árbitro.
+
+## 12. Instrucciones o prompts (pasos que otro ejecutará)
+
+Recórrelo de punta a punta, en orden de ejecución, como lo haría quien lo ejecuta: en cada paso solo existe lo que crearon los pasos anteriores y las entradas reales.
+
+1. **Repaso en orden.** Lee cada prompt o paso desde el primero. No saltes a los criterios finales.
+2. **Pasabilidad de cada criterio.** Por cada criterio de verificación ("listo cuando…", "debe existir…"), comprueba que pueda pasar con lo que crearon los pasos anteriores. Haz una tabla: paso → criterio → qué necesita → quién lo crea (entrada, paso N o nadie) → puede pasar sí/no.
+3. **Un criterio que nunca puede pasar es un fallo del entregable (NO PASA)**, aunque esté bien redactado: depende de algo que ningún paso crea, de algo que se crea en un paso posterior, o se contradice con otro criterio.
+4. **Enlaces entre pasos.** Lo que un paso entrega, con su nombre, ruta y formato, es lo que el siguiente espera recibir. Toda ruta, archivo o fuente nombrada existe o la crea un paso anterior.
+5. **Ejecutabilidad.** Cada paso dice quién lo hace, con qué herramienta o permiso, y cómo se sabe que terminó, sin dejar decisiones al ejecutor.
+
+Dónde atacar: criterios que exigen un archivo de un paso posterior · nombres o rutas que cambian entre pasos · un paso que sobrescribe lo que otro necesita verificar · criterios sobre un estado que el ejecutor no puede observar · pasos que suponen una herramienta o acceso que el entorno no da.
