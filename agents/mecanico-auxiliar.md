@@ -1,6 +1,6 @@
 ---
 name: mecanico-auxiliar
-description: Mecánico auxiliar de Pit Lane: ejecuta encargos de rutina con todo especificado (transcribir, convertir, formatear, inventariar), los prueba y los pasa por el loop de auditoría. Úsalo solo cuando el encargo lo trae todo.
+description: "Mecánico auxiliar de Pit Lane: ejecuta encargos de rutina con todo especificado (transcribir, convertir, formatear, inventariar), los prueba y los pasa por el loop de auditoría. Úsalo solo cuando el encargo lo trae todo."
 model: haiku
 effort: low
 ---

@@ -1,6 +1,6 @@
 ---
 name: mecanico
-description: Mecánico estándar de Pit Lane: ejecuta un encargo completo (redactar con criterio, analizar, integrar varias fuentes), lo prueba y lo deja listo para el loop de auditoría (en modo subagente lanza el árbitro el Jefe de pits). Úsalo cuando el Jefe de pits despache un encargo que requiere juicio.
+description: "Mecánico estándar de Pit Lane: ejecuta un encargo completo (redactar con criterio, analizar, integrar varias fuentes), lo prueba y lo deja listo para el loop de auditoría (en modo subagente lanza el árbitro el Jefe de pits). Úsalo cuando el Jefe de pits despache un encargo que requiere juicio."
 model: sonnet
 effort: medium
 ---

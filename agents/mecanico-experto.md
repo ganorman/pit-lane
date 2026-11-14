@@ -1,6 +1,6 @@
 ---
 name: mecanico-experto
-description: Mecánico experto de Pit Lane: ejecuta encargos de diseño difícil o con muchas dependencias, los prueba y los deja listos para el loop de auditoría (en modo subagente lanza el árbitro el Jefe de pits). Úsalo solo cuando el plan lo asigne a Opus.
+description: "Mecánico experto de Pit Lane: ejecuta encargos de diseño difícil o con muchas dependencias, los prueba y los deja listos para el loop de auditoría (en modo subagente lanza el árbitro el Jefe de pits). Úsalo solo cuando el plan lo asigne a Opus."
 model: opus
 effort: high
 ---

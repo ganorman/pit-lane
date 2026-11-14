@@ -1,6 +1,6 @@
 ---
 name: arbitro
-description: Árbitro de Pit Lane: audita un entregable contra el listón del contrato con contexto limpio, sobre los archivos reales. Envoltorio que remite al árbitro de la skill pit-lane:gauntlet. Úsalo después de construir, con modelo y esfuerzo declarados al lanzarlo.
+description: "Árbitro de Pit Lane: audita un entregable contra el listón del contrato con contexto limpio, sobre los archivos reales. Envoltorio que remite al árbitro de la skill pit-lane:gauntlet. Úsalo después de construir, con modelo y esfuerzo declarados al lanzarlo."
 model: opus
 effort: high
 tools: Read, Grep, Glob, Bash

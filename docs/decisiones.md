@@ -28,6 +28,8 @@ Una decisión por línea, con fecha AAAA-MM-DD.
 
 2026-11-14 · Corrección tras revisar V2.1 · `agents/lector-ejecucion.md`: la descripción del frontmatter va entre comillas porque `claude plugin validate` fallaba al parsearla (contiene ": "). Sin cambio de contenido.
 
+2026-11-14 · APROBADO por Gerardo · paso 11b · `agents/*.md`: `description` del frontmatter entre comillas en los 7 agentes; el `: ` sin comillas rompía el parseo YAML en `claude plugin validate` (con el error, el agente cargaría sin `model` ni `effort`). Validación: pasa.
+
 ## Cierre del paso 10: respuestas de Gerardo a la sección 10 del diseño y a "Revisa tú"
 
 2026-11-14 · CONFIRMADO por Gerardo · Decisiones 2, 3 y 4 de la sección 10: dos skills, aprobación en dos tiempos solo para XL, modos A y B en la v1 (C a evaluar, D fuera). Decisión 1 y 5 ya estaban cerradas (plan Pro verificado con `get_usage`).

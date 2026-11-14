@@ -1,6 +1,6 @@
 ---
 name: lector-ingenuo
-description: Lector ingenuo de Pit Lane: parafrasea el plan o diseño con contexto limpio; si no puede parafrasearlo, es un bloqueo. Úsalo en la revisión del plan de tamaño XL.
+description: "Lector ingenuo de Pit Lane: parafrasea el plan o diseño con contexto limpio; si no puede parafrasearlo, es un bloqueo. Úsalo en la revisión del plan de tamaño XL."
 model: sonnet
 effort: medium
 tools: Read, Grep, Glob
