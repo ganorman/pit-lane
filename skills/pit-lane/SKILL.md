@@ -53,7 +53,7 @@ Formato: `Tamaño: L — gana "entregables" (3) y "dependencia" (datos compartid
 | Tamaño | Qué corre |
 |---|---|
 | **S** | **R-02** Se hace y se dice qué se hizo, sin contrato. *Por qué:* en una tarea chica la ceremonia cuesta más que el error que evita. |
-| **M** | `pit-lane:gauntlet` tal cual: contrato corto en el chat (listón de 5 a 8, sin bloque PLAN), tú construyes y lanzas el árbitro de rutina, loop de hasta 3 rondas, bitácora junto al entregable. Sin carpeta `pit-lane/`. |
+| **M** | `pit-lane:gauntlet` tal cual: contrato corto en el chat (listón de 5 a 8, sin bloque PLAN), tú construyes y lanzas el árbitro con el modelo y el esfuerzo que fije MÉTODO, loop de hasta 3 rondas, bitácora junto al entregable. Sin carpeta `pit-lane/`. |
 | **L** | F1 a F6 completas: plan revisado por `pit-lane:lector-ejecucion`, mecánicos en paralelo, auditoría por encargo y auditoría de coherencia. |
 | **XL** | Como L, más revisión del plan con los tres lectores y aprobación en dos tiempos. |
 
@@ -118,7 +118,7 @@ Lo que hace cada mecánico está en su agente; tú vigilas y coordinas.
 
 El loop es el de `pit-lane:gauntlet`; quién lo lanza, en `references/modos-de-ejecucion.md`.
 
-- **R-39** Dueño de cada auditoría: en M, tú (la sesión que construye); en L y XL, modo A, tú lanzas `pit-lane:arbitro` para cada encargo y llevas su bitácora en `pit-lane/auditorias/E0x.md`; en modo B, cada mecánico lanza el suyo y lleva su bitácora. Tú lanzas siempre la de coherencia. *Por qué:* en el piloto nadie había comprobado que un subagente pudiera lanzar a otro (H10), y un dueño único evita auditorías que no corren.
+- **R-39** Dueño de cada auditoría: en M, tú (la sesión que construye); en L y XL, modo A, tú lanzas `pit-lane:arbitro` para cada encargo y llevas su bitácora en `pit-lane/auditorias/E0x.md`; en modo B, cada mecánico lanza el suyo y lleva su bitácora, y si no puede lanzar subagentes lo lanzas tú. Tú lanzas siempre la de coherencia. *Por qué:* en el piloto nadie había comprobado que un subagente pudiera lanzar a otro (H10), y un dueño único evita auditorías que no corren.
 - **Auditoría de coherencia** (L y XL): cuando todos los encargos están terminados, lanza `pit-lane:arbitro` con `pit-lane:gauntlet` sobre los criterios de coherencia del contrato (R-29), con el modelo y el esfuerzo que fije MÉTODO y la ruta absoluta de `skills/gauntlet/agents/arbitro.md`. La bitácora es `pit-lane/auditorias/coherencia.md`.
 - **R-24** Árbitro nuevo en cada ronda, sin el plan ni el razonamiento del constructor, sobre todo el listón, máximo 3 rondas. *Por qué:* un árbitro con el razonamiento del constructor repite su error; re-auditar todo detecta regresiones, y el tope acota el gasto.
 - **R-25** Un árbitro que falló o no corrió se reintenta una vez; si vuelve a fallar, se registra "no ejecutado", nunca "sin hallazgos". *Por qué:* un silencio no es una aprobación.

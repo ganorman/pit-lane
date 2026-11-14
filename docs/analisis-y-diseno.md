@@ -1,7 +1,7 @@
 # Pit Lane — metodología unificada: análisis comparativo y diseño
 
-**Versión 0.6 · noviembre 2026**
-Autor del análisis: Jefe de pits (Fable 5.2). Lectores: 4 × Sonnet 5.5, esfuerzo medio. Estado: pendiente de aprobación de Gerardo.
+**Versión 0.7 · noviembre 2026**
+Autor del análisis: Jefe de pits (Fable 5.2). Lectores: 4 × Sonnet 5.5, esfuerzo medio. Estado: aprobado por Gerardo; v1 construida (pasos 0 a 10), piloto hecho y ajustes de gauntlet V2.1 aplicados. La versión 0.7 incorpora las decisiones del 2026-11-14 registradas en `docs/decisiones.md`.
 
 > **Crítico independiente (Opus 5.5, esfuerzo alto), tres rondas, el tope.** Ronda 1: RECHAZADO (2 bloqueos, 11 mayores, 8 menores). Ronda 2: APROBADO CON CORRECCIONES (4 mayores, 5 menores). Ronda 3: APROBADO CON CORRECCIONES (3 mayores, 5 menores, sin bloqueos). La versión 0.4 aplicó las correcciones de las tres rondas. **Las 8 correcciones de la ronda 3 no pasaron por una cuarta auditoría, y el cambio de nombre a Pit Lane (versión 0.5) y el ajuste al plan Pro (versión 0.6) se hicieron después.** Informes en `docs/critica-ronda1.md`, `critica-ronda2.md` y `critica-ronda3.md`.
 
@@ -178,7 +178,7 @@ Se evalúan seis señales y **gana el nivel más alto** que alcance cualquiera. 
 | Tamaño | Qué corre |
 |---|---|
 | **S** | Se hace y se dice qué se hizo. Sin contrato |
-| **M** | Es gauntlet tal como lo usas hoy: contrato corto en el chat (listón de 5 a 8, sin bloque PLAN), la sesión construye y lanza el árbitro, loop de hasta 3 rondas con árbitro de rutina (Sonnet 5.5, medio), bitácora junto al entregable. Sin carpeta `pit-lane/` |
+| **M** | Es gauntlet tal como lo usas hoy: contrato corto en el chat (listón de 5 a 8, sin bloque PLAN), la sesión construye y lanza el árbitro, loop de hasta 3 rondas con el árbitro que fije MÉTODO (por defecto Opus 5.5, alto, si sale a terceros, se proyecta en público o es difícil de revertir; Sonnet 5.5, medio, en el resto; decisión 2026-11-14, gauntlet V2.1), bitácora junto al entregable. Sin carpeta `pit-lane/` |
 | **L** | Contrato, plan con encargos revisado por el lector de ejecución, mecánicos en paralelo, auditoría de cada encargo lanzada por el Jefe de pits en modo A (por su mecánico en modo B, decisión 2026-11-14) y auditoría de coherencia entre entregables lanzada por el Jefe de pits |
 | **XL** | Como L, más revisión del plan con tres lectores y aprobación en dos tiempos |
 
@@ -188,7 +188,7 @@ Se evalúan seis señales y **gana el nivel más alto** que alcance cualquiera. 
 |---|---|---|---|
 | **Gerardo** | Fija el objetivo, aprueba el contrato, decide lo irreversible, valida al final | — | — |
 | **Jefe de pits** | Triage, contrato, plan, enrutamiento, despacho, estado, propagación de cambios, auditoría de coherencia, cierre | Todo | No construye entregables de tamaño L o XL |
-| **Mecánico** | Un encargo de principio a fin: construye, prueba y pasa su entregable por el loop de auditoría, y es él quien lanza el árbitro | Su archivo de encargo, las normas, los datos maestros | La conversación del Jefe de pits |
+| **Mecánico** | Un encargo de principio a fin: construye, prueba y pasa su entregable por el loop de auditoría. En modo B lanza él el árbitro; en modo A lo lanza el Jefe de pits (decisión 2026-11-14, H10) | Su archivo de encargo, las normas, los datos maestros | La conversación del Jefe de pits |
 | **Subagente** | Una búsqueda o lectura acotada para un mecánico | La pregunta | Todo lo demás |
 | **Lector** (antes de construir) | Busca huecos en el plan o el diseño | Solo el documento y lo que este enlaza | La conversación |
 | **Árbitro** (después de construir) | Intenta rechazar el entregable con evidencia | Contrato, rutas de entregables y fuentes, fallos previos | El plan y el razonamiento del constructor |
@@ -218,6 +218,8 @@ Aprobado: AAAA-MM-DD   ← lo escribe el Jefe de pits cuando Gerardo aprueba
                       al auditar (archivos, fuentes y herramientas del árbitro); si no, se corrige o se elimina
                       antes de pedir la aprobación
                     + criterios de revisión humana (el árbitro no bloquea por ellos)
+                    + fuentes externas (gauntlet, Fase 0 paso 4): cada una con su comprobación ejecutable
+                      (curl o WebFetch, o la lista de Drive); sin ella, NO VERIFICABLE (decisión 2026-11-14)
                     + criterios de coherencia entre entregables (solo L y XL) ✚
 ## ENTREGABLE       archivos, formato, restricciones
 ## DATOS MAESTROS ✚ ruta del archivo único con cifras, fechas, nombres y precios compartidos
@@ -317,7 +319,7 @@ proyectos/<área>/AAAA-MM-DD_Tema/
 
 ### 6.10 Verificación y auditoría
 
-0. **Quién lanza cada auditoría.** En M, la sesión que construye. En L y XL, cada mecánico lanza el árbitro de su encargo (`pit-lane:arbitro`, con el modelo y el esfuerzo del encargo) y lleva su bitácora en `pit-lane/auditorias/E0x.md`; si un mecánico no puede lanzar subagentes, devuelve "auditoría: pendiente" y la lanzal Jefe de pits. La auditoría de coherencia la lanzal Jefe de pits cuando todos los encargos terminaron, con bitácora en `pit-lane/auditorias/coherencia.md`.
+0. **Quién lanza cada auditoría.** En M, la sesión que construye. En L y XL, modo A, el Jefe de pits lanza el árbitro de cada encargo (`pit-lane:arbitro`, con el modelo y el esfuerzo de la línea "Árbitro:" del encargo) y lleva su bitácora en `pit-lane/auditorias/E0x.md`: no se cuenta con que un subagente lance a otro (decisión 2026-11-14, H10). En modo B, cada mecánico lanza el árbitro de su encargo con esos mismos valores y lleva su bitácora; si no puede lanzar subagentes, devuelve "auditoría: pendiente" y la lanza el Jefe de pits. La auditoría de coherencia la lanza el Jefe de pits cuando todos los encargos terminaron, con bitácora en `pit-lane/auditorias/coherencia.md`.
 1. **El mecánico prueba** su entregable sobre el archivo real, con el método por tipo de gauntlet. Es necesario y no basta.
 2. **Árbitro nuevo por ronda**, con el contrato, las rutas y las fuentes. Veredictos: PASA, NO PASA, NO VERIFICABLE. Este último bloquea salvo que el contrato lo marque como revisión humana.
 3. **Coherencia entre entregables** (L y XL): un criterio del listón por cada dato maestro que aparece en más de un entregable.
@@ -398,7 +400,7 @@ Las reglas que el repo debe implementar tienen un ID. La skill y los archivos de
 | R-36 | Árbitro en modelo distinto del constructor cuando el error es costoso y el constructor no es Opus | 6.7 |
 | R-37 | El Jefe de pits no construye entregables de tamaño L ni XL | 6.4 |
 | R-38 | Antes del primer despacho se comprueba que ninguna variable de entorno anule el enrutamiento | 6.7 |
-| R-39 | Dueño de cada auditoría: en M, la sesión; en L y XL, cada mecánico lanza su árbitro y lleva su bitácora; el Jefe de pits lanza la de coherencia, y la de un mecánico que no pueda lanzar subagentes | 6.10 |
+| R-39 | Dueño de cada auditoría: en M, la sesión; en L y XL, modo A, el Jefe de pits lanza el árbitro de cada encargo y lleva su bitácora; en modo B, cada mecánico lanza el suyo y lleva su bitácora (o lo lanza el Jefe de pits si el mecánico no puede lanzar subagentes); el Jefe de pits lanza siempre la de coherencia | 6.10 |
 
 ---
 
@@ -411,6 +413,7 @@ pit-lane/
 ├── README.md
 ├── AGENTS.md                      manual, menos de 100 líneas
 ├── LICENSE · NOTICE               atribución a Superpowers (MIT), ECC (MIT) y EGM (Apache-2.0)
+├── .gitattributes                 finales de línea LF en el repo (decisión 2026-11-14)
 ├── .claude-plugin/plugin.json
 ├── skills/
 │   ├── pit-lane/SKILL.md           triage, contrato, plan, despacho, cierre
@@ -424,9 +427,9 @@ pit-lane/
 │   ├── mecanico.md                sonnet · medium
 │   ├── mecanico-experto.md        opus · high
 │   ├── mecanico-auxiliar.md       haiku · low
-│   ├── lector-ingenuo.md          sonnet · medium
-│   ├── lector-critico.md          sonnet · medium
-│   ├── lector-ejecucion.md        sonnet · medium
+│   ├── lector-ingenuo.md          sonnet · high    (solo XL; tabla 6.7)
+│   ├── lector-critico.md          opus · high      (solo XL; tabla 6.7)
+│   ├── lector-ejecucion.md        sonnet · medium  (en XL el despacho declara high)
 │   └── arbitro.md                 opus · high · envoltorio que remite a skills/gauntlet/agents/arbitro.md
 ├── references/
 │   ├── plantillas.md              contrato, encargo, estado
@@ -442,6 +445,7 @@ pit-lane/
     ├── critica-ronda3.md
     ├── auditoria-gauntlet.md      informe del paso 7
     ├── decisiones.md
+    ├── manual-de-uso.md           guía corta para usarlo (decisión 2026-11-14)
     └── fichas/                    las 4 fichas de los lectores
 ```
 
@@ -487,6 +491,8 @@ Dentro de cada oleada los pasos pueden correr a la vez, porque sus superficies d
 | 10 | Los archivos que el piloto señale; `docs/decisiones.md` |
 
 ### Encargos listos para pegar
+
+> Registro histórico de la construcción: los encargos se dejan como se ejecutaron. Donde difieren de la sección 6 (por ejemplo, el paso 5 dice que el mecánico lanza siempre su árbitro), vale la sección 6 con las decisiones de `docs/decisiones.md`.
 
 **Paso 1 — Haiku 5.5, esfuerzo bajo**
 > Antes de crear nada, haz un commit local con lo que ya hay en el repo (`docs/` y `skills/gauntlet/`) con el mensaje "paso 0: insumos". Después crea solo estos cinco archivos. (1) `.claude-plugin/plugin.json` con `"name": "pit-lane"`, `"version": "0.1.0"`, `"description": "Metodología de trabajo con Claude: Jefe de pits que planifica y enruta, mecánicos en paralelo y árbitro independiente."` y `"author": {"name": "Gerardo Alberto Norman"}`. (2) `LICENSE` con el texto estándar de la licencia MIT en inglés, titular Gerardo Alberto Norman, año 2026. (3) `NOTICE` con estas tres líneas de atribución, indicando que se tomaron ideas y no archivos: obra/superpowers (MIT), affaan-m/ECC (MIT), google/elephant-goldfish-model (Apache-2.0). (4) `README.md` con exactamente este contenido: título "# Pit Lane"; un párrafo: "Metodología de trabajo con Claude: un Jefe de pits que planifica y enruta, mecánicos que ejecutan en paralelo y un árbitro independiente que audita."; y cuatro viñetas: "Qué es y por qué: `docs/analisis-y-diseno.md`", "Cómo se trabaja en este repo: `AGENTS.md`", "Skills: `skills/pit-lane` (flujo completo) y `skills/gauntlet` (auditoría)", "Créditos: `NOTICE`". (5) `docs/decisiones.md` con el título "# Decisiones" y una línea: "Una decisión por línea, con fecha AAAA-MM-DD." No crees carpetas vacías ni ningún otro archivo. Al terminar, lista lo creado y haz un commit local "paso 1: esqueleto" que incluya solo esos cinco archivos. No hagas push.

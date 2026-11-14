@@ -36,8 +36,8 @@ Cumple el requisito de que el Jefe de pits despache tras la aprobación de Gerar
 2. El Jefe de pits escribe `pit-lane/contrato.md`, `pit-lane/datos-maestros.md` y un archivo por encargo en `pit-lane/encargos/` (R-10).
 3. Comprueba que ninguna variable de entorno anule el enrutamiento (R-38).
 4. Lanza los mecánicos por oleadas de hasta 2 (R-14), como subagentes, con el agente que corresponda según la tabla de enrutamiento (`pit-lane:mecanico`, `pit-lane:mecanico-experto` o `pit-lane:mecanico-auxiliar`) y con el modelo y el esfuerzo del plan escritos en el despacho (R-12). El despacho contiene la línea de arranque (R-15).
-5. Cada mecánico construye, prueba sobre el archivo real y devuelve "auditoría: pendiente". El Jefe de pits lanza `pit-lane:arbitro` por encargo (ver "Quién lanza cada auditoría"), devuelve los fallos al mecánico y repite hasta aprobar o llegar a 3 rondas (R-24).
-6. Cada mecánico devuelve uno de los cuatro estados más "auditoría: pendiente", en 15 líneas o menos (R-16).
+5. Cada mecánico construye, prueba sobre el archivo real y devuelve uno de los cuatro estados más "auditoría: pendiente", en 15 líneas o menos (R-16).
+6. Por cada encargo, el Jefe de pits lanza `pit-lane:arbitro` con el modelo y el esfuerzo de la línea "Árbitro:" del encargo, lleva la bitácora, devuelve los fallos al mecánico y repite hasta aprobar o llegar a 3 rondas (R-24, R-39; ver "Quién lanza cada auditoría").
 7. El Jefe de pits actualiza `estado.md` leyendo los encargos (R-18).
 
 **Escalada en el modo A** (R-27): si un criterio falla dos rondas seguidas, el Jefe de pits relanza el encargo con el modelo de un nivel superior y un enfoque distinto.
@@ -54,7 +54,7 @@ Cumple el requisito solo a medias: las sesiones las abre Gerardo, con instruccio
 2. El Jefe de pits escribe `contrato.md`, `datos-maestros.md` y los archivos de encargo (R-10), y comprueba las variables de entorno (R-38).
 3. Para cada mecánico de la oleada (hasta 2, R-14), el Jefe de pits le da a Gerardo cuatro cosas: el **nombre de la sesión**, el **modelo**, el **esfuerzo** y la **línea de arranque** con la ruta del encargo (R-12, R-15).
 4. Gerardo abre cada sesión de la pestaña Code, pone el modelo y el esfuerzo en su selector y pega la línea de arranque.
-5. Cada mecánico trabaja como en el modo A: construye, prueba, pasa el loop de `pit-lane:gauntlet` lanzando él mismo a `pit-lane:arbitro`, y devuelve el estado en 15 líneas o menos (R-16).
+5. Cada mecánico construye y prueba como en el modo A, pero pasa él mismo el loop de `pit-lane:gauntlet`: lanza `pit-lane:arbitro` con el modelo y el esfuerzo de la línea "Árbitro:" de su encargo y lleva su bitácora (R-39). Devuelve el estado y el resultado de la auditoría en 15 líneas o menos (R-16).
 6. El Jefe de pits lista las sesiones, lee su actividad y les escribe cuando haga falta.
 
 **Escalada en el modo B** (R-27): el Jefe de pits le indica a Gerardo el modelo que debe poner en el selector de esa sesión.
@@ -83,10 +83,10 @@ Cumple el requisito solo a medias: las sesiones las abre Gerardo, con instruccio
 |---|---|---|
 | M | La sesión que construye | Junto al entregable |
 | L y XL, modo A | El Jefe de pits lanza el árbitro de cada encargo (`pit-lane:arbitro`, con el modelo y el esfuerzo de la línea "Árbitro:" del encargo) | `pit-lane/auditorias/E0x.md`, la lleva el Jefe de pits |
-| L y XL, modo B | Cada mecánico lanza el árbitro de su encargo, con el mismo modelo y esfuerzo | `pit-lane/auditorias/E0x.md`, la lleva el mecánico |
+| L y XL, modo B | Cada mecánico lanza el árbitro de su encargo (`pit-lane:arbitro`, con el modelo y el esfuerzo de la línea "Árbitro:" del encargo, no los suyos) | `pit-lane/auditorias/E0x.md`, la lleva el mecánico |
 | L y XL, coherencia entre entregables | El Jefe de pits, cuando todos los encargos terminaron | `pit-lane/auditorias/coherencia.md` |
 
-- Si un mecánico no puede lanzar subagentes, devuelve "auditoría: pendiente" y la lanza el Jefe de pits (R-39). Hipótesis H10 (decisión 2026-11-14): en modo A no se cuenta con que un subagente lance a otro; el Jefe de pits lanza siempre los árbitros.
+- En modo A el Jefe de pits lanza siempre los árbitros: no se cuenta con que un subagente lance a otro (hipótesis H10, decisión 2026-11-14). En modo B, si un mecánico no puede lanzar subagentes, devuelve "auditoría: pendiente" y la lanza el Jefe de pits (R-39).
 - La auditoría de coherencia lleva un criterio por cada dato maestro que aparece en más de un entregable (R-29).
 - Un árbitro nuevo por ronda, sin el razonamiento del constructor, sobre todo el listón, máximo 3 rondas (R-24).
 - Un árbitro que falló o no corrió se reintenta una vez; si vuelve a fallar se registra "no ejecutado", nunca "sin hallazgos" (R-25).
@@ -98,4 +98,4 @@ El Jefe de pits lee `estado.md` y los encargos **antes** de confiar en lo que re
 
 ## Modos C y D
 
-**[CONFIRMAR]** El documento no define pasos concretos para los modos C y D; esta referencia solo recoge su fila de la tabla.
+Sin pasos concretos en la v1: esta referencia solo recoge su fila de la tabla. El C queda por evaluar (H7) y el D está fuera (confirmado por Gerardo, 2026-11-14).

@@ -26,9 +26,9 @@ Qué modelo y qué esfuerzo corre cada rol. Origen: sección 6.7 del documento d
    - En el modo B, el Jefe de pits le indica a Gerardo el modelo que debe poner en el selector de esa sesión.
 5. **Árbitro en modelo distinto del constructor** cuando el error es costoso y el constructor no es Opus (R-36). Si el constructor es Opus, el árbitro también lo es: la independencia la da el contexto limpio, no el modelo.
 6. **La columna de esfuerzo es hipótesis.** Parte de la regla gruesa de ECC (medio por defecto, alto para razonamiento profundo). El desglose por rol es propio y se calibra en el piloto midiendo rondas de auditoría por nivel.
-   **[CONFIRMAR]** El documento no asigna ID de la sección 6.14 a esta regla; queda sin ID.
+   Sin ID en la sección 6.14: es una nota de calibración, no una regla de comportamiento (confirmado por Gerardo, 2026-11-14).
 7. **Plan Pro.** Según el artículo de soporte de Anthropic sobre los modelos Fable, en el plan Pro esos modelos no entran en los límites del plan: corren con créditos de uso, que se pagan aparte. Por eso el modelo más capaz de esta tabla es Opus 5.5 y Fable queda fuera del enrutamiento. Opus es el que más rápido gasta el límite de 5 horas, así que se reserva para el Jefe de pits, el mecánico experto y el árbitro de error costoso.
-   **[CONFIRMAR]** Esta regla tampoco tiene ID en la sección 6.14.
+   Sin ID en la sección 6.14; es una regla de enrutamiento confirmada por Gerardo (2026-11-14): Fable va fuera.
 
 ## Dónde se fija el modelo y el esfuerzo
 

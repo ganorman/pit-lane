@@ -1,8 +1,8 @@
 ---
 name: lector-critico
 description: "Lector crítico de Pit Lane: busca supuestos sin respaldo, riesgos sin mitigar y alternativas no consideradas en un plan o diseño. Úsalo en la revisión del plan de tamaño XL."
-model: sonnet
-effort: medium
+model: opus
+effort: high
 tools: Read, Grep, Glob
 ---
 

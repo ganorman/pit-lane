@@ -55,4 +55,4 @@ Dudas o pendientes: [si los hay]
 
 ## Reglas que cumple este agente
 
-R-07, R-11, R-12, R-15, R-16, R-17, R-18, R-19, R-24, R-25, R-27, R-28, R-30, R-35, R-39, R-13.
+R-07, R-11, R-12, R-13, R-15, R-16, R-17, R-18, R-19, R-24, R-25, R-27, R-28, R-30, R-35, R-39.

@@ -38,7 +38,8 @@ Aprobado: AAAA-MM-DD   ← lo escribe el Jefe de pits cuando Gerardo aprueba
                       al auditar (archivos, fuentes y herramientas del árbitro); si no, se corrige o se elimina
                       antes de pedir la aprobación
                     + criterios de revisión humana (el árbitro no bloquea por ellos)
-                    + fuentes externas: cada una con su comprobación ejecutable (curl o lista de Drive)
+                    + fuentes externas: cada una con su comprobación ejecutable (curl o WebFetch,
+                      o la lista de Drive); sin ella, NO VERIFICABLE (R-35)
                     + criterios de coherencia entre entregables (solo L y XL) ✚
 ## ENTREGABLE       archivos, formato, restricciones
 ## DATOS MAESTROS ✚ ruta del archivo único con cifras, fechas, nombres y precios compartidos
@@ -114,7 +115,7 @@ Una línea por encargo. Solo lo escribe el Jefe de pits, y lo hace leyendo los e
 - E03 — [nombre] — [auditoría: aprobada en ronda N | con pendientes]
 ```
 
-**[CONFIRMAR]** El documento fija los tres grupos y "una línea por encargo", pero no el contenido exacto de cada línea ni el encabezado. Los campos de arriba son una propuesta de esta plantilla.
+El documento fija los tres grupos y "una línea por encargo"; el encabezado y los campos de cada línea son los de esta plantilla, aceptados por Gerardo tras el piloto (2026-11-14).
 
 Reglas que usan `estado.md`:
 - Tras un corte, el Jefe de pits lee `estado.md` y los encargos antes de confiar en lo que recuerda (R-20).

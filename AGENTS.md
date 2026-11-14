@@ -62,7 +62,7 @@ pit-lane/
 
 ### Plan de construcción
 
-Los pasos 0 a 10 están en la sección 8 del diseño, cada uno con su modelo, esfuerzo, encargo listo para pegar y superficie de escritura. Cada paso corre en un chat nuevo. Con el plan Pro, de uno en uno.
+Los pasos 0 a 10 están en la sección 8 del diseño, cada uno con su modelo, esfuerzo, encargo listo para pegar y superficie de escritura. Cada paso corre en un chat nuevo. Con el plan Pro, de uno en uno. Los diez pasos ya están hechos. Desde entonces, cada cambio lo aprueba Gerardo y queda en `docs/decisiones.md` (por ejemplo, el paso 11: gauntlet V2.1). Si el cambio altera una regla, se actualiza también el diseño, porque el diseño es la fuente de verdad.
 
 ### Comprobar que el plugin carga
 
@@ -74,4 +74,4 @@ En una sesión nueva de la app de escritorio deben aparecer `/pit-lane:pit-lane`
 
 ### Hipótesis abiertas
 
-Las hipótesis H1 a H10 de la sección 9 del diseño se validan en el piloto (paso 9). Los ajustes que salgan de ahí se aplican solo si Gerardo los aprueba (paso 10).
+Las hipótesis H1 a H10 de la sección 9 del diseño se validaron en el piloto (paso 9), y los ajustes aprobados están en `docs/decisiones.md` (H3 falló: el freno usa `get_usage`; H10: en modo A el Jefe de pits lanza los árbitros). Cualquier ajuste nuevo se aplica solo si Gerardo lo aprueba.
