@@ -25,9 +25,9 @@ Una decisión por línea, con fecha AAAA-MM-DD.
 2026-11-14 · RH1 y RH2 · Gerardo confirma que el flujo encaja con su día a día y que el costo le sirve.
 2026-11-14 · RH3 · La tablet queda DESCARTADA. El equipo "Mi Portátil" de Drive no es su laptop actual. Consecuencia: en D1 y D2 (proyecto Cerebro) los pasos de la tablet y el prompt 10 de la tablet ya no aplican, y con ellos los pendientes "la tablet sube sin pull" y "sesión en la nube sube a main".
 
-## Pendientes de Gerardo (marcadores [CONFIRMAR] del informe, L6)
+## Marcadores [CONFIRMAR] del informe (L6): los cuatro confirmados por Gerardo
 
-2026-11-13 · PENDIENTE [CONFIRMAR] · `references/enrutamiento.md:29` · Regla 6 (la columna de esfuerzo es hipótesis): el documento no asigna ID de la sección 6.14 a esta regla; queda sin ID.
+2026-11-14 · CONFIRMADO por Gerardo · `references/enrutamiento.md:29` · Regla 6 (la columna de esfuerzo es hipótesis): queda sin ID; es una nota de calibración, no una regla de comportamiento.
 2026-11-14 · CONFIRMADO por Gerardo · `references/enrutamiento.md:31` · Regla 7 (plan Pro, Fable fuera): "Fable va fuera". Sigue sin ID en la sección 6.14; queda como regla de enrutamiento confirmada.
-2026-11-13 · PENDIENTE [CONFIRMAR] · `references/modos-de-ejecucion.md:100` · El documento no define pasos concretos para los modos C y D; la referencia solo recoge su fila de la tabla.
-2026-11-13 · PENDIENTE [CONFIRMAR] · `references/plantillas.md:108` · Formato de `estado.md`: los campos de cada línea y el encabezado son una propuesta, no están en el documento.
+2026-11-14 · CONFIRMADO por Gerardo · `references/modos-de-ejecucion.md:100` · Modos C y D: sin pasos definidos; el C queda por evaluar (H7) y el D está fuera de la v1.
+2026-11-14 · CONFIRMADO por Gerardo · `references/plantillas.md:108` · Formato de `estado.md`: se acepta la propuesta tal cual (funcionó en todo el piloto).
