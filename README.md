@@ -4,6 +4,13 @@ Metodología de trabajo con Claude: un Jefe de pits que planifica y enruta, mec�
 
 Es un plugin de Claude Code con 2 skills y 7 agentes. Estado: v1 construida y probada en un piloto real (noviembre de 2026).
 
+## Requisitos
+
+- **Claude Code**, en la terminal o en la app de escritorio. Los subagentes, el enrutamiento de modelo y esfuerzo y la lectura del uso con `get_usage` solo existen ahí. Para fijar el esfuerzo en cada invocación hace falta la v2.1.292 o posterior. En otra IA solo se traslada el método (ver la sección 5 del manual).
+- **Plan:** pensado para Pro. El modelo más capaz que enruta es Opus 5.5, y Fable queda fuera.
+- **Opcionales, según el entregable** (R-34): el plugin [Superpowers](https://github.com/obra/superpowers) si el entregable es código, y [EGM](https://github.com/google/elephant-goldfish-model) si es una especificación de software. Sin ellos, el resto del flujo funciona igual; esos encargos solo pierden la parte de TDD, ramas y revisión de especificaciones.
+- **Para la verificación de Office** (`skills/gauntlet/scripts/verificar_office.py`): Python 3. Para renderizar, también LibreOffice y `pdftoppm` (Poppler); para recalcular un XLSX, el `recalc.py` de la skill xlsx. Si falta alguno, el árbitro marca esos criterios como NO VERIFICABLE en vez de aprobarlos.
+
 ## Instalación
 
 Clona el repo en tu carpeta personal de skills. Como trae `.claude-plugin/plugin.json`, Claude Code lo carga solo en cada sesión:
