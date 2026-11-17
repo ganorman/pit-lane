@@ -12,7 +12,14 @@ Pit Lane organiza el trabajo en tres roles:
 
 ## 2. Instalación (Claude Code)
 
-Clona el repo en tu carpeta personal de skills (en Windows, `C:\Users\<tu usuario>\.claude\skills\pit-lane`). Como trae `.claude-plugin/plugin.json`, se carga solo en cada sesión, sin instalarlo:
+Desde el marketplace (se actualiza con `claude plugin update`):
+
+```bash
+claude plugin marketplace add ganorman/pit-lane
+claude plugin install pit-lane@pit-lane
+```
+
+O clona el repo en tu carpeta personal de skills (en Windows, `C:\Users\<tu usuario>\.claude\skills\pit-lane`). Como trae `.claude-plugin/plugin.json`, se carga solo en cada sesión, sin instalarlo. Usa una sola de las dos vías: con las dos, tendrías el plugin cargado dos veces.
 
 ```bash
 git clone https://github.com/ganorman/pit-lane.git ~/.claude/skills/pit-lane
@@ -48,7 +55,7 @@ Abre una sesión nueva y comprueba que existen `/pit-lane:pit-lane`, `/pit-lane:
 **Con Claude Code**
 1. Instala el plugin (sección 2). No hace falta copiar archivos al proyecto.
 2. La primera vez, el Jefe de pits crea `pit-lane/` dentro del proyecto.
-3. Reemplaza el listón base B1 a B6 por tus reglas (idioma, marca, fechas, fuentes).
+3. Fija tus valores del listón base (idioma, nombres, marcas) en `~/.claude/pit-lane-liston-base.md`; el formato está en `skills/gauntlet/references/liston-base-ejemplo.md`.
 4. Si un entregable es código o una especificación de software, el Jefe de pits aplica el proceso de `references/software.md`: no hace falta instalar nada más.
 
 **Con otra IA (ChatGPT, Gemini, etc.)**
@@ -58,8 +65,12 @@ No tiene subagentes ni enrutamiento de modelos. Solo se traslada el método:
 3. Construye en una conversación.
 4. Audita en **otra conversación nueva**, con un prompt que solo contenga el contrato y los archivos. El resumen debe decir **AUDITORÍA NO INDEPENDIENTE**.
 
-## 6. Antes de compartirlo en GitHub
+## 6. Qué es tuyo y qué es del plugin
 
-Desde el 2026-11-16 las reglas no nombran a ninguna persona y el listón base B1 a B6 es genérico. Tus valores (idioma, nombres, marcas) van en `~/.claude/pit-lane-liston-base.md`, fuera del repo; el formato está en `skills/gauntlet/references/liston-base-ejemplo.md`.
+El repo es público. Las reglas no nombran a ninguna persona y el listón base B1 a B6 es genérico. Lo tuyo vive fuera del plugin y no se sube a ningún lado:
+
+- `~/.claude/pit-lane-liston-base.md`: tus valores del listón base.
+- `~/.claude/pit-lane-uso.json`: el uso de tu plan, si activas el script del freno.
+- La carpeta `pit-lane/` de cada trabajo, dentro de tu proyecto.
 
 `agents/arbitro.md` no es una copia: es un envoltorio que remite al método de `skills/gauntlet/agents/arbitro.md`, que es la única fuente.

@@ -2,18 +2,19 @@
 
 Metodología de trabajo con Claude: un Jefe de pits que planifica y enruta, mecánicos que ejecutan en paralelo y un árbitro independiente que audita.
 
-Es un plugin de Claude Code con 2 skills y 7 agentes. Estado: v1 construida y probada en un piloto real (noviembre de 2026).
+Es un plugin de Claude Code con 2 skills y 7 agentes, escrito en español. Versión 1.1, probada en un piloto real (noviembre de 2026). Licencia MIT.
 
 ## Requisitos
 
 - **Claude Code**, en la terminal o en la app de escritorio. Los subagentes, el enrutamiento de modelo y esfuerzo y la lectura del uso con `get_usage` solo existen ahí. Para fijar el esfuerzo en cada invocación hace falta la v2.1.292 o posterior. En otra IA solo se traslada el método (ver la sección 5 del manual).
-- **Plan:** pensado para Pro. El modelo más capaz que enruta es Opus 5.5, y Fable queda fuera.
+- **Plan:** pensado para Pro, con dos topes: como máximo 2 mecánicos a la vez, y Opus 5.5 como el modelo más capaz (Fable queda fuera porque en Pro corre con créditos aparte). Con un plan mayor puedes subir a 3 mecánicos y sumar Fable: cambia R-14 en `skills/pit-lane/SKILL.md` y la tabla de `references/enrutamiento.md`.
+- **Freno de gasto:** en la app de escritorio lee el uso solo. En la terminal usa `scripts/uso-statusline.ps1`, que necesita PowerShell (en macOS o Linux, `pwsh`); sin él, el freno es manual: escribe "freno".
 - **Nada más para el flujo.** No necesita otros plugins: para código y especificaciones de software trae su propio proceso (`references/software.md`).
 - **Para la verificación de Office** (`skills/gauntlet/scripts/verificar_office.py`): Python 3. Para ver cómo se ve un documento (`--render`) y recalcular un Excel (`--recalcular`), Microsoft Office en Windows (si no hay Office, el render intenta con LibreOffice). Sin ninguno de los dos, el árbitro marca esos criterios como NO VERIFICABLE en vez de aprobarlos.
 
 ## Instalación
 
-Elige una de las dos vías. En las dos hace falta acceso de lectura al repo.
+Elige una de las dos vías.
 
 **Desde el marketplace** (se actualiza con `claude plugin update`):
 
@@ -52,4 +53,5 @@ Ejemplo: *"/pit-lane:pit-lane — 3 informes DOCX con la producción de las fuen
 - Cómo se trabaja en este repo: `AGENTS.md`
 - Decisiones registradas: `docs/decisiones.md`
 - Skills: `skills/pit-lane` (flujo completo) y `skills/gauntlet` (auditoría)
-- Créditos: `NOTICE`
+- Créditos: `NOTICE` · Licencia: `LICENSE` (MIT)
+- Errores y propuestas: [issues del repo](https://github.com/ganorman/pit-lane/issues)

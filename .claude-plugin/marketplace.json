@@ -1,5 +1,6 @@
 {
   "name": "pit-lane",
+  "description": "Pit Lane: metodología de trabajo con Claude Code, en español, con contrato, mecánicos en paralelo y auditoría independiente.",
   "owner": {
     "name": "Gerardo Alberto Norman"
   },
