@@ -1,0 +1,13 @@
+{
+  "name": "pit-lane",
+  "owner": {
+    "name": "Gerardo Alberto Norman"
+  },
+  "plugins": [
+    {
+      "name": "pit-lane",
+      "source": "./",
+      "description": "Metodología de trabajo con Claude: Jefe de pits que planifica y enruta, mecánicos en paralelo y árbitro independiente."
+    }
+  ]
+}

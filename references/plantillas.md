@@ -2,10 +2,10 @@
 
 Contrato, encargo y `estado.md`. El resumen de auditoría y la bitácora no se repiten aquí: se usan las de `skills/gauntlet/references/plantillas.md` (secciones 2 y 3).
 
-Estructura de carpetas de un trabajo L o XL:
+Estructura de carpetas de un trabajo L o XL. La carpeta del trabajo es la que indique el usuario o, si no indica ninguna, el directorio de trabajo de la sesión; `entrada/` y `entregables/` son la organización sugerida y el contrato puede fijar otras rutas:
 
 ```
-proyectos/<área>/AAAA-MM-DD_Tema/
+<carpeta del trabajo>/
 ├── entrada/
 ├── entregables/
 └── pit-lane/
@@ -20,13 +20,13 @@ proyectos/<área>/AAAA-MM-DD_Tema/
 
 ## 1. Contrato — `pit-lane/contrato.md`
 
-Es el contrato de gauntlet completo, con siete añadidos (marcados con ✚). Antes de aprobar, Gerardo lee INSTRUCCIONES ORIGINALES y el LISTÓN: es su único veto. Lo aprueba Gerardo; al aprobarse, el listón queda congelado y solo Gerardo lo cambia (R-05). En M, L y XL nada se construye sin contrato aprobado (R-03). Una aprobación por tarea; dos en XL (R-08).
+Es el contrato de gauntlet completo, con siete añadidos (marcados con ✚). Antes de aprobar, el usuario lee INSTRUCCIONES ORIGINALES y el LISTÓN: es su único veto. Lo aprueba el usuario; al aprobarse, el listón queda congelado y solo el usuario lo cambia (R-05). En M, L y XL nada se construye sin contrato aprobado (R-03). Una aprobación por tarea; dos en XL (R-08).
 
 ```markdown
 # Contrato — [trabajo] — tamaño [M | L | XL]
-Aprobado: AAAA-MM-DD   ← lo escribe el Jefe de pits cuando Gerardo aprueba
+Aprobado: AAAA-MM-DD   ← lo escribe el Jefe de pits cuando el usuario aprueba
 ## TAREA            qué, para quién, qué debe incluir
-## INSTRUCCIONES ORIGINALES ✚  el pedido de Gerardo, literal y numerado (P1, P2…), sin resumir
+## INSTRUCCIONES ORIGINALES ✚  el pedido del usuario, literal y numerado (P1, P2…), sin resumir
 ## FRONTERA ✚       qué no se toca y qué no se debe hacer
 ## MÉTODO           fuentes (rutas), skills que se usan, modo, modelo y esfuerzo del árbitro, rondas máx. 3
 ## LISTÓN           ID | se exige (PASA / NO PASA) | método | evidencia esperada
@@ -38,8 +38,9 @@ Aprobado: AAAA-MM-DD   ← lo escribe el Jefe de pits cuando Gerardo aprueba
                       al auditar (archivos, fuentes y herramientas del árbitro); si no, se corrige o se elimina
                       antes de pedir la aprobación
                     + criterios de revisión humana (el árbitro no bloquea por ellos)
-                    + fuentes externas: cada una con su comprobación ejecutable (curl o WebFetch,
-                      o la lista de Drive); sin ella, NO VERIFICABLE (R-35)
+                    + fuentes externas: cada página web guardada en entrada/fuentes/ con su índice
+                      LEEME.md (URL y fecha de consulta), o la lista de Drive del conector; el árbitro
+                      coteja contra la copia; sin copia ni comprobación ejecutable, NO VERIFICABLE (R-35, R-42)
                     + criterios de coherencia entre entregables (solo L y XL) ✚
 ## ENTREGABLE       archivos, formato, restricciones
 ## DATOS MAESTROS ✚ ruta del archivo único con cifras, fechas, nombres y precios compartidos
@@ -55,13 +56,14 @@ Reglas que el contrato hace cumplir:
 - **DATOS MAESTROS.** Lo compartido vive en `datos-maestros.md`; los encargos lo citan, no lo copian (R-07).
 - **LISTÓN de coherencia (L y XL).** Un criterio por cada dato maestro que aparece en más de un entregable (R-29).
 - **Criterios de revisión humana.** Un NO VERIFICABLE bloquea igual que un NO PASA, salvo que el contrato lo marque aquí como revisión humana (R-35).
+- **Fuentes web.** Cada página que se use como fuente se guarda como archivo en `entrada/fuentes/`, con su índice, y el árbitro coteja contra esa copia (R-42).
 - **PRESUPUESTO.** Máximo 2 mecánicos por oleada (R-14).
 
 ---
 
 ## 2. Encargo — `pit-lane/encargos/E01-nombre.md`
 
-Un archivo por encargo, con esta plantilla (R-10). Fusiona el brief de Superpowers, la tarjeta de ECC, el archivo de encargo de la Colmena y la bitácora de gauntlet.
+Un archivo por encargo, con esta plantilla (R-10). Junta en un solo archivo lo que el mecánico necesita para trabajar sin la conversación: qué hacer, con qué, dónde puede escribir, contra qué se audita y por dónde va.
 
 ```markdown
 # E01 — [nombre]
@@ -70,9 +72,11 @@ Modelo: sonnet · Esfuerzo: medium · Modo: subagente | sesión
 Árbitro: sonnet · medium   (opus · high si sale a terceros, se proyecta en público o es difícil de revertir)
 Depende de: — | E0x
 ## Objetivo
-## Entradas                 rutas (incluye normas y datos-maestros.md)
+## Entradas                 rutas (incluye normas y datos-maestros.md; si es código, instrucciones
+                            para otra IA o una especificación de software, la ruta absoluta de references/software.md, R-34)
 ## Superficie de escritura  únicas rutas que puede crear o modificar
-                            (en modo B incluye su bitácora: pit-lane/auditorias/E01.md)
+                            (en modo B incluye su bitácora: pit-lane/auditorias/E01.md;
+                            si busca fuentes en la web, incluye entrada/fuentes/, R-42)
 ## Frontera                 qué no tocar ni decidir
 ## Listón aplicable         IDs, con su método; incluye los IDs B del listón base
                             que apliquen a este entregable
@@ -100,7 +104,7 @@ Todo mecánico arranca con esta línea (R-15):
 
 ## 3. Estado — `pit-lane/estado.md`
 
-Una línea por encargo. Solo lo escribe el Jefe de pits, y lo hace leyendo los encargos (R-18). Usa los tres grupos de la Colmena: **trabajando**, **esperan tu decisión**, **terminados** (R-18).
+Una línea por encargo. Solo lo escribe el Jefe de pits, y lo hace leyendo los encargos (R-18). Usa tres grupos, para que el usuario vea de un vistazo qué le toca: **trabajando**, **esperan tu decisión**, **terminados** (R-18).
 
 ```markdown
 # Estado — [trabajo] — actualizado [AAAA-MM-DD hh:mm]
@@ -115,7 +119,7 @@ Una línea por encargo. Solo lo escribe el Jefe de pits, y lo hace leyendo los e
 - E03 — [nombre] — [auditoría: aprobada en ronda N | con pendientes]
 ```
 
-El documento fija los tres grupos y "una línea por encargo"; el encabezado y los campos de cada línea son los de esta plantilla, aceptados por Gerardo tras el piloto (2026-11-14).
+El documento fija los tres grupos y "una línea por encargo"; el encabezado y los campos de cada línea son los de esta plantilla, aceptados tras el piloto (decisión 2026-11-14).
 
 Reglas que usan `estado.md`:
 - Tras un corte, el Jefe de pits lee `estado.md` y los encargos antes de confiar en lo que recuerda (R-20).

@@ -1,6 +1,6 @@
 # Modos de ejecución
 
-Cómo se lanzan los mecánicos. Origen: secciones 6.8, 6.9 y 6.10 del documento de diseño. Los agentes se nombran con prefijo: `pit-lane:mecanico`, `pit-lane:mecanico-experto`, `pit-lane:mecanico-auxiliar`, `pit-lane:arbitro`.
+Cómo se lanzan los mecánicos. Origen: secciones 8, 9 y 10 del diseño (`docs/diseno.md`). Los agentes se nombran con prefijo: `pit-lane:mecanico`, `pit-lane:mecanico-experto`, `pit-lane:mecanico-auxiliar`, `pit-lane:arbitro`.
 
 ## Tabla
 
@@ -11,7 +11,7 @@ Cómo se lanzan los mecánicos. Origen: secciones 6.8, 6.9 y 6.10 del documento 
 | **C. Projects** | Coordinador con hilos, en la nube o en tu equipo | Trabajo de días que debe seguir con el equipo apagado | Ajustes del proyecto | Evaluar en el piloto si tu cuenta lo tiene |
 | **D. Agent teams** | Líder con compañeros y lista de tareas compartida | — | Se nombra el modelo al crear cada compañero | Fuera: experimental, sin reanudación |
 
-Los modos C y D no se usan en la v1. El modo C queda por evaluar en el piloto (hipótesis H7); el D está fuera por ser experimental.
+Los modos C y D no se usan en la v1. El modo C queda por evaluar (hipótesis H7: si tu cuenta tiene Projects); el D está fuera por ser experimental.
 
 ---
 
@@ -22,6 +22,7 @@ Los modos C y D no se usan en la v1. El modo C queda por evaluar en el piloto (h
 - Dos encargos corren en paralelo solo si sus superficies de escritura no se solapan (R-11).
 - Todo mecánico arranca con la línea estándar (R-15): *"Tu encargo está en `<ruta>`. Léelo entero antes de nada y sigue desde donde se quedó."*
 - Un mecánico recibe su archivo de encargo, las normas y los datos maestros; no recibe la conversación del Jefe de pits.
+- Lectores y árbitros no cargan `CLAUDE.md` ni `AGENTS.md`: lo que necesiten de esas reglas va escrito en el contrato o en el encargo (R-40).
 - El Jefe de pits no construye entregables de tamaño L ni XL (R-37).
 - El Jefe de pits no lee entregables completos: los mecánicos devuelven 15 líneas o menos y una ruta (R-16, R-31).
 - Freno de gasto: al 80 % de la ventana de 5 horas, o con la palabra "freno", no se despacha nada nuevo; cada mecánico escribe su avance y se detiene (R-30).
@@ -30,9 +31,9 @@ Los modos C y D no se usan en la v1. El modo C queda por evaluar en el piloto (h
 
 ## Modo A — Subagentes
 
-Cumple el requisito de que el Jefe de pits despache tras la aprobación de Gerardo.
+Cumple el requisito de que el Jefe de pits despache tras la aprobación del usuario.
 
-1. Gerardo aprueba contrato, plan y enrutamiento (R-08).
+1. El usuario aprueba contrato, plan y enrutamiento (R-08).
 2. El Jefe de pits escribe `pit-lane/contrato.md`, `pit-lane/datos-maestros.md` y un archivo por encargo en `pit-lane/encargos/` (R-10).
 3. Comprueba que ninguna variable de entorno anule el enrutamiento (R-38).
 4. Lanza los mecánicos por oleadas de hasta 2 (R-14), como subagentes, con el agente que corresponda según la tabla de enrutamiento (`pit-lane:mecanico`, `pit-lane:mecanico-experto` o `pit-lane:mecanico-auxiliar`) y con el modelo y el esfuerzo del plan escritos en el despacho (R-12). El despacho contiene la línea de arranque (R-15).
@@ -48,20 +49,20 @@ Cumple el requisito de que el Jefe de pits despache tras la aprobación de Gerar
 
 ## Modo B — Sesiones paralelas
 
-Cumple el requisito solo a medias: las sesiones las abre Gerardo, con instrucciones exactas del Jefe de pits. No se confirmó que Claude pueda crear sesiones en la app de escritorio.
+Cumple el requisito solo a medias: las sesiones las abre el usuario, con instrucciones exactas del Jefe de pits. No se confirmó que Claude pueda crear sesiones en la app de escritorio.
 
-1. Gerardo aprueba contrato, plan y enrutamiento (R-08).
+1. El usuario aprueba contrato, plan y enrutamiento (R-08).
 2. El Jefe de pits escribe `contrato.md`, `datos-maestros.md` y los archivos de encargo (R-10), y comprueba las variables de entorno (R-38).
-3. Para cada mecánico de la oleada (hasta 2, R-14), el Jefe de pits le da a Gerardo cuatro cosas: el **nombre de la sesión**, el **modelo**, el **esfuerzo** y la **línea de arranque** con la ruta del encargo (R-12, R-15).
-4. Gerardo abre cada sesión de la pestaña Code, pone el modelo y el esfuerzo en su selector y pega la línea de arranque.
+3. Para cada mecánico de la oleada (hasta 2, R-14), el Jefe de pits le da al usuario cuatro cosas: el **nombre de la sesión**, el **modelo**, el **esfuerzo** y la **línea de arranque** con la ruta del encargo (R-12, R-15).
+4. El usuario abre cada sesión de la pestaña Code, pone el modelo y el esfuerzo en su selector y pega la línea de arranque.
 5. Cada mecánico construye y prueba como en el modo A, pero pasa él mismo el loop de `pit-lane:gauntlet`: lanza `pit-lane:arbitro` con el modelo y el esfuerzo de la línea "Árbitro:" de su encargo y lleva su bitácora (R-39). Devuelve el estado y el resultado de la auditoría en 15 líneas o menos (R-16).
 6. El Jefe de pits lista las sesiones, lee su actividad y les escribe cuando haga falta.
 
-**Escalada en el modo B** (R-27): el Jefe de pits le indica a Gerardo el modelo que debe poner en el selector de esa sesión.
+**Escalada en el modo B** (R-27): el Jefe de pits le indica al usuario el modelo que debe poner en el selector de esa sesión.
 
 **Cómo se entera el Jefe de pits de que un mecánico terminó:**
 - Pide el aviso de inactividad de la sesión de cada mecánico, si la herramienta lo permite (`notify_when_idle`; hipótesis H4: no se confirmó que esté disponible entre sesiones de la app de escritorio).
-- Si no se puede, relee los encargos cada vez que Gerardo pide estado o avisa "terminó E0x".
+- Si no se puede, relee los encargos cada vez que el usuario pide estado o avisa "terminó E0x".
 
 **Ajuste pequeño y localizado:** se le pide directo al mecánico (R-22). Pasarlo por el Jefe de pits procesa el contexto dos veces.
 
@@ -98,4 +99,4 @@ El Jefe de pits lee `estado.md` y los encargos **antes** de confiar en lo que re
 
 ## Modos C y D
 
-Sin pasos concretos en la v1: esta referencia solo recoge su fila de la tabla. El C queda por evaluar (H7) y el D está fuera (confirmado por Gerardo, 2026-11-14).
+Sin pasos concretos en la v1: esta referencia solo recoge su fila de la tabla. El C queda por evaluar (H7) y el D está fuera (decisión 2026-11-14).

@@ -49,7 +49,7 @@ Abre una sesión nueva y comprueba que existen `/pit-lane:pit-lane`, `/pit-lane:
 1. Instala el plugin (sección 2). No hace falta copiar archivos al proyecto.
 2. La primera vez, el Jefe de pits crea `pit-lane/` dentro del proyecto.
 3. Reemplaza el listón base B1 a B6 por tus reglas (idioma, marca, fechas, fuentes).
-4. Instala Superpowers y EGM si los entregables son código o especificaciones.
+4. Si un entregable es código o una especificación de software, el Jefe de pits aplica el proceso de `references/software.md`: no hace falta instalar nada más.
 
 **Con otra IA (ChatGPT, Gemini, etc.)**
 No tiene subagentes ni enrutamiento de modelos. Solo se traslada el método:
@@ -60,9 +60,6 @@ No tiene subagentes ni enrutamiento de modelos. Solo se traslada el método:
 
 ## 6. Antes de compartirlo en GitHub
 
-El repo hoy es privado. Si algún día lo haces público:
-
-- Quita lo específico de Gerardo (su nombre en las reglas y las marcas PVJ2 y GAN del listón base B1 a B6) o muévelo a una carpeta de ejemplo.
-- Revisa las licencias de las fuentes con alguien que sepa del tema (sección 7 del diseño).
+Desde el 2026-11-16 las reglas no nombran a ninguna persona y el listón base B1 a B6 es genérico. Tus valores (idioma, nombres, marcas) van en `~/.claude/pit-lane-liston-base.md`, fuera del repo; el formato está en `skills/gauntlet/references/liston-base-ejemplo.md`.
 
 `agents/arbitro.md` no es una copia: es un envoltorio que remite al método de `skills/gauntlet/agents/arbitro.md`, que es la única fuente.

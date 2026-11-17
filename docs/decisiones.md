@@ -2,6 +2,8 @@
 
 Una decisión por línea, con fecha AAAA-MM-DD.
 
+Las líneas anteriores al 2026-11-15 citan secciones y rutas de la versión 0.x del diseño (`docs/analisis-y-diseno.md`, reemplazado por `docs/diseno.md`); se dejan como se escribieron.
+
 2026-11-13 · Corrección L9 (auditoría paso 7): `agents/arbitro.md:32` ahora nombra la skill como `pit-lane:gauntlet`, con prefijo.
 
 2026-11-14 · Paso 10 · APROBADO por Gerardo · R-01: las fuentes externas suben a L, no a XL, salvo que el costo del error también sea alto (`skills/pit-lane/SKILL.md`). Contradecía la fila "muchas o externas" de la sección 6.3 del diseño; ya actualizada (ver la línea RESUELTO).
@@ -20,7 +22,7 @@ Una decisión por línea, con fecha AAAA-MM-DD.
 
 2026-11-14 · APROBADO por Gerardo · gauntlet V2.1 · Plantilla de contrato de gauntlet: la línea "Árbitro:" de MÉTODO declara modelo y esfuerzo (antes solo el modo); cubre el tamaño M y la gauntlet de la cuenta.
 2026-11-14 · APROBADO por Gerardo · gauntlet V2.1 · Árbitro por defecto: opus · high si el entregable sale a terceros, se proyecta en público o es difícil de revertir; sonnet · medium en el resto. Reemplaza "cuando el error es costoso" en `skills/gauntlet/SKILL.md`, `references/plantillas.md` (encargo) y sección 6.6 del diseño.
-2026-11-14 · APROBADO por Gerardo · gauntlet V2.1 · Descripción de gauntlet: el trabajo con varios entregables remite a `pit-lane:pit-lane` (si es código, superpowers).
+2026-11-14 · APROBADO por Gerardo · gauntlet V2.1 · Descripción de gauntlet: el trabajo con varios entregables remite a `pit-lane:pit-lane` (el código remitía entonces a un plugin externo; desde el 2026-11-15, al proceso de software propio).
 2026-11-14 · APROBADO por Gerardo · gauntlet V2.1 · Fuentes externas: la comprobación puede ser curl o WebFetch, según las herramientas del árbitro; los adjuntos largos se citan por nombre o ruta en INSTRUCCIONES ORIGINALES, no se copian.
 2026-11-14 · APROBADO por Gerardo · V2.1 · Contrato de Pit Lane (`references/plantillas.md` y sección 6.5): el LISTÓN incluye la pasabilidad de gauntlet; el encargo (sección 6.6) exige que "Listón aplicable" incluya los IDs B que apliquen. Cierra el hueco que dejaba omitir la Fase 0 de gauntlet.
 2026-11-14 · APROBADO por Gerardo · V2.1 · `agents/lector-ejecucion.md`: instrucción 4, pasabilidad de cada criterio e IDs B por encargo (bajo R-23).
@@ -35,7 +37,7 @@ Una decisión por línea, con fecha AAAA-MM-DD.
 2026-11-14 · CONFIRMADO por Gerardo · Decisiones 2, 3 y 4 de la sección 10: dos skills, aprobación en dos tiempos solo para XL, modos A y B en la v1 (C a evaluar, D fuera). Decisión 1 y 5 ya estaban cerradas (plan Pro verificado con `get_usage`).
 2026-11-14 · Decisión 6 · Gerardo reemplaza a mano su gauntlet de cuenta, en otro chat, con la versión ajustada de este repo. No es trabajo de Pit Lane.
 2026-11-14 · RH1 y RH2 · Gerardo confirma que el flujo encaja con su día a día y que el costo le sirve.
-2026-11-14 · RH3 · La tablet queda DESCARTADA. El equipo "Mi Portátil" de Drive no es su laptop actual. Consecuencia: en D1 y D2 (proyecto Cerebro) los pasos de la tablet y el prompt 10 de la tablet ya no aplican, y con ellos los pendientes "la tablet sube sin pull" y "sesión en la nube sube a main".
+2026-11-14 · RH3 · Respuesta sobre los equipos personales del mantenedor; no afecta a Pit Lane (detalle retirado el 2026-11-16; sigue en el historial de git).
 
 ## Marcadores [CONFIRMAR] del informe (L6): los cuatro confirmados por Gerardo
 
@@ -48,7 +50,7 @@ Una decisión por línea, con fecha AAAA-MM-DD.
 
 ## Revisión integral del repo (2026-11-14): 14 hallazgos, todos aprobados por Gerardo ("Sí, todas")
 
-2026-11-14 · APROBADO por Gerardo · gauntlet · `skills/gauntlet/scripts/verificar_office.py`: la salida se fuerza a UTF-8. En Windows, con la salida redirigida (como la corre el árbitro), el "⚠" de las alertas rompía el script con UnicodeEncodeError, salida 1 y ALERTAS vacía. Probado con un DOCX con "PVDC" y en-US: antes se caía, ahora reporta las 3 alertas.
+2026-11-14 · APROBADO por Gerardo · gauntlet · `skills/gauntlet/scripts/verificar_office.py`: la salida se fuerza a UTF-8. En Windows, con la salida redirigida (como la corre el árbitro), el "⚠" de las alertas rompía el script con UnicodeEncodeError, salida 1 y ALERTAS vacía. Probado con un DOCX con un texto prohibido y en-US: antes se caía, ahora reporta las 3 alertas.
 2026-11-14 · APROBADO por Gerardo · gauntlet · `verificar_office.py`: un tipo no soportado, o un PDF sin `--render`, ahora deja una alerta en vez de "ninguna"; un XLSX sin `xl/workbook.xml` ya no se cae y lo avisa; las diapositivas o notas ilegibles se saltan.
 2026-11-14 · APROBADO por Gerardo · Diseño 6.4 (fila Mecánico), 6.10 (paso 0) y 6.14 (R-39) alineados con la decisión R-39/H10 ya aprobada: en modo A el Jefe de pits lanza los árbitros; en modo B, el mecánico. Se corrige la errata "lanzal Jefe".
 2026-11-14 · APROBADO por Gerardo · `references/modos-de-ejecucion.md`: pasos 5 y 6 del modo A sin repetición; el modo B y la tabla de R-39 dicen que el árbitro usa la línea "Árbitro:" del encargo (no el modelo del mecánico, R-36); se quita el resto anterior a H10.
@@ -66,5 +68,33 @@ Una decisión por línea, con fecha AAAA-MM-DD.
 ## Evaluación externa de Gerardo (2026-11-15): seis puntos
 
 2026-11-15 · Puntos 1 (README corto) y 2 (carga del plugin, H9) ya cubiertos por la revisión del 2026-11-14; H9 se cumple en el equipo de Gerardo, y para otros equipos el manual indica `CLAUDE_CODE_PLUGIN_DIRS`. Puntos 4 (contenido personal) y 6 (depende de Claude Code): quedan como están mientras el repo sea privado; separar las reglas personales y añadir un `marketplace.json` queda para cuando se decida compartirlo.
-2026-11-15 · APROBADO por Gerardo · Punto 3 (dependencias externas) y 6: `README.md` con una sección "Requisitos" (Claude Code y versión, plan Pro, Superpowers y EGM opcionales según R-34, y herramientas de `verificar_office.py`).
+2026-11-15 · APROBADO por Gerardo · Punto 3 (dependencias externas) y 6: `README.md` con una sección "Requisitos" (Claude Code y versión, plan Pro, plugins opcionales según R-34 y herramientas de `verificar_office.py`). Los plugins opcionales se quitaron el mismo día (ver abajo).
 2026-11-15 · APROBADO por Gerardo · Punto 5 (riesgo de desincronía de `arbitro.md`): `agents/arbitro.md` deja de repetir instrucciones del método; conserva solo lo propio del agente (la ruta, sus herramientas sin WebFetch ni Drive y el "no ejecutado" sin ruta). El método queda solo en `skills/gauntlet/agents/arbitro.md` (regla 2 de AGENTS.md).
+
+## Repositorio autosuficiente (2026-11-15)
+
+2026-11-15 · APROBADO por Gerardo · El repo no cita otras metodologías ni depende de plugins externos. Gerardo confirmó que los nombres eran solo citas y que no cambian cómo trabaja Pit Lane.
+2026-11-15 · APROBADO por Gerardo · R-34 reescrita: el código y las especificaciones de software siguen `references/software.md`, nuevo y con texto propio. Integra lo que faltaba para no depender de nada externo: rama aparte con línea base verde, prueba que falla antes del código, causa raíz antes del arreglo (tres arreglos fallidos detienen el encargo), verificar cada hallazgo antes de corregirlo, revisión final con la batería completa, cierre con opciones y prueba real de skills y prompts; para especificaciones, plantilla mínima, cotejo contra el código y la pregunta de si hace falta construir. Se actualizan `skills/pit-lane/SKILL.md`, los 3 mecánicos, `lector-ejecucion` (cotejo contra el código) y `lector-critico` (no construir, reutilizar, tamaño justo).
+2026-11-15 · APROBADO por Gerardo · `docs/analisis-y-diseno.md` (v0.7, análisis comparativo) se reemplaza por `docs/diseno.md` (v1.0), una especificación propia con las mismas reglas R-01 a R-39 y los mismos porqués, ahora en la sección 16. Se borran del repo las fichas, los informes del crítico y la auditoría del paso 7; siguen en el historial de git.
+2026-11-15 · APROBADO por Gerardo · Se quitan las citas en `references/` (columna "Regla de origen" → "Por qué"), `AGENTS.md` (regla 7: texto propio y autosuficiente), `README.md`, el manual y la descripción de gauntlet. `NOTICE` queda en dos líneas sin nombres de terceros.
+2026-11-15 · APROBADO por Gerardo · gauntlet · Render y recálculo con Microsoft Office: `scripts/office.ps1`, nuevo, exporta DOCX, PPTX y XLSX a PDF y recalcula XLSX con Excel; `verificar_office.py --render` lo usa (LibreOffice solo como alternativa si no hay Office) y el árbitro lee el PDF con su herramienta de lectura, sin `pdftoppm`; `--recalcular` reemplaza al `recalc.py` externo. Probado en el equipo de Gerardo con un DOCX, un PPTX y un XLSX. Se actualizan `verificacion-por-tipo.md` (§1 a §4) y dos ejemplos de criterio en `references/plantillas.md` de gauntlet.
+2026-11-15 · Auditoría del cambio: `pit-lane:arbitro` (opus · high, R-36) RECHAZADO en ronda 1 (11 de 12). Fallaba L5 (autosuficiencia) por dos prácticas aplicables que faltaban, y se integran: (1) en `references/software.md` punto 12, las instrucciones para otra IA se ven fallar sin ellas antes de escribirlas, y R-34 se activa también para skills, prompts y agentes (`SKILL.md`, diseño §13 y fila R-34, 3 mecánicos, plantilla de encargo); (2) R-23 en `SKILL.md` y diseño §16: la severidad de un hallazgo la fija el lector y el Jefe de pits no la cambia. Observaciones aplicadas: `verificar_office.py --recalcular` reutiliza una sola carpeta temporal; README aclara la alternativa LibreOffice; `modos-de-ejecucion.md` ya no dice "en el piloto" para el modo C; "coste" pasa a "costo"; §16 y §17 del diseño recuperan el argumento de Projects, `/rc`, `CLAUDE.md` y la espera de los hilos de Projects. La renumeración de secciones en `references/` y `AGENTS.md` sigue a `docs/diseno.md`.
+2026-11-15 · Corrección de honestidad · `AGENTS.md` decía que las hipótesis H1 a H10 "se validaron en el piloto"; solo H3, H9 y H10 tienen resultado. La sección 20 del diseño y AGENTS.md ahora lo dicen así.
+
+## Generalización del plugin (2026-11-16)
+
+2026-11-16 · A pedido del mantenedor ("que no esté atado solo a mí ni contenga datos personales") · Las reglas dicen "el usuario" en vez de un nombre propio en `skills/pit-lane/SKILL.md`, `references/`, los 3 lectores, `scripts/LEEME.md` y `docs/diseno.md`; `AGENTS.md` dice "el mantenedor". El autor queda solo en `LICENSE`, `NOTICE`, `plugin.json` y la cabecera del diseño.
+2026-11-16 · gauntlet · Listón base B1 a B6 genérico, con los mismos ID: B1, B3, B4 y B6 toman su valor de `~/.claude/pit-lane-liston-base.md` (fuera del repo; ejemplo en `skills/gauntlet/references/liston-base-ejemplo.md`). Los valores del mantenedor se movieron a ese archivo en su equipo.
+2026-11-16 · gauntlet · `verificar_office.py`: `--idioma` y `--prohibido` ya no tienen valor por defecto; `verificacion-por-tipo.md` §8 pasa a "citas textuales" y la edición la fija el contrato; ejemplos sin marcas ni nombres de skills personales.
+2026-11-16 · La carpeta del trabajo es la que indique el usuario o el directorio de trabajo (`references/plantillas.md`, diseño §9).
+2026-11-16 · Las rutas que el Jefe de pits pasa a los agentes salen de `${CLAUDE_PLUGIN_ROOT}` (`skills/pit-lane/SKILL.md`), y la carpeta de gauntlet, de `${CLAUDE_SKILL_DIR}`: así funcionan también si el plugin se instala desde un marketplace, en la caché de plugins. Si la variable no se sustituye, vale la regla anterior (dos niveles arriba).
+2026-11-16 · `.claude-plugin/marketplace.json` nuevo: permite instalar con `claude plugin marketplace add <owner>/pit-lane` y `claude plugin install pit-lane@pit-lane`. README con esa vía y con el listón base personal. La línea RH3 y un ejemplo con datos del mantenedor se neutralizan.
+2026-11-16 · PENDIENTE del mantenedor · Propuestas de la comparación con otro plugin de revisión (ver informe de la sesión): sin aplicar hasta su aprobación.
+
+## Mejoras tomadas de la comparación con EGM (2026-11-17)
+
+2026-11-17 · APROBADO por el mantenedor ("Sí, aplícalas") · R-40: lectores y árbitro con `omitClaudeMd: true` en su frontmatter; no cargan `CLAUDE.md` ni `AGENTS.md`, y lo que necesiten de esas reglas va en el contrato o el encargo. `agents/lector-*.md`, `agents/arbitro.md`, `skills/pit-lane/SKILL.md`, `references/modos-de-ejecucion.md`, gauntlet `SKILL.md` (paso 4) y diseño §4, §10 y §15.
+2026-11-17 · APROBADO por el mantenedor · R-41: escalar. Una prueba que el árbitro no puede abrir no se disputa ni se corrige: NO PASA marcado ESCALADO, fuera del loop y de R-27, primero en "revisa tú". Los 3 mecánicos, gauntlet `SKILL.md` (Decidir, reglas del loop, Fase 2) y plantillas (bitácora y resumen), `SKILL.md` (F5 y R-32) y diseño.
+2026-11-17 · APROBADO por el mantenedor · R-42: cada página web usada como fuente se guarda como archivo en `entrada/fuentes/` (en M, `fuentes/` junto al entregable) con índice `LEEME.md` (URL y fecha); el árbitro coteja contra la copia. Reemplaza la comprobación en vivo como vía principal de la decisión 2026-11-14 (curl o WebFetch quedan para ver si la página cambió). Mecánico y mecánico experto, los dos árbitros, gauntlet `SKILL.md`, plantillas y verificación por tipo §7, `references/plantillas.md`, `SKILL.md` (F3) y diseño §5, §6 y §10.
+2026-11-17 · APROBADO por el mantenedor · R-43, adaptada: de la regla de EGM "no agregar contexto solo para el revisor" se toma la parte del entregable (corregir no es rellenar; el árbitro reporta como observación el texto dirigido a él). En el plan y los encargos se invierte: el lector representa al mecánico, que tampoco tiene la conversación, así que el contexto que le falta se agrega.
+2026-11-17 · Diseño versión 1.1. `AGENTS.md`: las reglas son R-01 a R-43.

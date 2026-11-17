@@ -8,12 +8,21 @@ Es un plugin de Claude Code con 2 skills y 7 agentes. Estado: v1 construida y pr
 
 - **Claude Code**, en la terminal o en la app de escritorio. Los subagentes, el enrutamiento de modelo y esfuerzo y la lectura del uso con `get_usage` solo existen ahí. Para fijar el esfuerzo en cada invocación hace falta la v2.1.292 o posterior. En otra IA solo se traslada el método (ver la sección 5 del manual).
 - **Plan:** pensado para Pro. El modelo más capaz que enruta es Opus 5.5, y Fable queda fuera.
-- **Opcionales, según el entregable** (R-34): el plugin [Superpowers](https://github.com/obra/superpowers) si el entregable es código, y [EGM](https://github.com/google/elephant-goldfish-model) si es una especificación de software. Sin ellos, el resto del flujo funciona igual; esos encargos solo pierden la parte de TDD, ramas y revisión de especificaciones.
-- **Para la verificación de Office** (`skills/gauntlet/scripts/verificar_office.py`): Python 3. Para renderizar, también LibreOffice y `pdftoppm` (Poppler); para recalcular un XLSX, el `recalc.py` de la skill xlsx. Si falta alguno, el árbitro marca esos criterios como NO VERIFICABLE en vez de aprobarlos.
+- **Nada más para el flujo.** No necesita otros plugins: para código y especificaciones de software trae su propio proceso (`references/software.md`).
+- **Para la verificación de Office** (`skills/gauntlet/scripts/verificar_office.py`): Python 3. Para ver cómo se ve un documento (`--render`) y recalcular un Excel (`--recalcular`), Microsoft Office en Windows (si no hay Office, el render intenta con LibreOffice). Sin ninguno de los dos, el árbitro marca esos criterios como NO VERIFICABLE en vez de aprobarlos.
 
 ## Instalación
 
-Clona el repo en tu carpeta personal de skills. Como trae `.claude-plugin/plugin.json`, Claude Code lo carga solo en cada sesión:
+Elige una de las dos vías. En las dos hace falta acceso de lectura al repo.
+
+**Desde el marketplace** (se actualiza con `claude plugin update`):
+
+```bash
+claude plugin marketplace add ganorman/pit-lane
+claude plugin install pit-lane@pit-lane
+```
+
+**Clonando el repo** en tu carpeta personal de skills. Como trae `.claude-plugin/plugin.json`, Claude Code lo carga solo en cada sesión:
 
 ```bash
 git clone https://github.com/ganorman/pit-lane.git ~/.claude/skills/pit-lane
@@ -21,6 +30,10 @@ claude plugin validate ~/.claude/skills/pit-lane
 ```
 
 En una sesión nueva deben aparecer `/pit-lane:pit-lane`, `/pit-lane:gauntlet` y los agentes `pit-lane:…`.
+
+## Tus reglas permanentes
+
+El listón base que audita el árbitro (idioma del archivo, fechas reales, nombres y marcas, datos con fuente) es genérico. Para fijar tus valores, por ejemplo tu variante de español o cómo se escribe el nombre de tu empresa, copia `skills/gauntlet/references/liston-base-ejemplo.md` a `~/.claude/pit-lane-liston-base.md` y edítalo. Ese archivo es tuyo y no forma parte del plugin. Sin él, el idioma es el de tu pedido y no se exige ningún nombre ni marca.
 
 ## Uso
 
@@ -35,7 +48,7 @@ Ejemplo: *"/pit-lane:pit-lane — 3 informes DOCX con la producción de las fuen
 ## Más información
 
 - Guía de uso: `docs/manual-de-uso.md`
-- Qué es y por qué: `docs/analisis-y-diseno.md` (fuente de verdad)
+- Qué es y por qué: `docs/diseno.md` (fuente de verdad)
 - Cómo se trabaja en este repo: `AGENTS.md`
 - Decisiones registradas: `docs/decisiones.md`
 - Skills: `skills/pit-lane` (flujo completo) y `skills/gauntlet` (auditoría)

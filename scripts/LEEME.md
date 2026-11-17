@@ -33,7 +33,7 @@ El script funciona (probado a mano el 2026-11-14), pero en el piloto la status l
 
 1. La herramienta `get_usage` de la app, que devuelve el porcentaje de la ventana de 5 horas.
 2. `~/.claude/pit-lane-uso.json`, que este script mantiene cuando Claude Code corre en la terminal.
-3. Si ninguno responde, o el archivo no se actualiza, el freno queda manual: Gerardo escribe la palabra "freno" y no se despacha nada nuevo.
+3. Si ninguno responde, o el archivo no se actualiza, el freno queda manual: el usuario escribe la palabra "freno" y no se despacha nada nuevo.
 
 ## Probarlo sin tocar la configuración
 

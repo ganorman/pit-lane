@@ -22,8 +22,8 @@ Loop autónomo: planificar → construir → probar → árbitro → corregir.
 Árbitro: subagente nuevo por ronda | pase separado (AUDITORÍA NO INDEPENDIENTE) · modelo [opus | sonnet] · esfuerzo [high | medium]
   (opus · high si sale a terceros, se proyecta en público o es difícil de revertir; sonnet · medium en el resto).
 Rondas máximas: 3.
-Skills que se usan: [docx, pptx, xlsx, exam-builder, branding-…].
-Fuentes: [rutas o descripción].
+Skills que se usan: [docx, pptx, xlsx, las propias del usuario…].
+Fuentes: [rutas; las páginas web, guardadas en `fuentes/` con su índice `fuentes/LEEME.md` (URL y fecha de consulta)].
 
 ## LISTÓN
 Referencia de calidad: [estándar o ejemplo, traducido a rasgos observables].
@@ -34,7 +34,7 @@ Referencia de calidad: [estándar o ejemplo, traducido a rasgos observables].
 | L2 | ... | ... | ... |
 | Ln | Completitud: cada punto P1, P2… aparece en el entregable, o su ausencia es una decisión anotada en "Decisiones tomadas" | Tabla punto → ubicación en el entregable | Tabla completa; cada punto ausente remite a su decisión |
 
-Listón base aplicable: B1, B2, B5, B6  (B3/B4 no aplican porque …)
+Listón base aplicable: B1 (idioma: [es-XX]), B2, B5, B6 ([idioma y variante de redacción])  (B3/B4 no aplican porque … | B3: [nombre exigido / formas prohibidas])
 Criterios de revisión humana (el árbitro no bloquea por ellos): [ID, o "ninguno"].
 
 ## ENTREGABLE
@@ -57,11 +57,11 @@ Lee INSTRUCCIONES ORIGINALES y el LISTÓN antes de aprobar: es tu único veto.
 | Mal (vago) | Bien (verificable) |
 |---|---|
 | El examen es de buena calidad | Cada pregunta tiene exactamente 4 opciones y una sola correcta según la clave · Método: conteo en el DOCX y cotejo con la clave · Evidencia: tabla pregunta → opciones → clave |
-| Las fórmulas funcionan | Tras recalcular, ninguna celda devuelve #REF!, #DIV/0!, #VALUE! o #NAME? y ninguna fórmula queda sin valor · Método: recalcular una copia con `recalc.py` de la skill xlsx y correr `verificar_office.py copia.xlsx` · Evidencia: `celdas_con_error: 0` y `formulas_sin_valor_cacheado: 0` |
-| Las citas son correctas | Cada cita bíblica coincide palabra por palabra con la RV1960 · Método: cotejo cita por cita · Evidencia: tabla cita → texto RV1960 → coincide sí/no |
+| Las fórmulas funcionan | Tras recalcular, ninguna celda devuelve #REF!, #DIV/0!, #VALUE! o #NAME? y ninguna fórmula queda sin valor · Método: `verificar_office.py archivo.xlsx --recalcular` (recalcula una copia con Excel) · Evidencia: sección "Recálculo" sin alerta, `celdas_con_error: 0` y `formulas_sin_valor_cacheado: 0` |
+| Las citas son correctas | Cada cita coincide palabra por palabra con la edición que fija el contrato · Método: cotejo cita por cita · Evidencia: tabla cita → texto de la edición → coincide sí/no |
 | Que esté todo lo que pedí | Cada punto P1…Pn del pedido aparece en el entregable, o su ausencia está anotada en "Decisiones tomadas" · Método: cotejo punto por punto contra INSTRUCCIONES ORIGINALES · Evidencia: tabla punto → ubicación o decisión |
-| Que se vea profesional | Ninguna diapositiva tiene texto que se salga del cuadro ni fuente menor de 18 pt · Método: render a PNG + inspección de cada imagen · Evidencia: lista de diapositivas revisadas |
-| Al nivel de un SOP de Barrick | Tiene propósito, alcance, responsables, EPP, pasos numerados con puntos de LOTO y registro de revisión · Método: buscar cada sección · Evidencia: título de sección encontrado por cada rasgo |
+| Que se vea profesional | Ninguna diapositiva tiene texto que se salga del cuadro ni fuente menor de 18 pt · Método: render a PDF (`--render`) + inspección de cada página con la herramienta de lectura · Evidencia: lista de diapositivas revisadas |
+| Al nivel de un SOP de la planta | Tiene propósito, alcance, responsables, EPP, pasos numerados con puntos de LOTO y registro de revisión · Método: buscar cada sección · Evidencia: título de sección encontrado por cada rasgo |
 
 ---
 
@@ -87,6 +87,9 @@ Correcciones planificadas: [...]
 
 ## Disputas
 - [ID] constructor dice … / árbitro dice … / resolución …
+
+## Escalados
+- [ID] hallazgo … / prueba fuera del alcance del árbitro … / decisión del usuario …
 ```
 
 ---
@@ -106,6 +109,7 @@ Correcciones planificadas: [...]
 
 **Pendientes:** [criterios que no pasaron, con el porqué] | ninguno
 **Disputas:** [resumen] | ninguna
+**Escalados:** [criterio, hallazgo y la prueba que debes confirmar] | ninguno
 **Fuera del listón (observaciones):** [lo que el árbitro vio y no bloqueaba]
 **Revisa tú:** [lista corta de lo que solo un humano puede confirmar]
 

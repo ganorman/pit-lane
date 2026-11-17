@@ -5,22 +5,28 @@ verificar_office.py — Evidencia objetiva sobre un archivo DOCX, PPTX o XLSX pa
 Qué reporta:
   - Metadatos (docProps/core.xml): título, autor, fechas de creación/modificación, idioma;
     alerta si el año de creación no es el actual.
-  - Idiomas declarados en el contenido (w:lang en DOCX, lang/altLang en PPTX) con su conteo,
-    y los que no son es-DO.
-  - Texto prohibido (por defecto "PVDC") y años mencionados en el texto, para revisar fechas.
+  - Idiomas declarados en el contenido (w:lang en DOCX, lang/altLang en PPTX) con su conteo;
+    con --idioma, alerta de los que no coinciden con el idioma del contrato (B1).
+  - Con --prohibido, apariciones de cada texto prohibido (B3); y años mencionados en el texto,
+    para revisar fechas.
   - Conteos de estructura: párrafos y tablas (DOCX), diapositivas y notas (PPTX),
     hojas, fórmulas y celdas con error en valores cacheados (XLSX).
-  - Opcional --render DIR: convierte a PDF con LibreOffice y a PNG por página (pdftoppm),
-    para inspección visual.
+  - Opcional --render DIR: exporta a PDF con Microsoft Office (office.ps1, en Windows) para
+    la inspección visual; el PDF se abre con la herramienta de lectura, página por página.
+    Si no hay Office, intenta con LibreOffice (soffice) si está instalado.
+  - Opcional --recalcular (XLSX): recalcula una copia temporal con Excel y reporta los valores
+    recalculados; el original no se toca.
   - Opcional --texto: imprime el texto extraído (por diapositiva / párrafo / hoja).
 
 Uso:
-  python3 verificar_office.py ARCHIVO [--render DIR] [--texto] [--prohibido PVDC --prohibido OTRO]
-          [--idioma es-DO]
+  python3 verificar_office.py ARCHIVO [--render DIR] [--recalcular] [--texto]
+          [--idioma es-MX] [--prohibido TEXTO --prohibido OTRO]
+
+--idioma y --prohibido no tienen valor por defecto: se pasan los que fija el contrato.
+Sin --idioma, los idiomas se listan pero no se comparan; sin --prohibido, no se busca ningún texto.
 
 Sale con código 0 siempre que pudo leer el archivo; las alertas van en la sección ALERTAS.
-Para recalcular fórmulas XLSX usa el recalc.py de la skill xlsx; este script solo lee
-los valores cacheados y avisa si hay fórmulas sin valor calculado.
+Sin --recalcular, un XLSX se audita con sus valores cacheados, que pueden estar desactualizados.
 """
 import argparse
 import os
@@ -28,6 +34,7 @@ import re
 import shutil
 import subprocess
 import sys
+import tempfile
 import zipfile
 from collections import Counter
 from xml.etree import ElementTree as ET
@@ -188,35 +195,71 @@ def xlsx_info(path):
     return Counter(), struct, texts, []
 
 
+OFFICE_PS1 = os.path.join(os.path.dirname(os.path.abspath(__file__)), "office.ps1")
+
+
+def office(accion, entrada, salida=None):
+    """Corre office.ps1. Devuelve (ok, salida estándar o mensaje de error)."""
+    powershell = shutil.which("powershell") or shutil.which("pwsh")
+    if os.name != "nt" or not powershell or not os.path.exists(OFFICE_PS1):
+        return False, "Microsoft Office no disponible (requiere Windows con Office)"
+    cmd = [powershell, "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", OFFICE_PS1,
+           "-Accion", accion, "-Entrada", os.path.abspath(entrada)]
+    if salida:
+        cmd += ["-Salida", os.path.abspath(salida)]
+    try:
+        r = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
+    except subprocess.TimeoutExpired:
+        return False, "Office no respondió en 5 minutos"
+    if r.returncode != 0:
+        return False, (r.stderr or r.stdout).strip()[:300] or f"office.ps1 salió con código {r.returncode}"
+    return True, r.stdout.strip()
+
+
 def render(path, outdir):
+    """Exporta a PDF para la inspección visual. Devuelve (ok, mensaje)."""
     os.makedirs(outdir, exist_ok=True)
-    soffice = shutil.which("soffice") or shutil.which("libreoffice")
-    if not soffice:
-        return "LibreOffice no disponible: no se pudo renderizar"
+    if path.lower().endswith(".pdf"):
+        return True, f"PDF: {path} · ábrelo con la herramienta de lectura, página por página"
     base = os.path.splitext(os.path.basename(path))[0]
-    if not path.lower().endswith(".pdf"):
+    pdf = os.path.join(outdir, base + ".pdf")
+    ok, msg = office("pdf", path, pdf)
+    if ok and os.path.exists(pdf):
+        m = re.search(r"PAGINAS=(\S+)", msg)
+        paginas = m.group(1) if m and m.group(1) != "?" else "ver en el PDF"
+        return True, f"PDF (Microsoft Office): {pdf} · páginas: {paginas} · ábrelo con la herramienta de lectura, página por página"
+    soffice = shutil.which("soffice") or shutil.which("libreoffice")
+    if soffice:
         r = subprocess.run([soffice, "--headless", "--convert-to", "pdf", "--outdir", outdir, path],
                            capture_output=True, text=True, timeout=180)
-        pdf = os.path.join(outdir, base + ".pdf")
-        if not os.path.exists(pdf):
-            return f"Falló la conversión a PDF: {r.stderr.strip()[:300]}"
-    else:
-        pdf = path
-    if shutil.which("pdftoppm"):
-        subprocess.run(["pdftoppm", "-png", "-r", "60", pdf, os.path.join(outdir, base)],
-                       capture_output=True, timeout=180)
-        pngs = sorted(f for f in os.listdir(outdir) if f.startswith(base) and f.endswith(".png"))
-        return f"PDF: {pdf} · {len(pngs)} página(s) PNG en {outdir}"
-    return f"PDF: {pdf} (pdftoppm no disponible para PNG)"
+        if os.path.exists(pdf):
+            return True, f"PDF (LibreOffice): {pdf} · ábrelo con la herramienta de lectura, página por página"
+        msg += f" · LibreOffice también falló: {r.stderr.strip()[:200]}"
+    return False, f"No se pudo exportar a PDF: {msg}"
+
+
+def recalcular(path):
+    """Recalcula una copia temporal con Excel. Devuelve (ruta de la copia o None, mensaje).
+    La copia va siempre a la misma carpeta (%TEMP%/verificar_office) y reemplaza la de la corrida
+    anterior del mismo archivo, para que las copias no se acumulen."""
+    tmp = os.path.join(tempfile.gettempdir(), "verificar_office")
+    os.makedirs(tmp, exist_ok=True)
+    copia = os.path.join(tmp, os.path.basename(path))
+    shutil.copy2(path, copia)
+    ok, msg = office("recalcular", copia)
+    if ok:
+        return copia, f"Valores recalculados con Excel sobre una copia ({copia}); el original no se tocó"
+    return None, msg
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("archivo")
     ap.add_argument("--render", metavar="DIR")
+    ap.add_argument("--recalcular", action="store_true")
     ap.add_argument("--texto", action="store_true")
     ap.add_argument("--prohibido", action="append", default=None)
-    ap.add_argument("--idioma", default="es-DO")
+    ap.add_argument("--idioma", default=None)
     args = ap.parse_args()
     # En Windows la salida redirigida usa cp1252, que no tiene "⚠": sin esto el script se cae justo al imprimir las alertas.
     for flujo in (sys.stdout, sys.stderr):
@@ -224,7 +267,7 @@ def main():
             flujo.reconfigure(encoding="utf-8", errors="replace")
         except (AttributeError, ValueError):
             pass
-    prohibidos = args.prohibido or ["PVDC"]
+    prohibidos = args.prohibido or []
     path = args.archivo
     ext = os.path.splitext(path)[1].lower()
     alertas = []
@@ -245,7 +288,18 @@ def main():
             elif ext == ".pptx":
                 langs, struct, texts, extra = pptx_info(z)
         if ext == ".xlsx":
-            langs, struct, texts, extra = xlsx_info(path)
+            origen_valores = path
+            if args.recalcular:
+                copia, msg = recalcular(path)
+                print(f"\n## Recálculo\n- {msg}")
+                if copia:
+                    origen_valores = copia
+                else:
+                    alertas.append(f"No se pudo recalcular ({msg}): los criterios sobre valores de celdas "
+                                   "son NO VERIFICABLE salvo cálculo independiente")
+            langs, struct, texts, extra = xlsx_info(origen_valores)
+        if args.recalcular and ext != ".xlsx":
+            alertas.append("--recalcular solo aplica a XLSX; se ignoró")
 
         print("\n## Metadatos")
         for k, v in meta.items():
@@ -256,16 +310,19 @@ def main():
             alertas.append(f"Fecha de creación en metadatos = {meta['creado'][:10]} (no es {anio}; ¿plantilla vieja?)")
         if not meta.get("idioma"):
             alertas.append("core.xml sin dc:language")
-        elif meta.get("idioma") != args.idioma:
+        elif args.idioma and meta.get("idioma") != args.idioma:
             alertas.append(f"core.xml dc:language = {meta['idioma']} (se esperaba {args.idioma})")
 
         print("\n## Idiomas declarados en el contenido")
         if langs:
             for k, v in langs.most_common():
                 print(f"- {k}: {v}")
-            otros = {k: v for k, v in langs.items() if k != args.idioma}
-            if otros:
-                alertas.append(f"Idiomas distintos de {args.idioma}: {otros}")
+            if args.idioma:
+                otros = {k: v for k, v in langs.items() if k != args.idioma}
+                if otros:
+                    alertas.append(f"Idiomas distintos de {args.idioma}: {otros}")
+            else:
+                alertas.append("No se pasó --idioma: los idiomas se listan pero no se compararon con el del contrato (B1)")
         else:
             print("- (ninguno declarado en el contenido)")
             if ext in (".docx", ".pptx"):
@@ -283,10 +340,12 @@ def main():
                 alertas.append(f"{struct['celdas_con_error']} celda(s) con error de Excel")
             if struct.get("formulas_sin_valor_cacheado"):
                 alertas.append(f"{struct['formulas_sin_valor_cacheado']} fórmula(s) sin valor calculado: "
-                               "recalcula con recalc.py de la skill xlsx antes de auditar valores")
+                               "corre de nuevo con --recalcular antes de auditar valores")
 
         todo = "\n".join(texts + extra)
         print("\n## Texto")
+        if not prohibidos:
+            print("- Texto prohibido: no se buscó ninguno (no se pasó --prohibido)")
         for p in prohibidos:
             n = len(re.findall(re.escape(p), todo, re.IGNORECASE))
             print(f"- '{p}' (sin distinguir mayúsculas): {n} aparición(es)")
@@ -305,11 +364,14 @@ def main():
         print(f"Tipo {ext} no soportado por este script; usa el método de references/verificacion-por-tipo.md")
         alertas.append(f"Tipo {ext} no soportado: este script no revisó nada del contenido")
     elif not args.render:
-        alertas.append("PDF sin --render: este script no revisó nada; usa pdftotext y pdfinfo (verificacion-por-tipo.md §4)")
+        alertas.append("PDF: este script no revisa su contenido; ábrelo con la herramienta de lectura (verificacion-por-tipo.md §4)")
 
     if args.render:
         print("\n## Render")
-        print("- " + render(path, args.render))
+        ok, msg = render(path, args.render)
+        print("- " + msg)
+        if not ok:
+            alertas.append("Sin render: los criterios visuales son NO VERIFICABLE salvo revisión humana")
 
     print("\n## ALERTAS")
     if alertas:
