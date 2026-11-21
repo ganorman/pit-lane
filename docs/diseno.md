@@ -92,9 +92,9 @@ Aprobado: AAAA-MM-DD   ← lo escribe el Jefe de pits cuando el usuario aprueba
                     + completitud ✚: cada punto P1, P2… aparece en el entregable, o su ausencia es una
                       decisión anotada y vetable; corregir un criterio no elimina contenido pedido
                       (lo no verificable se marca pendiente, no se borra)
-                    + pasabilidad (gauntlet, Fase 0 paso 4): cada criterio puede pasar con lo que existirá
-                      al auditar (archivos, fuentes y herramientas del árbitro); si no, se corrige o se elimina
-                      antes de pedir la aprobación
+                    + pasabilidad con pre-vuelo (gauntlet, Fase 0 paso 4; R-44): el método de cada criterio
+                      se ejecuta una vez con las herramientas del árbitro; línea "Pre-vuelo: L1 ✔ · L2 ✘ → …";
+                      un ✘ cambia de método o pasa a revisión humana antes de pedir la aprobación
                     + criterios de revisión humana (el árbitro no bloquea por ellos)
                     + fuentes externas (gauntlet, Fase 0 paso 4): cada página web guardada en entrada/fuentes/
                       con su índice (URL y fecha de consulta), o la lista de Drive; el árbitro coteja contra la
@@ -213,6 +213,7 @@ Una carpeta por trabajo: la que indique el usuario o, si no indica ninguna, el d
 10. **Escalar** (R-41). Si la prueba del constructor existe pero no está en ningún archivo que el árbitro pueda abrir, el hallazgo no se disputa ni se corrige: queda NO PASA marcado ESCALADO, no cuenta para seguir el loop y va primero en "revisa tú".
 11. **Fuentes web guardadas** (R-42). Cada página que se use como fuente se guarda como archivo antes de auditar, con un índice de URL y fecha de consulta; el árbitro coteja contra esa copia.
 12. **Corregir no es rellenar** (R-43). Nada se agrega a un entregable o al contrato solo para que un revisor lo apruebe. En el plan y los encargos, el contexto que le falta a un lector le falta al mecánico, y se agrega.
+13. **Pre-vuelo del listón** (R-44). Antes de pedir la aprobación, quien redacta el contrato ejecuta una vez el método de cada criterio con las herramientas del árbitro y anota el resultado en la línea "Pre-vuelo:". Un ✘ cambia de método o pasa a revisión humana antes de aprobar. En L y XL va antes de los lectores.
 
 ## 11. Frenos
 
@@ -300,6 +301,7 @@ Las reglas que el repo implementa tienen un ID. La skill y los archivos de refer
 | R-41 | Una prueba que el árbitro no puede abrir se escala: NO PASA marcado ESCALADO, fuera del loop y de R-27, primero en "revisa tú" | 10 |
 | R-42 | Toda página web usada como fuente se guarda como archivo, con índice de URL y fecha, y el árbitro coteja contra la copia | 5, 10 |
 | R-43 | Corregir no es rellenar: nada se agrega solo para el revisor; en el plan y los encargos, el contexto que falta a un lector se agrega | 10 |
+| R-44 | Pre-vuelo del listón: el método de cada criterio se ejecuta una vez antes de aprobar; un ✘ cambia de método o pasa a revisión humana | 5, 10 |
 
 ## 16. Decisiones de diseño y sus porqués
 
@@ -311,6 +313,7 @@ Las reglas que el repo implementa tienen un ID. La skill y los archivos de refer
 | **Paralelo solo entre encargos cuya superficie de escritura no se solapa**; en serie cuando comparten archivo | Dos ejecutores sobre el mismo archivo se pisan; entregables separados pueden avanzar a la vez sin riesgo |
 | **Tope de 3 rondas**; si un criterio falla dos seguidas, otro enfoque y un nivel más de modelo | Decisión del autor (2026-10-14). Pasadas tres rondas, las correcciones tienden a ser cosméticas; insistir con el mismo enfoque y el mismo modelo repite el mismo fallo |
 | **Cada ronda re-audita todo el listón** | Con 5 a 12 criterios cuesta poco y atrapa regresiones: una corrección puede romper lo que antes pasaba |
+| **El listón se prueba antes de aprobarlo** (pre-vuelo, R-44) | Un criterio que el árbitro no puede verificar sale NO VERIFICABLE y no se arregla editando el entregable: gasta las 3 rondas. Detectarlo antes de aprobar cuesta una ejecución por criterio |
 | **Preguntas en un solo bloque** de hasta 4, cada una con opción recomendada; lo menor se decide y se anota. 2 o 3 enfoques solo si hay una elección real de diseño | Un bloque ahorra paradas, y lo anotado sigue siendo vetable |
 | **Sonnet redacta y analiza**; Haiku solo si el encargo trae el texto ya decidido; Opus solo para diseño difícil | Un documento con criterio no es "estructura simple". El modelo barato toma más turnos cuando tiene que interpretar, y eso cuesta más que su precio por token |
 | **Listón binario**, no puntajes | Lo binario se verifica; un puntaje lo pone el mismo que construyó y no dice qué falla |

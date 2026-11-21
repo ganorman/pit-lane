@@ -69,6 +69,7 @@ Plantilla y reglas del contrato: `references/plantillas.md`, sección 1. En M es
 - **R-07** Cifras, fechas, nombres y precios compartidos van en `datos-maestros.md`; contrato y encargos los citan, no los copian. *Por qué:* un dato con un solo dueño no puede quedar distinto en dos entregables.
 - **R-29** En L y XL, el listón lleva un criterio de coherencia por cada dato maestro que aparece en más de un entregable. *Por qué:* ahí nacen las incoherencias que ninguna auditoría por encargo ve.
 - **R-35** Marca como revisión humana los criterios que una máquina no puede verificar; los demás, si salen NO VERIFICABLE, bloquean igual que un NO PASA. *Por qué:* un criterio que nadie pudo verificar no está aprobado.
+- **R-44** Antes de pedir la aprobación, haz el pre-vuelo del listón (`pit-lane:gauntlet`, Fase 0, paso 4): ejecuta una vez el método de cada criterio con las herramientas del árbitro y anota el resultado en la línea "Pre-vuelo:" del contrato. Un criterio con ✘ cambia de método o pasa a revisión humana antes de la aprobación. En L y XL hazlo antes de los lectores (R-23), para que lean el contrato ya ajustado. *Por qué:* razonar que un criterio se puede verificar no es verificarlo, y un NO VERIFICABLE que aparece en la ronda 1 gasta las 3 rondas sin que el constructor pueda arreglarlo editando el entregable.
 
 ## F2 — Plan (L, XL)
 

@@ -99,3 +99,9 @@ Las líneas anteriores al 2026-11-15 citan secciones y rutas de la versión 0.x 
 2026-11-17 · APROBADO por el mantenedor · R-43, adaptada: de la regla de EGM "no agregar contexto solo para el revisor" se toma la parte del entregable (corregir no es rellenar; el árbitro reporta como observación el texto dirigido a él). En el plan y los encargos se invierte: el lector representa al mecánico, que tampoco tiene la conversación, así que el contexto que le falta se agrega.
 2026-11-17 · Diseño versión 1.1. `AGENTS.md`: las reglas son R-01 a R-43.
 2026-11-17 · DECIDIDO por el mantenedor · El repo queda público (en GitHub ya lo era). `plugin.json` 1.1.0 con homepage, repository, license y keywords; `marketplace.json` con descripción; README sin la nota de acceso privado, con los topes del plan Pro y cómo cambiarlos, y el requisito del freno en macOS y Linux; manual con las dos vías de instalación y la sección "Qué es tuyo y qué es del plugin".
+
+## Destrabar el loop de auditoría (2026-11-21)
+
+Origen: evaluación del 2026-11-21. El loop daba vueltas en el mismo sitio por tres causas: salida todo o nada sin vía para un criterio defectuoso, rondas que empiezan de cero y criterios que solo se descubren no verificables en la ronda 1. El mantenedor aprobó los cambios 2, 3 y 5 de esa evaluación ("aprobado"), incluidas las modificaciones a `skills/gauntlet/`.
+
+2026-11-21 · APROBADO por el mantenedor · R-44, pre-vuelo del listón: la pasabilidad deja de razonarse y se ejecuta. Antes de pedir la aprobación, el método de cada criterio corre una vez con las herramientas del árbitro y el contrato lleva la línea "Pre-vuelo:"; un ✘ cambia de método o pasa a revisión humana. En L y XL va antes de los lectores. gauntlet `SKILL.md` (Fase 0 paso 4) y plantillas, `references/plantillas.md`, `skills/pit-lane/SKILL.md` (F1) y diseño §5, §10, §15 y §16.

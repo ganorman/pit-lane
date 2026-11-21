@@ -36,6 +36,7 @@ Referencia de calidad: [estándar o ejemplo, traducido a rasgos observables].
 
 Listón base aplicable: B1 (idioma: [es-XX]), B2, B5, B6 ([idioma y variante de redacción])  (B3/B4 no aplican porque … | B3: [nombre exigido / formas prohibidas])
 Criterios de revisión humana (el árbitro no bloquea por ellos): [ID, o "ninguno"].
+Pre-vuelo (método de cada criterio ejecutado una vez con las herramientas del árbitro): L1 ✔ · L2 ✔ · … [un ✘ solo aparece con su ajuste: "→ otro método" o "→ revisión humana"]
 
 ## ENTREGABLE
 - Archivos: [nombre.ext, ruta]
