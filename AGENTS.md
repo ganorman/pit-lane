@@ -27,7 +27,7 @@ pit-lane/
 |---|---|
 | `skills/pit-lane/SKILL.md` | El flujo F0 a F6. Cita cada regla por ID y remite a `references/` para el detalle |
 | `skills/gauntlet/` | La auditoría. Es lo único que contiene la verificación por tipo y `verificar_office.py` |
-| `references/` | El detalle que la skill no repite: plantillas, tabla de enrutamiento, pasos de los modos A y B, proceso de software |
+| `references/` | El detalle que la skill no repite: plantillas, tabla de enrutamiento, pasos de los modos A, B y E, instrucciones del mecánico externo, proceso de software |
 | `agents/` | Un archivo por agente; `model` y `effort` del frontmatter según la sección 18 del diseño |
 | `scripts/` | `uso-statusline.ps1` escribe el porcentaje de uso en `~/.claude/pit-lane-uso.json` |
 | `docs/decisiones.md` | Registro de decisiones, una por línea, con fecha |
@@ -38,7 +38,7 @@ pit-lane/
 
 ### Reglas de contenido
 
-1. **Reglas con ID.** Las reglas del sistema son R-01 a R-46 (sección 15 del diseño). Toda regla que aparece en la skill, en `references/` o en un agente lleva su ID, por ejemplo "(R-12)". No se inventan reglas: si falta algo, se marca **[CONFIRMAR]** y se lleva a `docs/decisiones.md` como pendiente del mantenedor.
+1. **Reglas con ID.** Las reglas del sistema son R-01 a R-51 (sección 15 del diseño). Toda regla que aparece en la skill, en `references/` o en un agente lleva su ID, por ejemplo "(R-12)". No se inventan reglas: si falta algo, se marca **[CONFIRMAR]** y se lleva a `docs/decisiones.md` como pendiente del mantenedor.
 2. **Sin duplicados.** Cada contenido vive en un solo archivo y los demás remiten a él. La verificación por tipo y el resumen de auditoría son de `skills/gauntlet/`; las plantillas y la tabla de enrutamiento, de `references/`.
 3. **Prefijo siempre.** Ninguna skill ni agente nombra a un agente ni a la skill gauntlet sin el prefijo `pit-lane:`. Excepciones: el campo `name` del frontmatter, las rutas de archivo y el contenido original de `skills/gauntlet/`.
 4. **`skills/gauntlet/` no se reescribe.** Es la skill del mantenedor con los ajustes registrados en `docs/decisiones.md` (paso 2, paso 10, V2.1 y las revisiones de noviembre de 2026). Cualquier otro cambio necesita su aprobación. Es la única fuente de gauntlet: la copia de la cuenta de claude.ai se exporta desde aquí.
@@ -74,4 +74,4 @@ En una sesión nueva de la app de escritorio deben aparecer `/pit-lane:pit-lane`
 
 ### Hipótesis abiertas
 
-Las hipótesis H1 a H11 están en la sección 20 del diseño, con su resultado. H3 falló (el freno usa `get_usage`), H9 se cumple en el equipo del mantenedor y H10 se resolvió haciendo que en modo A el Jefe de pits lance los árbitros, y H11 se cumplió en una prueba (falta un encargo real); las demás siguen abiertas. Cualquier ajuste nuevo se aplica solo si el mantenedor lo aprueba.
+Las hipótesis H1 a H12 están en la sección 20 del diseño, con su resultado. H3 falló (el freno usa `get_usage`), H9 se cumple en el equipo del mantenedor y H10 se resolvió haciendo que en modo A el Jefe de pits lance los árbitros, y H11 se cumplió en una prueba (falta un encargo real); H12 (Codex y Antigravity respetan la bahía del modo E) y las demás siguen abiertas. Cualquier ajuste nuevo se aplica solo si el mantenedor lo aprueba.

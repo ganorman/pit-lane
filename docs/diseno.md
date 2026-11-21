@@ -10,7 +10,8 @@ Autor: Gerardo Alberto Norman, con Claude. Estado: v1 en uso. Este documento es 
 1. Pit Lane es una forma de trabajar con Claude en trabajos serios: primero un contrato con un listón verificable, después el trabajo repartido en encargos que corren en paralelo, y al final una auditoría hecha por alguien que no construyó.
 2. Ataca dos fallos: declarar "listo" sin que nadie ajeno lo haya verificado sobre el archivo real, y gastar el modelo más caro en trabajo que no lo necesita.
 3. La ceremonia es proporcional: el tamaño de la tarea (S, M, L, XL) decide cuántas fases corren.
-4. Cabe en **2 skills, 7 agentes y 4 archivos de referencia**, y no depende de ningún plugin externo: el proceso para código y especificaciones de software es propio (sección 13).
+4. Cabe en **2 skills, 7 agentes y 5 archivos de referencia**, y no depende de ningún plugin externo: el proceso para código y especificaciones de software es propio (sección 13).
+5. Desde la v1.3, un encargo de rutina puede ejecutarlo una IA de otro proveedor (modo E, sección 8); la integración y la auditoría siguen en Claude.
 
 ---
 
@@ -65,8 +66,9 @@ Se evalúan seis señales y **gana el nivel más alto** que alcance cualquiera. 
 | Rol | Qué hace | Qué recibe | Qué no recibe |
 |---|---|---|---|
 | **Usuario** | Fija el objetivo, aprueba el contrato, decide lo irreversible, valida al final | — | — |
-| **Jefe de pits** | Triage, contrato, plan, enrutamiento, despacho, estado, propagación de cambios, auditoría de coherencia, cierre | Todo | No construye entregables de tamaño L o XL |
+| **Jefe de pits** | Triage, contrato, plan, enrutamiento, despacho, estado, propagación de cambios, integración de las bahías externas, auditoría de coherencia, cierre | Todo | No construye entregables de tamaño L o XL; copiar la salida de una bahía es integrar, no construir (R-37, R-51) |
 | **Mecánico** | Un encargo de principio a fin: construye, prueba y pasa su entregable por el loop de auditoría. En modo B lanza él el árbitro; en modo A lo lanza el Jefe de pits (decisión 2026-11-14, H10) | Su archivo de encargo, las normas, los datos maestros | La conversación del Jefe de pits |
+| **Mecánico externo** (modo E) | Un encargo de rutina o estándar ligero en una IA de otro proveedor: construye, prueba y deja su informe en "Avance". No audita | Su bahía: `AGENTS.md` (instrucciones neutrales), `ENCARGO.md`, `entrada/` de solo lectura | La conversación, las reglas de Claude y cualquier archivo fuera de la bahía |
 | **Subagente** | Una búsqueda o lectura acotada para un mecánico | La pregunta | Todo lo demás |
 | **Lector** (antes de construir) | Busca huecos en el plan o el diseño | Solo el documento y lo que este enlaza | La conversación, ni `CLAUDE.md` ni `AGENTS.md` (R-40) |
 | **Árbitro** (después de construir) | Intenta rechazar el entregable con evidencia | Contrato, rutas de entregables y fuentes (las web, como copia guardada, R-42), fallos previos | El plan y el razonamiento del constructor, ni `CLAUDE.md` ni `AGENTS.md` (R-40) |
@@ -103,7 +105,7 @@ Aprobado: AAAA-MM-DD   ← lo escribe el Jefe de pits cuando el usuario aprueba
 ## ENTREGABLE       archivos, formato, restricciones
 ## DATOS MAESTROS ✚ ruta del archivo único con cifras, fechas, nombres y precios compartidos
 ## PLAN ✚           solo L y XL: tabla de encargos (ver 6) con modelo y esfuerzo
-## PRESUPUESTO ✚    mecánicos simultáneos máx. 2 · freno de gasto
+## PRESUPUESTO ✚    por oleada: Claude máx. 2 · externos máx. 2 (1 por herramienta) · total 4 · freno de gasto
 ## Decisiones tomadas (vétalas si no te sirven)
 ```
 
@@ -116,8 +118,12 @@ Un archivo por encargo en `pit-lane/encargos/E01-nombre.md`. Junta en un solo ar
 ```markdown
 # E01 — [nombre]
 Estado: pendiente | en curso | en auditoría | terminado | espera decisión
-Modelo: sonnet · Esfuerzo: medium · Modo: subagente | sesión
-Árbitro: sonnet · medium   (opus · high si sale a terceros, se proyecta en público o es difícil de revertir)
+Ejecutor: claude | codex | antigravity
+Modelo: sonnet · Esfuerzo: medium · Modo: subagente | sesión | bahía
+                            (externo: modelo y razonamiento del proveedor, R-50)
+Árbitro: sonnet · medium   (opus · high si sale a terceros, se proyecta en público o es difícil de revertir;
+                            corre siempre en Claude, R-51)
+Integra en: <ruta del entregable>   ← solo modo E
 Depende de: — | E0x
 ## Objetivo
 ## Entradas                 rutas (incluye normas y datos-maestros.md; si es código o una
@@ -136,7 +142,7 @@ Depende de: — | E0x
 ## Qué no funcionó y por qué                                     ← lo escribe el mecánico
 ```
 
-Arranque estándar de todo mecánico: *"Tu encargo está en `<ruta>`. Léelo entero antes de nada y sigue desde donde se quedó."*
+Arranque estándar de todo mecánico: *"Tu encargo está en `<ruta>`. Léelo entero antes de nada y sigue desde donde se quedó."* En el modo E lo reemplaza el texto del despacho externo (R-49), y la copia del encargo en la bahía deja "Avance" como última sección: el mecánico externo solo escribe ahí (R-48).
 
 ## 7. Enrutamiento de modelo y esfuerzo
 
@@ -148,6 +154,7 @@ Arranque estándar de todo mecánico: *"Tu encargo está en `<ruta>`. Léelo ent
 | Mecánico: redactar con criterio, analizar, integrar varias fuentes | Sonnet 5.5 | medio | Integrar y juzgar pide un modelo estándar, no el más caro |
 | Mecánico experto: diseño difícil, decisiones con muchas dependencias | Opus 5.5 | alto | Es arquitectura, como el plan |
 | Mecánico auxiliar: transcribir, convertir, formatear, inventariar, con todo especificado | Haiku 5.5 | bajo | Rutina con especificación completa: no hay nada que interpretar |
+| Mecánico externo (modo E): rutina o estándar ligero | El del plan gratis del proveedor (tabla fechada en `references/enrutamiento.md`) | El del proveedor | Libera la ventana de 5 horas de Claude en encargos que no necesitan juicio |
 | Subagente de búsqueda o lectura | Haiku 5.5 | bajo | Explorar y leer es barato y paralelo |
 | Árbitro, error costoso | Opus 5.5 | alto | La última revisión antes de que algo salga va al más capaz |
 | Árbitro, rutina | Sonnet 5.5 | medio | La revisión se escala al riesgo del entregable |
@@ -159,6 +166,7 @@ Reglas:
 4. **Árbitro en modelo distinto del constructor** cuando el error es costoso y el constructor no es Opus. Si el constructor es Opus, el árbitro también lo es: la independencia la da el contexto limpio, no el modelo.
 5. La columna de esfuerzo parte de una regla general: medio por defecto, alto para razonamiento profundo. El desglose por rol es **hipótesis** y se calibra midiendo rondas de auditoría por nivel.
 6. **Plan Pro.** Según el artículo de soporte de Anthropic sobre los modelos Fable, en el plan Pro esos modelos no entran en los límites del plan: corren con créditos de uso, que se pagan aparte. Por eso el modelo más capaz de esta tabla es Opus 5.5 y Fable queda fuera del enrutamiento. Opus es el que más rápido gasta el límite de 5 horas, así que se reserva para el Jefe de pits, el mecánico experto y el árbitro de error costoso.
+7. **Modelos externos** (R-50). La tabla de modelos externos lleva fecha de verificación; con más de 30 días, el Jefe de pits la verifica en la web antes de despachar, y si una fuente dice otra cosa, gana la fuente. Un mecánico externo equivale a un auxiliar o a un estándar ligero (redactar o resumir con poco criterio y una sola fuente), nunca a un experto. Verificación del 2026-11-21: Codex con GPT-6 Luna, velocidad estándar, en la app de escritorio de ChatGPT (el plan Free no incluye el CLI), y Antigravity, app o CLI, con Gemini 3.8 Flash y cuota semanal.
 
 ## 8. Modos de ejecución
 
@@ -168,11 +176,18 @@ Reglas:
 | **B. Sesiones paralelas** | Cada mecánico es una sesión completa de la pestaña Code; el Jefe de pits las lista, lee y les escribe | Trabajos largos; cuando quieres entrar a la sesión de un mecánico a corregir | Selector de cada sesión. La sesión la abres tú y pegas la línea de arranque | **v1** |
 | **C. Projects** | Coordinador con hilos, en la nube o en tu equipo | Trabajo de días que debe seguir con el equipo apagado | Ajustes del proyecto | Por evaluar si tu cuenta lo tiene (H7) |
 | **D. Agent teams** | Líder con compañeros y lista de tareas compartida | — | Se nombra el modelo al crear cada compañero | Fuera: experimental, sin reanudación |
+| **E. Bahías externas** | Un encargo lo ejecuta una IA de otro proveedor (Codex, Antigravity) en una carpeta aislada del mismo proyecto; el Jefe de pits integra y audita en Claude | 3 o más encargos independientes y alguno de rutina, o probar una skill o un prompt en otro modelo (R-47) | Selector de la herramienta externa; el despacho los escribe (R-49) | **v1.3** |
 
 **Cuánto cumple cada modo el requisito de que el Jefe de pits despache tras tu aprobación:**
 - **Modo A: lo cumple.** El Jefe de pits lanza los mecánicos con el modelo y el esfuerzo del plan.
 - **Modo B: a medias.** Las sesiones las abres tú, con instrucciones exactas del Jefe de pits (nombre de la sesión, modelo, esfuerzo y línea de arranque). No está confirmado que Claude pueda crear sesiones en la app de escritorio.
 - **Modo C: lo cumple**, y es el único en que Claude inicia sesiones completas. Depende de que tu cuenta tenga Projects (H7).
+- **Modo E: a medias, como el B.** Abres tú la herramienta externa en la bahía y pegas el texto del despacho; el aviso de fin es manual ("terminó E0x").
+
+**Modo E en breve** (pasos en `references/modos-de-ejecucion.md`):
+- **Bahía** (R-48): `pit-lane/bahias/E0x-<herramienta>/` con `AGENTS.md` (copia de `references/mecanico-externo.md`, instrucciones válidas para cualquier IA, sin subagentes ni reglas de Claude), `ENCARGO.md` (copia del encargo; el ejecutor solo escribe en "Avance"), `entrada/` (copias de solo lectura) y `salida/` (lo único escribible). Si el proyecto usa git, la bahía puede ser un worktree. Antes de despachar, el Jefe de pits toma un inventario con el hash de cada archivo de la carpeta del trabajo.
+- **Despacho** (R-49): un bloque fijo por encargo, con ID, herramienta, modelo y razonamiento; la carpeta; el texto que se pega, y el aviso "terminó E0x". Una corrección vuelve con el mismo formato.
+- **Integración y auditoría** (R-51): con "terminó E0x", el Jefe de pits lee el informe de "Avance", compara el inventario, copia `salida/` al entregable y lanza el árbitro en Claude, como en el modo A. Si un criterio falla dos rondas seguidas, el encargo pasa a un mecánico Claude (R-27).
 
 ## 9. Estado y reanudación
 
@@ -187,7 +202,8 @@ Una carpeta por trabajo: la que indique el usuario o, si no indica ninguna, el d
     ├── datos-maestros.md
     ├── estado.md             ← una línea por encargo; solo la escribe el Jefe de pits
     ├── encargos/E01-….md
-    └── auditorias/           ← E01.md, E02.md… (la lleva el Jefe de pits en modo A y el mecánico en modo B) y coherencia.md (el Jefe de pits)
+    ├── bahias/E03-codex/     ← solo modo E: AGENTS.md · ENCARGO.md · entrada/ · salida/ (R-48)
+    └── auditorias/           ← E01.md, E02.md… (la lleva el Jefe de pits en modos A y E y el mecánico en modo B), inventarios del modo E y coherencia.md (el Jefe de pits)
 ```
 
 - `estado.md` usa tres grupos: **trabajando**, **esperan tu decisión**, **terminados**.
@@ -195,12 +211,12 @@ Una carpeta por trabajo: la que indique el usuario o, si no indica ninguna, el d
 - Cambio de un dato compartido: se edita `datos-maestros.md`, el Jefe de pits busca qué encargos lo citan y avisa solo a esos mecánicos.
 - Ajuste pequeño y localizado: se le pide directo al mecánico. Pasarlo por el Jefe de pits procesa el contexto dos veces.
 - **Quién escribe qué.** El mecánico actualiza "Estado", "Avance" y "Qué no funcionó" en su propio encargo. El Jefe de pits es el único que escribe `estado.md`, y lo hace leyendo los encargos.
-- **Cómo se entera el Jefe de pits de que un mecánico terminó.** En el modo A, el resultado vuelve solo. En el modo B, el Jefe de pits pide el aviso de inactividad de la sesión de cada mecánico si la herramienta lo permite (H4); si no, relee los encargos cada vez que el usuario pide estado o avisa "terminó E0x".
+- **Cómo se entera el Jefe de pits de que un mecánico terminó.** En el modo A, el resultado vuelve solo. En el modo E, el usuario avisa "terminó E0x". En el modo B, el Jefe de pits pide el aviso de inactividad de la sesión de cada mecánico si la herramienta lo permite (H4); si no, relee los encargos cada vez que el usuario pide estado o avisa "terminó E0x".
 - **Mecánico bloqueado o sin contexto.** El Jefe de pits resuelve con el contrato y los datos maestros si alcanza. Si no, pasa el encargo a "esperan tu decisión", detiene también los encargos que dependen de él y sigue despachando los independientes. Al resolverse, se relanza con el mismo modelo.
 
 ## 10. Verificación y auditoría
 
-0. **Quién lanza cada auditoría.** En M, la sesión que construye. En L y XL, modo A, el Jefe de pits lanza el árbitro de cada encargo (`pit-lane:arbitro`, con el modelo y el esfuerzo de la línea "Árbitro:" del encargo) y lleva su bitácora en `pit-lane/auditorias/E0x.md`: no se cuenta con que un subagente lance a otro (decisión 2026-11-14, H10). En modo B, cada mecánico lanza el árbitro de su encargo con esos mismos valores y lleva su bitácora; si no puede lanzar subagentes, devuelve "auditoría: pendiente" y la lanza el Jefe de pits. La auditoría de coherencia la lanza el Jefe de pits cuando todos los encargos terminaron, con bitácora en `pit-lane/auditorias/coherencia.md`.
+0. **Quién lanza cada auditoría.** En M, la sesión que construye. En L y XL, modo A, el Jefe de pits lanza el árbitro de cada encargo (`pit-lane:arbitro`, con el modelo y el esfuerzo de la línea "Árbitro:" del encargo) y lleva su bitácora en `pit-lane/auditorias/E0x.md`: no se cuenta con que un subagente lance a otro (decisión 2026-11-14, H10). En modo B, cada mecánico lanza el árbitro de su encargo con esos mismos valores y lleva su bitácora; si no puede lanzar subagentes, devuelve "auditoría: pendiente" y la lanza el Jefe de pits. En modo E, el Jefe de pits lanza el árbitro en Claude sobre el entregable integrado (R-51): el árbitro nunca corre en la herramienta externa. La auditoría de coherencia la lanza el Jefe de pits cuando todos los encargos terminaron, con bitácora en `pit-lane/auditorias/coherencia.md`.
 1. **El mecánico prueba** su entregable sobre el archivo real, con el método por tipo de gauntlet. Es necesario y no basta.
 2. **Árbitro nuevo por ronda**, con el contrato, las rutas y las fuentes. Veredictos: PASA, NO PASA, NO VERIFICABLE y DEFECTUOSO. NO VERIFICABLE bloquea salvo que el contrato lo marque como revisión humana; DEFECTUOSO sigue el punto 14.
 3. **Coherencia entre entregables** (L y XL): un criterio del listón por cada dato maestro que aparece en más de un entregable.
@@ -222,8 +238,9 @@ Una carpeta por trabajo: la que indique el usuario o, si no indica ninguna, el d
 | Freno | Regla | Cómo se cumple |
 |---|---|---|
 | Rondas | Máximo 3 | Contrato |
-| Mecánicos simultáneos | Máximo 2 por oleada (plan Pro) | Contrato; el Jefe de pits despacha por oleadas |
-| Gasto | Al 80 % de la ventana de 5 horas no se despacha nada nuevo; cada mecánico escribe su avance y se detiene | El Jefe de pits lee el uso con `get_usage` de la app de escritorio; de respaldo, `~/.claude/pit-lane-uso.json`, que escribe el script de status line cuando Claude Code corre en la terminal; si ninguno responde, el freno lo activas tú con la palabra "freno" |
+| Mecánicos simultáneos | Por oleada, hasta 2 mecánicos Claude (plan Pro) y hasta 2 externos (1 por herramienta), 4 en total; expertos solo en Claude: 1, o 2 si no hay otro mecánico Claude trabajando (R-14) | Contrato; el Jefe de pits despacha por oleadas |
+| Gasto | Al 80 % de la ventana de 5 horas no se despacha nada nuevo, tampoco a una bahía, porque su auditoría corre en Claude; cada mecánico escribe su avance y se detiene | El Jefe de pits lee el uso con `get_usage` de la app de escritorio; de respaldo, `~/.claude/pit-lane-uso.json`, que escribe el script de status line cuando Claude Code corre en la terminal; si ninguno responde, el freno lo activas tú con la palabra "freno" |
+| Cuota externa | La de cada proveedor (en Antigravity, semanal); si se acaba, el mecánico externo escribe su avance y se detiene | `references/mecanico-externo.md` |
 | Contexto del Jefe de pits | Los mecánicos devuelven ≤15 líneas y una ruta; el Jefe de pits no lee entregables completos | Formato del encargo |
 | Compactación | Solo al cambiar de fase, con el estado ya escrito | Regla del flujo |
 
@@ -249,7 +266,6 @@ Cuando un entregable es código, instrucciones para otra IA (skill, prompt, agen
 |---|---|---|
 | Revisión de diseño en varias etapas con muchos revisores | Demasiadas paradas para el valor que agrega | Tres lectores de contexto limpio |
 | Hooks y un observador en segundo plano que aprende solo | Complejidad alta; un observador así no funciona bien en Windows nativo | Aprendizaje con aprobación humana al cierre |
-| Orquestación con modelos de otros proveedores o con varias terminales | Infraestructura externa y costo | — |
 | Puntajes numéricos de calidad | El mismo agente se califica y un número no dice qué falla | Listón binario |
 | Agent teams | Experimental | Modos A y B |
 | Informe de deriva entre documentos y código | Útil solo cuando haya documentos vivos que mantener | Candidato a v2 |
@@ -273,7 +289,7 @@ Las reglas que el repo implementa tienen un ID. La skill y los archivos de refer
 | R-11 | Cada encargo declara su superficie de escritura; paralelo solo sin solape | 1 |
 | R-12 | Cada encargo y cada despacho declaran modelo y esfuerzo | 7 |
 | R-13 | Haiku solo con el encargo completo; en la duda, Sonnet | 7 |
-| R-14 | Máximo 2 mecánicos por oleada | 11 |
+| R-14 | Topes por oleada: hasta 2 mecánicos Claude y hasta 2 externos (1 por herramienta), 4 en total; expertos solo en Claude: 1, o 2 si no hay otro mecánico Claude trabajando | 11 |
 | R-15 | Todo mecánico arranca con la línea estándar | 6 |
 | R-16 | El mecánico prueba sobre el archivo real y devuelve uno de cuatro estados en 15 líneas o menos | 6, 10 |
 | R-17 | El mecánico actualiza Estado, Avance y Qué no funcionó en su encargo | 9 |
@@ -296,9 +312,9 @@ Las reglas que el repo implementa tienen un ID. La skill y los archivos de refer
 | R-34 | Si el entregable es código, instrucciones para otra IA o una especificación de software, el encargo sigue `references/software.md` | 13 |
 | R-35 | NO VERIFICABLE bloquea igual que NO PASA, salvo que el contrato lo marque como revisión humana | 10 |
 | R-36 | Árbitro en modelo distinto del constructor cuando el error es costoso y el constructor no es Opus | 7 |
-| R-37 | El Jefe de pits no construye entregables de tamaño L ni XL | 4 |
+| R-37 | El Jefe de pits no construye entregables de tamaño L ni XL; copiar la salida de una bahía al entregable es integrar, no construir (R-51) | 4 |
 | R-38 | Antes del primer despacho se comprueba que ninguna variable de entorno anule el enrutamiento | 7, 17 |
-| R-39 | Dueño de cada auditoría: en M, la sesión; en L y XL, modo A, el Jefe de pits lanza el árbitro de cada encargo y lleva su bitácora; en modo B, cada mecánico lanza el suyo y lleva su bitácora (o lo lanza el Jefe de pits si el mecánico no puede lanzar subagentes); el Jefe de pits lanza siempre la de coherencia | 10 |
+| R-39 | Dueño de cada auditoría: en M, la sesión; en L y XL, modo A, el Jefe de pits lanza el árbitro de cada encargo y lleva su bitácora; en modo B, cada mecánico lanza el suyo y lleva su bitácora (o lo lanza el Jefe de pits si el mecánico no puede lanzar subagentes); en modo E, el Jefe de pits, en Claude; el Jefe de pits lanza siempre la de coherencia | 10 |
 | R-40 | Lectores y árbitro corren sin `CLAUDE.md` ni `AGENTS.md`; lo que necesiten de esas reglas va en el contrato o el encargo | 4, 10 |
 | R-41 | Una prueba que el árbitro no puede abrir se escala: NO PASA marcado ESCALADO, fuera del loop y de R-27, primero en "revisa tú" | 10 |
 | R-42 | Toda página web usada como fuente se guarda como archivo, con índice de URL y fecha, y el árbitro coteja contra la copia | 5, 10 |
@@ -306,6 +322,11 @@ Las reglas que el repo implementa tienen un ID. La skill y los archivos de refer
 | R-44 | Pre-vuelo del listón: el método de cada criterio se ejecuta una vez antes de aprobar; un ✘ cambia de método o pasa a revisión humana | 5, 10 |
 | R-45 | Un criterio que el árbitro marca DEFECTUOSO, con evidencia, sale del loop como un ESCALADO; solo el usuario lo cambia | 10 |
 | R-46 | Modo A: los fallos vuelven al mismo mecánico (se continúa su subagente); disputa exprés si lo único pendiente son disputas y el entregable no cambió | 8, 10 |
+| R-47 | Modo E solo con 3 o más encargos independientes y alguno de rutina, o para probar una skill o un prompt en otro modelo; el encargo declara `Ejecutor:` y el modelo y el razonamiento del proveedor | 6, 8 |
+| R-48 | Bahía por encargo externo: `AGENTS.md` (copia de `references/mecanico-externo.md`), `ENCARGO.md`, `entrada/` de solo lectura y `salida/`; el ejecutor escribe solo en `salida/` y en "Avance"; inventario antes de despachar | 8, 9 |
+| R-49 | El despacho externo usa siempre el formato fijo de la plantilla, también para las correcciones | 8 |
+| R-50 | Tabla de modelos externos fechada; con más de 30 días se verifica en la web antes de despachar; un externo es auxiliar o estándar ligero, nunca experto | 7 |
+| R-51 | Con "terminó E0x": informe de "Avance", inventario comparado, `salida/` copiada al entregable y árbitro en Claude, que siempre corre en Claude | 8, 10 |
 
 ## 16. Decisiones de diseño y sus porqués
 
@@ -324,8 +345,12 @@ Las reglas que el repo implementa tienen un ID. La skill y los archivos de refer
 | **Sonnet redacta y analiza**; Haiku solo si el encargo trae el texto ya decidido; Opus solo para diseño difícil | Un documento con criterio no es "estructura simple". El modelo barato toma más turnos cuando tiene que interpretar, y eso cuesta más que su precio por token |
 | **Listón binario**, no puntajes | Lo binario se verifica; un puntaje lo pone el mismo que construyó y no dice qué falla |
 | **Dos skills** (`pit-lane` y `gauntlet`) en vez de una por fase | Menos archivos, y gauntlet sigue sirviendo sola para tareas M |
-| **Modos A y B en la v1**; C por evaluar; D fuera | A y B cubren trabajos cortos y largos con lo que la app ofrece hoy; C depende de la cuenta (H7); D es experimental |
-| **Plan Pro**: máximo 2 mecánicos simultáneos y Opus 5.5 como modelo más capaz | Más mecánicos a la vez agotan antes la ventana de 5 horas; los modelos Fable corren con créditos aparte. Si se sube de plan, se puede volver a 3 mecánicos y a Fable |
+| **Modos A y B en la v1**, E desde la v1.3; C por evaluar; D fuera | A y B cubren trabajos cortos y largos con lo que la app ofrece hoy; E suma IA de otros proveedores para la rutina; C depende de la cuenta (H7); D es experimental |
+| **Plan Pro**: máximo 2 mecánicos Claude simultáneos y Opus 5.5 como modelo más capaz | Más mecánicos Claude a la vez agotan antes la ventana de 5 horas; los modelos Fable corren con créditos aparte. Si se sube de plan, se puede volver a 3 mecánicos y a Fable |
+| **Modo E: carriles externos en el mismo proyecto**, hasta 2 (1 por herramienta) | Los planes gratis de otros proveedores suman capacidad sin gastar la ventana de Claude en rutina. Un carril por herramienta porque cada una se abre a mano y comparte una sola cuota |
+| **La bahía aísla y el inventario comprueba** | Otra IA no carga las reglas de Pit Lane ni sus permisos: sus instrucciones pueden ignorarse sin aviso. Copias de solo lectura limitan el daño y el hash antes y después hace verificable qué tocó (H12) |
+| **El árbitro corre siempre en Claude**, y el externo nunca es experto | El método del árbitro, el contexto limpio y las herramientas de verificación son de Claude; el criterio difícil se queda donde el enrutamiento está garantizado por configuración |
+| **Copiar la salida es integrar, no construir** (R-37, R-51) | El Jefe de pits copia sin cambiar el contenido; si hubiera que editarlo, es una corrección y vuelve a la bahía |
 | **gauntlet vive en este repo** | Es la única fuente: la copia de la cuenta de claude.ai se exporta desde `skills/gauntlet/` |
 
 ## 17. La plataforma: qué ofrece Claude Code
@@ -379,7 +404,8 @@ pit-lane/
 ├── references/
 │   ├── plantillas.md              contrato, encargo, estado
 │   ├── enrutamiento.md            tabla de la sección 7 y reglas
-│   ├── modos-de-ejecucion.md      modos A y B paso a paso
+│   ├── modos-de-ejecucion.md      modos A, B y E paso a paso
+│   ├── mecanico-externo.md        instrucciones del mecánico para cualquier IA (modo E, R-48)
 │   └── software.md                código y especificaciones de software (R-34)
 ├── scripts/
 │   ├── uso-statusline.ps1         freno de gasto (respaldo en la terminal)
@@ -429,6 +455,7 @@ Después vinieron el paso 11 (gauntlet V2.1), la revisión integral del 2026-11-
 | H9 | El plugin en `~/.claude/skills/pit-lane/` carga con sus 7 agentes también en la app de escritorio | Sesión nueva | Declarar la carpeta en `CLAUDE_CODE_PLUGIN_DIRS` | **Se cumple** en el equipo del autor; sin comprobar en otros |
 | H10 | Un mecánico lanzado como subagente puede lanzar a su vez el árbitro | Piloto, modo A | El Jefe de pits lanza los árbitros | No se cuenta con ello: en modo A el Jefe de pits lanza los árbitros (decisión 2026-11-14) |
 | H11 | Continuar un subagente con SendMessage conserva su contexto en Claude Code (R-46) | Prueba del 2026-11-21 y uso en modo A | Volver a relanzar al mecánico en frío, con la línea de arranque | **Se cumple** en la prueba del 2026-11-21: el subagente terminó su turno, se continuó con SendMessage y recordó el dato del primer turno. Falta confirmarlo en un encargo real |
+| H12 | Codex y Antigravity siguen el `AGENTS.md` de la bahía y solo escriben en `salida/` y en "Avance" (R-48) | Prueba real con un encargo de rutina en cada herramienta, inventario antes y después (R-51) | La herramienta que escribió fuera sale del modo E hasta una nueva prueba; si las dos fallan, la bahía se arma siempre como copia descartable o worktree | Abierta: prueba en curso |
 
 ---
 
