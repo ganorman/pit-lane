@@ -91,6 +91,9 @@ Correcciones planificadas: [...]
 
 ## Escalados
 - [ID] hallazgo … / prueba fuera del alcance del árbitro … / decisión del usuario …
+
+## Defectuosos
+- [ID] dos lecturas (A → …, B → …) | no puede pasar (falta …) / decisión del usuario …
 ```
 
 ---
@@ -111,6 +114,7 @@ Correcciones planificadas: [...]
 **Pendientes:** [criterios que no pasaron, con el porqué] | ninguno
 **Disputas:** [resumen] | ninguna
 **Escalados:** [criterio, hallazgo y la prueba que debes confirmar] | ninguno
+**Defectuosos:** [criterio, las dos lecturas o lo que falta, y qué debes decidir] | ninguno
 **Fuera del listón (observaciones):** [lo que el árbitro vio y no bloqueaba]
 **Revisa tú:** [lista corta de lo que solo un humano puede confirmar]
 

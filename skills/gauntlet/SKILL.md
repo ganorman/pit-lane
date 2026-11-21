@@ -88,7 +88,7 @@ Si el usuario tiene más reglas permanentes (en ese archivo, en su memoria o en 
 5. **Decidir.**
    - Todos los criterios PASA → sal del loop. Ninguna versión sale sin al menos una auditoría, pero una primera versión que la pasa puede entregarse: rehacerla por regla solo produce cambios cosméticos. Esto vale también en modo degradado, siempre que el resumen lo declare.
    - Algún NO PASA → corrige esos criterios y vuelve al paso 1.
-   - Si los únicos NO PASA son criterios escalados (ver "Escalar" en las reglas del loop), sal del loop: los decide el usuario.
+   - Si lo único que no pasa son criterios escalados o defectuosos (ver "Escalar" y "Criterio defectuoso" en las reglas del loop), sal del loop: los decide el usuario.
 
 ### Reglas del loop
 
@@ -101,6 +101,7 @@ Si el usuario tiene más reglas permanentes (en ese archivo, en su memoria o en 
 - **Tope: 3 rondas** (o lo que diga el contrato). Al llegar al tope, entrega con los pendientes a la vista. Nunca maquilles un NO PASA como PASA.
 - **Disputas.** Si el constructor cree que el árbitro se equivoca, no lo ignora: registra la disputa con evidencia en la bitácora. El árbitro siguiente la resuelve, y el usuario la ve en el resumen.
 - **Escalar.** Si el constructor cree que un hallazgo es erróneo pero su prueba no está en ningún archivo que el árbitro pueda abrir (una decisión verbal, una convención del equipo), no lo disputa ni lo corrige: lo escala. El criterio queda NO PASA, marcado ESCALADO en la bitácora con la prueba que el usuario debe confirmar. No cuenta para seguir el loop ni para cambiar de enfoque, y va primero en "Qué debe revisar el humano". Si el usuario lo confirma, el resumen lo registra como aprobado por el usuario, no por el árbitro.
+- **Criterio defectuoso.** Si el árbitro marca un criterio DEFECTUOSO (admite dos lecturas con veredictos opuestos, o no puede pasar con lo que existe ni con lo que el contrato hará existir), ese criterio sale del loop igual que uno escalado: no cuenta para seguir el loop ni para cambiar de enfoque, y va primero en "Qué debe revisar el humano", con las dos lecturas o con lo que falta. El listón sigue congelado: el constructor no reescribe el criterio ni lo esquiva, y solo el usuario lo reescribe, lo quita o acepta una de las lecturas. Solo el árbitro puede declarar un criterio DEFECTUOSO; el constructor no.
 - **Sin paradas.** Una ambigüedad menor que aparezca en el loop se decide y se anota. Solo se detiene el loop por algo irreversible o que invalide el contrato (por ejemplo, la fuente contradice la TAREA); en ese caso se presenta el problema con opciones.
 
 ### Modo degradado (sin subagentes)
@@ -123,6 +124,6 @@ Lleva un solo archivo, `auditoria-gauntlet.md`, junto al entregable. Si la tarea
 
 1. El entregable, en el formato del contrato.
 2. El **resumen de auditoría** (plantilla en `references/plantillas.md`): rondas hechas, qué rechazó el árbitro, errores encontrados, qué se corrigió, pendientes, disputas y observaciones fuera del listón.
-3. **Qué debe revisar el humano.** La lista corta de lo que ninguna máquina pudo confirmar (primero los criterios ESCALADOS; después los marcados "revisión humana", los NO VERIFICABLE y los riesgos fuera del listón). El árbitro aprueba el listón, no la intención; la revisión final sigue siendo del usuario.
+3. **Qué debe revisar el humano.** La lista corta de lo que ninguna máquina pudo confirmar (primero los criterios ESCALADOS y los DEFECTUOSOS; después los marcados "revisión humana", los NO VERIFICABLE y los riesgos fuera del listón). El árbitro aprueba el listón, no la intención; la revisión final sigue siendo del usuario.
 
 Sé breve en el chat: el detalle está en la bitácora.

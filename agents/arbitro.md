@@ -26,4 +26,4 @@ Este archivo no tiene método propio: el método, lo que recibes, los veredictos
 
 ## Reglas que cumple este agente
 
-Las del método de la skill, entre ellas R-24, R-25, R-28, R-35 y R-42. Propia de este agente: R-40.
+Las del método de la skill, entre ellas R-24, R-25, R-28, R-35, R-42 y R-45. Propia de este agente: R-40.
