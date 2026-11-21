@@ -7,7 +7,7 @@ Guía corta para instalar Pit Lane en Claude Code, usarlo en un proyecto y adapt
 Pit Lane organiza el trabajo en tres roles:
 
 - **Jefe de pits:** clasifica la tarea, redacta el contrato y el plan.
-- **Mecánicos:** ejecutan los encargos, en paralelo y por oleadas de hasta 2.
+- **Mecánicos:** ejecutan los encargos, en paralelo y por oleadas de hasta 2 en Claude (y hasta 2 en otras IA, modo E).
 - **Árbitro:** audita cada entregable con contexto limpio, contra el listón aprobado.
 
 ## 2. Instalación (Claude Code)
@@ -58,7 +58,10 @@ Abre una sesión nueva y comprueba que existen `/pit-lane:pit-lane`, `/pit-lane:
 3. Fija tus valores del listón base (idioma, nombres, marcas) en `~/.claude/pit-lane-liston-base.md`; el formato está en `skills/gauntlet/references/liston-base-ejemplo.md`.
 4. Si un entregable es código o una especificación de software, el Jefe de pits aplica el proceso de `references/software.md`: no hace falta instalar nada más.
 
-**Con otra IA (ChatGPT, Gemini, etc.)**
+**Otra IA como mecánico (modo E)**
+Si tienes Codex (app de escritorio de ChatGPT) o Antigravity, el Jefe de pits puede mandarles encargos de rutina. Arma una carpeta aislada por encargo (la bahía) y te da un bloque con la carpeta que debes abrir, el modelo, el texto que pegas y el aviso que le devuelves: *"terminó E03"*. Después comprueba qué archivos se tocaron, integra y audita en Claude. Pasos en `references/modos-de-ejecucion.md`.
+
+**Con otra IA (ChatGPT, Gemini, etc.) sin Claude**
 No tiene subagentes ni enrutamiento de modelos. Solo se traslada el método:
 1. Copia la plantilla de contrato de `references/plantillas.md`.
 2. Pide el contrato en el chat y espera tu aprobación.

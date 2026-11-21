@@ -10,6 +10,7 @@ Cómo se lanzan los mecánicos. Origen: secciones 8, 9 y 10 del diseño (`docs/d
 | **B. Sesiones paralelas** | Cada mecánico es una sesión completa de la pestaña Code; el Jefe de pits las lista, lee y les escribe | Trabajos largos; cuando quieres entrar a la sesión de un mecánico a corregir | Selector de cada sesión. La sesión la abres tú y pegas la línea de arranque | **v1** |
 | **C. Projects** | Coordinador con hilos, en la nube o en tu equipo | Trabajo de días que debe seguir con el equipo apagado | Ajustes del proyecto | Evaluar en el piloto si tu cuenta lo tiene |
 | **D. Agent teams** | Líder con compañeros y lista de tareas compartida | — | Se nombra el modelo al crear cada compañero | Fuera: experimental, sin reanudación |
+| **E. Bahías externas** | Un encargo lo ejecuta una IA de otro proveedor (Codex, Antigravity) en una carpeta aislada; el Jefe de pits integra y audita en Claude | 3 o más encargos independientes y alguno de rutina, o probar una skill o un prompt en otro modelo (R-47) | Selector de la herramienta externa; el modelo y el razonamiento van en el despacho (R-49, R-50) | **v1.3** |
 
 Los modos C y D no se usan en la v1. El modo C queda por evaluar (hipótesis H7: si tu cuenta tiene Projects); el D está fuera por ser experimental.
 
@@ -18,7 +19,7 @@ Los modos C y D no se usan en la v1. El modo C queda por evaluar (hipótesis H7:
 ## Reglas comunes a los modos A y B
 
 - Cada encargo y cada despacho declaran modelo y esfuerzo (R-12). Ver `references/enrutamiento.md`.
-- Máximo 2 mecánicos por oleada (R-14). El Jefe de pits despacha por oleadas.
+- Topes por oleada (R-14): hasta 2 mecánicos Claude y hasta 2 externos del modo E (1 por herramienta), 4 en total. Los mecánicos expertos corren solo en Claude: 1, o 2 si no hay otro mecánico Claude trabajando. El Jefe de pits despacha por oleadas.
 - Dos encargos corren en paralelo solo si sus superficies de escritura no se solapan (R-11).
 - Todo mecánico arranca con la línea estándar (R-15): *"Tu encargo está en `<ruta>`. Léelo entero antes de nada y sigue desde donde se quedó."*
 - Un mecánico recibe su archivo de encargo, las normas y los datos maestros; no recibe la conversación del Jefe de pits.
@@ -73,6 +74,68 @@ Cumple el requisito solo a medias: las sesiones las abre el usuario, con instruc
 
 ---
 
+## Modo E — Bahías externas
+
+Un encargo lo ejecuta la IA de otro proveedor, en la misma máquina y el mismo proyecto. El mecánico externo trabaja en una **bahía**: una carpeta aislada con sus instrucciones, su encargo, copias de lo que necesita y una única carpeta de salida. La integración y la auditoría siguen en Claude. Del bloque de reglas comunes valen R-11, R-12, R-14, R-30, R-31, R-37 y R-40; la línea de arranque (R-15) la reemplaza el texto del despacho (R-49).
+
+### Cuándo (R-47)
+
+- Hay **3 o más encargos independientes y alguno es de rutina**, o hace falta **probar una skill o un prompt en otro modelo**. Fuera de eso no compensa: armar la bahía, integrar y auditar cuesta más que lo que se ahorra.
+- Solo encargos de nivel auxiliar o estándar ligero (R-50). Un encargo de `pit-lane:mecanico-experto` no va nunca a una bahía.
+- El encargo declara `Ejecutor:` con la herramienta, y en "Modelo" el modelo y el razonamiento del proveedor (`references/plantillas.md`, sección 2).
+- Antes de despachar, si la tabla de modelos externos de `references/enrutamiento.md` tiene más de 30 días, el Jefe de pits la verifica en la web (R-50).
+
+### Armar la bahía (R-48)
+
+Una carpeta por encargo externo: `<carpeta del trabajo>\pit-lane\bahias\E0x-<herramienta>\`.
+
+| Pieza | Qué es | Cómo la deja el Jefe de pits |
+|---|---|---|
+| `AGENTS.md` | Copia de `references/mecanico-externo.md` | Solo lectura |
+| `ENCARGO.md` | Copia del encargo de `pit-lane/encargos/`, con "Avance" como **última** sección | Escribible: el ejecutor solo escribe en "Avance" |
+| `entrada\` | Copias de lo que el encargo necesita (datos maestros, fuentes, plantillas), nunca los originales | Solo lectura |
+| `salida\` | Lo único que el ejecutor puede escribir. `salida\_borrador\` es para sus archivos de trabajo y no se integra | Vacía |
+
+1. Copia las piezas y marca como solo lectura `AGENTS.md` y todo `entrada\`: `Get-ChildItem <bahía>\entrada -Recurse -File | ForEach-Object { $_.IsReadOnly = $true }`, y lo mismo con `AGENTS.md`.
+2. Guarda una copia de `ENCARGO.md` tal como se despacha en `pit-lane/auditorias/E0x-encargo-despacho.md`.
+3. Toma el **inventario antes**: el hash de cada archivo de la carpeta del trabajo, fuera de `pit-lane\auditorias\`.
+   ```powershell
+   $t = '<carpeta del trabajo>'
+   Get-ChildItem $t -Recurse -File | Where-Object { $_.FullName -notlike "$t\pit-lane\auditorias\*" } |
+     Get-FileHash | Select-Object Hash, @{n='Ruta'; e={ $_.Path.Substring($t.Length) }} |
+     Export-Csv "$t\pit-lane\auditorias\E0x-inventario-antes.csv" -NoTypeInformation
+   ```
+- **Variante con git.** Si el proyecto usa git y el encargo necesita el repositorio entero como entrada, la bahía puede ser un worktree (`git worktree add <bahía> -b bahia/E0x`). `AGENTS.md`, `ENCARGO.md` y `salida\` van en su raíz (si el proyecto ya tiene `AGENTS.md`, el del worktree se reemplaza y ese cambio nunca se confirma), el resto del repositorio hace de `entrada\` y el control del paso "Integrar" es `git status --porcelain` dentro del worktree.
+
+### Despachar (R-49)
+
+El Jefe de pits le da al usuario un bloque por encargo, con la plantilla de `references/plantillas.md`, sección 4: ID, herramienta, modelo y razonamiento; la ruta absoluta de la bahía; el texto que se pega; y el aviso de fin. El usuario abre la herramienta en esa carpeta, pone el modelo y el razonamiento en su selector y pega el texto. Cada despacho cuenta para los topes de R-14 hasta que se integra.
+
+### Aviso de fin
+
+No hay aviso automático entre proveedores. El usuario escribe **"terminó E0x"**. Si pide el estado antes, el Jefe de pits lee la sección "Avance" de cada bahía.
+
+### Integrar (R-51)
+
+Con "terminó E0x":
+1. Lee el informe final de "Avance" (15 líneas o menos). No lee el entregable completo (R-31).
+2. Toma el **inventario después** con el mismo comando (archivo `E0x-inventario-despues.csv`) y compara:
+   ```powershell
+   Compare-Object (Import-Csv "$t\pit-lane\auditorias\E0x-inventario-antes.csv") (Import-Csv "$t\pit-lane\auditorias\E0x-inventario-despues.csv") -Property Ruta, Hash
+   ```
+   Solo pueden aparecer `salida\` y `ENCARGO.md` de las bahías despachadas, las superficies de escritura de los encargos Claude de la misma oleada y los archivos del Jefe de pits (`estado.md`, `encargos/`). En `ENCARGO.md`, todo lo anterior a "Avance" debe ser idéntico a `E0x-encargo-despacho.md`. Cualquier otro cambio se anota en la bitácora como **escritura fuera de la bahía**, se muestra al usuario y cuenta como un fallo de H12.
+3. Copia `salida\` (sin `_borrador\`) a la ruta de la línea "Integra en:" del encargo, y pasa al encargo de `pit-lane/encargos/` el estado, el "Avance" y el "Qué no funcionó" del informe (R-17, R-18). Copiar la salida es integrar, no construir (R-37): el Jefe de pits no cambia una palabra del entregable.
+
+### Auditar (R-51)
+
+El Jefe de pits lanza `pit-lane:arbitro` **en Claude**, sobre el entregable integrado, con el modelo y el esfuerzo de la línea "Árbitro:" del encargo, y lleva la bitácora en `pit-lane/auditorias/E0x.md`, como en el modo A (R-24, R-39). El árbitro corre siempre en Claude, nunca en la herramienta externa. Como el constructor no es Opus, si el error es costoso el árbitro es Opus (R-36).
+
+- **Corrección.** Los fallos vuelven a la bahía: el Jefe de pits agrega a `ENCARGO.md`, justo antes de "Avance", la sección "Fallos de la auditoría — ronda N" con la tabla de fallos, renueva la copia de despacho y el inventario antes, y le da al usuario el mismo formato de despacho (R-49).
+- **Escalada** (R-27). Si un criterio falla dos rondas seguidas, el encargo pasa a Claude: `pit-lane:mecanico` en modo A, que retoma desde `salida\` y el "Avance".
+- **Freno** (R-30). Con el freno activo tampoco se despachan bahías: su auditoría corre en Claude. La cuota de la herramienta externa es aparte; si se acaba, el ejecutor escribe su avance y se detiene.
+
+---
+
 ## Mecánico bloqueado o sin contexto (R-19)
 
 1. El Jefe de pits resuelve con el contrato y los datos maestros si alcanzan.
@@ -90,6 +153,7 @@ Cumple el requisito solo a medias: las sesiones las abre el usuario, con instruc
 | M | La sesión que construye | Junto al entregable |
 | L y XL, modo A | El Jefe de pits lanza el árbitro de cada encargo (`pit-lane:arbitro`, con el modelo y el esfuerzo de la línea "Árbitro:" del encargo) | `pit-lane/auditorias/E0x.md`, la lleva el Jefe de pits |
 | L y XL, modo B | Cada mecánico lanza el árbitro de su encargo (`pit-lane:arbitro`, con el modelo y el esfuerzo de la línea "Árbitro:" del encargo, no los suyos) | `pit-lane/auditorias/E0x.md`, la lleva el mecánico |
+| L y XL, modo E | El Jefe de pits, en Claude, sobre el entregable integrado (R-51) | `pit-lane/auditorias/E0x.md`, la lleva el Jefe de pits |
 | L y XL, coherencia entre entregables | El Jefe de pits, cuando todos los encargos terminaron | `pit-lane/auditorias/coherencia.md` |
 
 - En modo A el Jefe de pits lanza siempre los árbitros: no se cuenta con que un subagente lance a otro (hipótesis H10, decisión 2026-11-14). En modo B, si un mecánico no puede lanzar subagentes, devuelve "auditoría: pendiente" y la lanza el Jefe de pits (R-39).
