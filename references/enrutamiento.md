@@ -38,7 +38,7 @@ Qué modelo y qué esfuerzo corre cada rol. Origen: sección 7 del diseño (`doc
 | Herramienta | Dónde se ejecuta | Modelo del plan gratis | Razonamiento | Nivel de Pit Lane | Fuente |
 |---|---|---|---|---|---|
 | Codex | App de escritorio de ChatGPT. El plan Free no incluye el CLI ni la extensión del IDE | GPT-6 Luna, velocidad estándar ("subject to rollout") | High | Auxiliar o estándar ligero | developers.openai.com/codex/pricing |
-| Antigravity | App de Antigravity o su CLI | Gemini 3.8 Flash, cuota semanal | El que ofrezca su selector [CONFIRMAR] | Auxiliar o estándar ligero | antigravity.google/pricing |
+| Antigravity | App de Antigravity o su CLI | Gemini 3.8 Flash, cuota semanal | Medium (el que usó la prueba del 2026-11-21) | Auxiliar o estándar ligero | antigravity.google/pricing |
 
 - **Nunca experto.** Un encargo externo es de nivel auxiliar (rutina con todo especificado) o **estándar ligero**: redactar o resumir con poco criterio y una sola fuente. Integrar varias fuentes, juzgar o diseñar se queda en Claude (R-13, R-47).
 - **Tabla con más de 30 días.** Antes de despachar, el Jefe de pits la verifica en la web. Si una fuente dice otra cosa, gana la fuente: lo anota en "Decisiones tomadas" del contrato, despacha con el valor verificado y le avisa al usuario para que el mantenedor ajuste esta tabla (R-50).

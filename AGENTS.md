@@ -74,4 +74,4 @@ En una sesión nueva de la app de escritorio deben aparecer `/pit-lane:pit-lane`
 
 ### Hipótesis abiertas
 
-Las hipótesis H1 a H12 están en la sección 20 del diseño, con su resultado. H3 falló (el freno usa `get_usage`), H9 se cumple en el equipo del mantenedor y H10 se resolvió haciendo que en modo A el Jefe de pits lance los árbitros, y H11 se cumplió en una prueba (falta un encargo real); H12 (Codex y Antigravity respetan la bahía del modo E) y las demás siguen abiertas. Cualquier ajuste nuevo se aplica solo si el mantenedor lo aprueba.
+Las hipótesis H1 a H12 están en la sección 20 del diseño, con su resultado. H3 falló (el freno usa `get_usage`), H9 se cumple en el equipo del mantenedor y H10 se resolvió haciendo que en modo A el Jefe de pits lance los árbitros, y H11 se cumplió en una prueba (falta un encargo real); H12 (las IA externas respetan la bahía del modo E) se cumplió con Antigravity y falta probarla con Codex; las demás siguen abiertas. Cualquier ajuste nuevo se aplica solo si el mantenedor lo aprueba.
