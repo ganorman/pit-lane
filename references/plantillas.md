@@ -1,6 +1,6 @@
 # Plantillas de Pit Lane
 
-Contrato, encargo y `estado.md`. El resumen de auditoría y la bitácora no se repiten aquí: se usan las de `skills/gauntlet/references/plantillas.md` (secciones 2 y 3).
+Contrato, encargo, `estado.md` y despacho externo. El resumen de auditoría y la bitácora no se repiten aquí: se usan las de `skills/gauntlet/references/plantillas.md` (secciones 2 y 3).
 
 Estructura de carpetas de un trabajo L o XL. La carpeta del trabajo es la que indique el usuario o, si no indica ninguna, el directorio de trabajo de la sesión; `entrada/` y `entregables/` son la organización sugerida y el contrato puede fijar otras rutas:
 
@@ -13,7 +13,8 @@ Estructura de carpetas de un trabajo L o XL. La carpeta del trabajo es la que in
     ├── datos-maestros.md
     ├── estado.md             ← una línea por encargo; solo la escribe el Jefe de pits
     ├── encargos/E01-….md
-    └── auditorias/           ← E01.md, E02.md… (una por encargo: la lleva el Jefe de pits en modo A y el mecánico en modo B) y coherencia.md (el Jefe de pits)
+    ├── bahias/E03-codex/     ← solo modo E: AGENTS.md · ENCARGO.md · entrada/ · salida/ (R-48)
+    └── auditorias/           ← E01.md, E02.md… (una por encargo: la lleva el Jefe de pits en modos A y E y el mecánico en modo B) y coherencia.md (el Jefe de pits)
 ```
 
 ---
@@ -45,7 +46,7 @@ Aprobado: AAAA-MM-DD   ← lo escribe el Jefe de pits cuando el usuario aprueba
 ## ENTREGABLE       archivos, formato, restricciones
 ## DATOS MAESTROS ✚ ruta del archivo único con cifras, fechas, nombres y precios compartidos
 ## PLAN ✚           solo L y XL: tabla de encargos (ver sección 2) con modelo y esfuerzo
-## PRESUPUESTO ✚    mecánicos simultáneos máx. 2 · freno de gasto
+## PRESUPUESTO ✚    por oleada: Claude máx. 2 · externos máx. 2 (1 por herramienta) · total 4 · freno de gasto
 ## Decisiones tomadas (vétalas si no te sirven)
 ```
 
@@ -58,7 +59,7 @@ Reglas que el contrato hace cumplir:
 - **Criterios de revisión humana.** Un NO VERIFICABLE bloquea igual que un NO PASA, salvo que el contrato lo marque aquí como revisión humana (R-35).
 - **Pre-vuelo.** El método de cada criterio se ejecuta una vez antes de pedir la aprobación; un ✘ cambia de método o pasa a revisión humana (R-44).
 - **Fuentes web.** Cada página que se use como fuente se guarda como archivo en `entrada/fuentes/`, con su índice, y el árbitro coteja contra esa copia (R-42).
-- **PRESUPUESTO.** Máximo 2 mecánicos por oleada (R-14).
+- **PRESUPUESTO.** Por oleada, hasta 2 mecánicos Claude y hasta 2 externos (1 por herramienta), 4 en total; expertos solo en Claude (R-14).
 
 ---
 
@@ -69,15 +70,20 @@ Un archivo por encargo, con esta plantilla (R-10). Junta en un solo archivo lo q
 ```markdown
 # E01 — [nombre]
 Estado: pendiente | en curso | en auditoría | terminado | espera decisión
-Modelo: sonnet · Esfuerzo: medium · Modo: subagente | sesión
-Árbitro: sonnet · medium   (opus · high si sale a terceros, se proyecta en público o es difícil de revertir)
+Ejecutor: claude | codex | antigravity
+Modelo: sonnet · Esfuerzo: medium · Modo: subagente | sesión | bahía
+                            (externo: Modelo: GPT-6 Luna · Razonamiento: High · Modo: bahía, R-50)
+Árbitro: sonnet · medium   (opus · high si sale a terceros, se proyecta en público o es difícil de revertir;
+                            corre siempre en Claude, R-51)
+Integra en: <ruta del entregable>   ← solo modo E: dónde copia el Jefe de pits la salida
 Depende de: — | E0x
 ## Objetivo
 ## Entradas                 rutas (incluye normas y datos-maestros.md; si es código, instrucciones
                             para otra IA o una especificación de software, la ruta absoluta de references/software.md, R-34)
 ## Superficie de escritura  únicas rutas que puede crear o modificar
                             (en modo B incluye su bitácora: pit-lane/auditorias/E01.md;
-                            si busca fuentes en la web, incluye entrada/fuentes/, R-42)
+                            si busca fuentes en la web, incluye entrada/fuentes/, R-42;
+                            en modo E es solo salida\ y la sección Avance, R-48)
 ## Frontera                 qué no tocar ni decidir
 ## Listón aplicable         IDs, con su método; incluye los IDs B del listón base
                             que apliquen a este entregable
@@ -94,6 +100,7 @@ Reglas que el encargo hace cumplir:
 - **Superficie de escritura.** Cada encargo declara la suya; dos encargos corren en paralelo solo si sus superficies no se solapan (R-11).
 - **Qué devolver.** El mecánico prueba sobre el archivo real y devuelve uno de los cuatro estados en 15 líneas o menos (R-16).
 - **Avance y Qué no funcionó.** El mecánico actualiza "Estado", "Avance" y "Qué no funcionó" en su propio encargo (R-17).
+- **Ejecutor externo (modo E).** La copia de la bahía (`ENCARGO.md`) deja "Avance" como última sección y el mecánico externo solo escribe ahí, con su informe final; el Jefe de pits pasa el estado y el "Qué no funcionó" de ese informe al encargo de `pit-lane/encargos/` (R-48, R-51).
 
 ### Línea de arranque (todo mecánico)
 
@@ -125,3 +132,20 @@ El documento fija los tres grupos y "una línea por encargo"; el encabezado y lo
 Reglas que usan `estado.md`:
 - Tras un corte, el Jefe de pits lee `estado.md` y los encargos antes de confiar en lo que recuerda (R-20).
 - Un mecánico bloqueado pasa a "Esperan tu decisión" (R-19). Detalle en `references/modos-de-ejecucion.md`.
+
+---
+
+## 4. Despacho externo (modo E)
+
+El Jefe de pits le da al usuario un bloque por encargo externo, siempre con este formato (R-49). La misma plantilla sirve para una corrección que vuelve a la bahía.
+
+```
+E03 · Codex en la app de escritorio de ChatGPT · GPT-6 Luna · razonamiento High
+Abre la carpeta: <ruta absoluta de la bahía>
+Pega: "Lee AGENTS.md y ENCARGO.md de esta carpeta y ejecuta el encargo.
+       Escribe solo en salida\ y en la sección Avance de ENCARGO.md."
+Cuando termine, escríbeme: "terminó E03"
+```
+
+- La primera línea sale de la línea "Ejecutor:" y "Modelo:" del encargo y de la tabla de modelos externos (`references/enrutamiento.md`, R-50): ID, herramienta y dónde se ejecuta, modelo, razonamiento.
+- El texto que se pega no cambia entre encargos ni entre rondas: lo que cambia es el `ENCARGO.md` de la bahía.
