@@ -1,6 +1,6 @@
 # Pit Lane — diseño
 
-**Versión 1.1 · noviembre 2026**
+**Versión 1.2 · noviembre 2026**
 Autor: Gerardo Alberto Norman, con Claude. Estado: v1 en uso. Este documento es la fuente de verdad del repo: si algo del repo lo contradice, gana este documento (AGENTS.md). Las decisiones fechadas que lo modificaron están en `docs/decisiones.md`.
 
 > **Nombre.** Pit Lane toma su nombre de la parada en pits de la Fórmula 1: un equipo de especialistas que trabaja en paralelo, cada uno en lo suyo, y nadie suelta el carro hasta que todo está verificado. El **Jefe de pits** planifica y coordina; los **mecánicos** ejecutan; el **árbitro** verifica.
