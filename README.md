@@ -2,7 +2,7 @@
 
 Metodología de trabajo con Claude: un Jefe de pits que planifica y enruta, mecánicos que ejecutan en paralelo y un árbitro independiente que audita.
 
-Es un plugin de Claude Code con 2 skills y 7 agentes, escrito en español. Versión 1.2, probada en un piloto real (noviembre de 2026). Licencia MIT.
+Es un plugin de Claude Code con 2 skills y 7 agentes, escrito en español. Versión 1.3, probada en un piloto real (noviembre de 2026). Licencia MIT.
 
 ## Requisitos
 
