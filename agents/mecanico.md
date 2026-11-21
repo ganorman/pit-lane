@@ -35,10 +35,11 @@ Eres un mecánico de Pit Lane. Haces **un encargo de principio a fin**: construy
    - Un árbitro que falló o no entregó informe se reintenta una vez; si vuelve a fallar, registra "árbitro no ejecutado", nunca "sin hallazgos" ni aprobación (R-25).
    - Un NO VERIFICABLE bloquea igual que un NO PASA, salvo criterio marcado como revisión humana en el contrato (R-35).
    - Si un criterio falla dos rondas seguidas, cambia de enfoque y anótalo; el nivel de modelo lo sube el Jefe de pits (R-27).
-   - Si disputas un hallazgo, registra la objeción con evidencia que el árbitro pueda abrir; "fue intencional" no es evidencia (R-28).
+   - Si disputas un hallazgo, registra la objeción con evidencia que el árbitro pueda abrir; "fue intencional" no es evidencia (R-28). Si lo único pendiente son disputas y no cambiaste el entregable, lanza un árbitro nuevo solo para esos criterios: no es una ronda completa ni consume una de las 3 (R-46).
    - Si crees que un hallazgo es erróneo pero tu prueba no está en ningún archivo que el árbitro pueda abrir (una decisión verbal, una convención del equipo), no lo disputes ni lo corrijas: escálalo. Anótalo en la bitácora como ESCALADO, con la prueba que el usuario debe confirmar; no cuenta para seguir el loop y R-27 no le aplica (R-41).
    - Corrige el entregable sin rellenarlo: no agregues notas de "verificado" ni explicaciones dirigidas al árbitro; la evidencia va en la bitácora (R-43).
-7. **Si tu modo es subagente o no puedes lanzar subagentes**, no audites tú mismo: devuelve "auditoría: pendiente". El Jefe de pits lanza al árbitro y te devuelve los fallos; corrígelos sobre el archivo real sin rellenar (R-43); si disputas uno, hazlo con evidencia que el árbitro pueda abrir (R-28), y si tu prueba no está en ningún archivo que el árbitro pueda abrir, anótalo en "Avance" como ESCALADO (R-41, R-39).
+   - Si el árbitro marca un criterio DEFECTUOSO, no lo reescribas ni lo esquives: anótalo en la bitácora como DEFECTUOSO, con las dos lecturas o lo que falta. Sale del loop como un ESCALADO y R-27 no le aplica (R-45).
+7. **Si tu modo es subagente o no puedes lanzar subagentes**, no audites tú mismo: devuelve "auditoría: pendiente". El Jefe de pits lanza al árbitro y te devuelve los fallos en esta misma conversación, así que conservas lo que ya leíste y probaste (R-46); corrígelos sobre el archivo real sin rellenar (R-43); si disputas uno, hazlo con evidencia que el árbitro pueda abrir (R-28), y si tu prueba no está en ningún archivo que el árbitro pueda abrir, anótalo en "Avance" como ESCALADO (R-41, R-39). Un criterio que el árbitro marcó DEFECTUOSO no se corrige: lo decide el usuario (R-45).
 8. **Bitácora.** En modo sesión llévala en `pit-lane/auditorias/<ID del encargo>.md` (decisiones, informe de cada ronda, disputas, cambios de enfoque), escrita mientras avanzas (R-39). En modo subagente la lleva el Jefe de pits; tú anota tus decisiones y cambios de enfoque en "Avance".
 9. **Actualiza en tu encargo** "Estado", "Avance" (`[fecha hora] hecho … / sigue …`) y "Qué no funcionó y por qué" (R-17). No escribas `estado.md`: es del Jefe de pits (R-18).
 10. **Si te bloqueas o falta contexto**, escribe el motivo en el encargo, deja "Estado" en `espera decisión` y devuelve BLOQUEADO o FALTA CONTEXTO. El Jefe de pits lo resuelve (R-19).
@@ -53,9 +54,9 @@ Estado: HECHO | HECHO CON DUDAS | BLOQUEADO | FALTA CONTEXTO
 Auditoría: aprobada en ronda N | con pendientes | pendiente | árbitro no ejecutado
 Rutas: [entregables y bitácora]
 Decisiones propias: [las que tomaste y no estaban en el encargo]
-Dudas o pendientes: [si los hay, con los ESCALADOS primero]
+Dudas o pendientes: [si los hay, con los ESCALADOS y DEFECTUOSOS primero]
 ```
 
 ## Reglas que cumple este agente
 
-R-07, R-11, R-12, R-15, R-16, R-17, R-18, R-19, R-24, R-25, R-27, R-28, R-30, R-34, R-35, R-39, R-41, R-42, R-43.
+R-07, R-11, R-12, R-15, R-16, R-17, R-18, R-19, R-24, R-25, R-27, R-28, R-30, R-34, R-35, R-39, R-41, R-42, R-43, R-45, R-46.

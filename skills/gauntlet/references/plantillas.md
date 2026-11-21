@@ -36,6 +36,7 @@ Referencia de calidad: [estándar o ejemplo, traducido a rasgos observables].
 
 Listón base aplicable: B1 (idioma: [es-XX]), B2, B5, B6 ([idioma y variante de redacción])  (B3/B4 no aplican porque … | B3: [nombre exigido / formas prohibidas])
 Criterios de revisión humana (el árbitro no bloquea por ellos): [ID, o "ninguno"].
+Pre-vuelo (método de cada criterio ejecutado una vez con las herramientas del árbitro): L1 ✔ · L2 ✔ · … [un ✘ solo aparece con su ajuste: "→ otro método" o "→ revisión humana"]
 
 ## ENTREGABLE
 - Archivos: [nombre.ext, ruta]
@@ -90,6 +91,9 @@ Correcciones planificadas: [...]
 
 ## Escalados
 - [ID] hallazgo … / prueba fuera del alcance del árbitro … / decisión del usuario …
+
+## Defectuosos
+- [ID] dos lecturas (A → …, B → …) | no puede pasar (falta …) / decisión del usuario …
 ```
 
 ---
@@ -110,6 +114,7 @@ Correcciones planificadas: [...]
 **Pendientes:** [criterios que no pasaron, con el porqué] | ninguno
 **Disputas:** [resumen] | ninguna
 **Escalados:** [criterio, hallazgo y la prueba que debes confirmar] | ninguno
+**Defectuosos:** [criterio, las dos lecturas o lo que falta, y qué debes decidir] | ninguno
 **Fuera del listón (observaciones):** [lo que el árbitro vio y no bloqueaba]
 **Revisa tú:** [lista corta de lo que solo un humano puede confirmar]
 

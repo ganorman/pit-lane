@@ -34,9 +34,9 @@ Aprobado: AAAA-MM-DD   ← lo escribe el Jefe de pits cuando el usuario aprueba
                     + completitud ✚: cada punto P1, P2… aparece en el entregable, o su ausencia es una
                       decisión anotada y vetable; corregir un criterio no elimina contenido pedido
                       (lo no verificable se marca pendiente, no se borra)
-                    + pasabilidad (gauntlet, Fase 0 paso 4): cada criterio puede pasar con lo que existirá
-                      al auditar (archivos, fuentes y herramientas del árbitro); si no, se corrige o se elimina
-                      antes de pedir la aprobación
+                    + pasabilidad con pre-vuelo (gauntlet, Fase 0 paso 4; R-44): el método de cada criterio
+                      se ejecuta una vez con las herramientas del árbitro; línea "Pre-vuelo: L1 ✔ · L2 ✘ → …";
+                      un ✘ cambia de método o pasa a revisión humana antes de pedir la aprobación
                     + criterios de revisión humana (el árbitro no bloquea por ellos)
                     + fuentes externas: cada página web guardada en entrada/fuentes/ con su índice
                       LEEME.md (URL y fecha de consulta), o la lista de Drive del conector; el árbitro
@@ -56,6 +56,7 @@ Reglas que el contrato hace cumplir:
 - **DATOS MAESTROS.** Lo compartido vive en `datos-maestros.md`; los encargos lo citan, no lo copian (R-07).
 - **LISTÓN de coherencia (L y XL).** Un criterio por cada dato maestro que aparece en más de un entregable (R-29).
 - **Criterios de revisión humana.** Un NO VERIFICABLE bloquea igual que un NO PASA, salvo que el contrato lo marque aquí como revisión humana (R-35).
+- **Pre-vuelo.** El método de cada criterio se ejecuta una vez antes de pedir la aprobación; un ✘ cambia de método o pasa a revisión humana (R-44).
 - **Fuentes web.** Cada página que se use como fuente se guarda como archivo en `entrada/fuentes/`, con su índice, y el árbitro coteja contra esa copia (R-42).
 - **PRESUPUESTO.** Máximo 2 mecánicos por oleada (R-14).
 

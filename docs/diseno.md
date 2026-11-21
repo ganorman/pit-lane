@@ -1,6 +1,6 @@
 # Pit Lane — diseño
 
-**Versión 1.1 · noviembre 2026**
+**Versión 1.2 · noviembre 2026**
 Autor: Gerardo Alberto Norman, con Claude. Estado: v1 en uso. Este documento es la fuente de verdad del repo: si algo del repo lo contradice, gana este documento (AGENTS.md). Las decisiones fechadas que lo modificaron están en `docs/decisiones.md`.
 
 > **Nombre.** Pit Lane toma su nombre de la parada en pits de la Fórmula 1: un equipo de especialistas que trabaja en paralelo, cada uno en lo suyo, y nadie suelta el carro hasta que todo está verificado. El **Jefe de pits** planifica y coordina; los **mecánicos** ejecutan; el **árbitro** verifica.
@@ -92,9 +92,9 @@ Aprobado: AAAA-MM-DD   ← lo escribe el Jefe de pits cuando el usuario aprueba
                     + completitud ✚: cada punto P1, P2… aparece en el entregable, o su ausencia es una
                       decisión anotada y vetable; corregir un criterio no elimina contenido pedido
                       (lo no verificable se marca pendiente, no se borra)
-                    + pasabilidad (gauntlet, Fase 0 paso 4): cada criterio puede pasar con lo que existirá
-                      al auditar (archivos, fuentes y herramientas del árbitro); si no, se corrige o se elimina
-                      antes de pedir la aprobación
+                    + pasabilidad con pre-vuelo (gauntlet, Fase 0 paso 4; R-44): el método de cada criterio
+                      se ejecuta una vez con las herramientas del árbitro; línea "Pre-vuelo: L1 ✔ · L2 ✘ → …";
+                      un ✘ cambia de método o pasa a revisión humana antes de pedir la aprobación
                     + criterios de revisión humana (el árbitro no bloquea por ellos)
                     + fuentes externas (gauntlet, Fase 0 paso 4): cada página web guardada en entrada/fuentes/
                       con su índice (URL y fecha de consulta), o la lista de Drive; el árbitro coteja contra la
@@ -202,10 +202,10 @@ Una carpeta por trabajo: la que indique el usuario o, si no indica ninguna, el d
 
 0. **Quién lanza cada auditoría.** En M, la sesión que construye. En L y XL, modo A, el Jefe de pits lanza el árbitro de cada encargo (`pit-lane:arbitro`, con el modelo y el esfuerzo de la línea "Árbitro:" del encargo) y lleva su bitácora en `pit-lane/auditorias/E0x.md`: no se cuenta con que un subagente lance a otro (decisión 2026-11-14, H10). En modo B, cada mecánico lanza el árbitro de su encargo con esos mismos valores y lleva su bitácora; si no puede lanzar subagentes, devuelve "auditoría: pendiente" y la lanza el Jefe de pits. La auditoría de coherencia la lanza el Jefe de pits cuando todos los encargos terminaron, con bitácora en `pit-lane/auditorias/coherencia.md`.
 1. **El mecánico prueba** su entregable sobre el archivo real, con el método por tipo de gauntlet. Es necesario y no basta.
-2. **Árbitro nuevo por ronda**, con el contrato, las rutas y las fuentes. Veredictos: PASA, NO PASA, NO VERIFICABLE. Este último bloquea salvo que el contrato lo marque como revisión humana.
+2. **Árbitro nuevo por ronda**, con el contrato, las rutas y las fuentes. Veredictos: PASA, NO PASA, NO VERIFICABLE y DEFECTUOSO. NO VERIFICABLE bloquea salvo que el contrato lo marque como revisión humana; DEFECTUOSO sigue el punto 14.
 3. **Coherencia entre entregables** (L y XL): un criterio del listón por cada dato maestro que aparece en más de un entregable.
 4. **Un árbitro que falló o no corrió** se reintenta una vez; si vuelve a fallar se registra "no ejecutado", nunca "sin hallazgos".
-5. **Disputas:** el constructor registra su objeción con evidencia que el árbitro pueda abrir; "fue intencional" no es evidencia. La resuelve el árbitro siguiente y el usuario la ve en el resumen.
+5. **Disputas:** el constructor registra su objeción con evidencia que el árbitro pueda abrir; "fue intencional" no es evidencia. La resuelve un árbitro nuevo y el usuario la ve en el resumen. Si lo único pendiente son disputas y el entregable no cambió, es una disputa exprés: un árbitro nuevo resuelve solo esos criterios, sin ronda completa y sin consumir una de las 3 (R-46).
 6. **Tope:** 3 rondas. Al tope se entrega con los pendientes a la vista.
 7. **Sin subagentes** (por ejemplo, en un chat que no los tenga): vale el modo degradado de gauntlet, un pase separado sobre el archivo real, y el resumen empieza con **AUDITORÍA NO INDEPENDIENTE**.
 8. **Render de documentos de Office.** Para los criterios visuales, `verificar_office.py --render` exporta el DOCX, PPTX o XLSX a PDF con Microsoft Office, y el árbitro lo lee página por página con su herramienta de lectura; `--recalcular` recalcula una copia de un XLSX con Excel. Sin Office ni alternativa, esos criterios son NO VERIFICABLE (decisión 2026-11-15).
@@ -213,6 +213,9 @@ Una carpeta por trabajo: la que indique el usuario o, si no indica ninguna, el d
 10. **Escalar** (R-41). Si la prueba del constructor existe pero no está en ningún archivo que el árbitro pueda abrir, el hallazgo no se disputa ni se corrige: queda NO PASA marcado ESCALADO, no cuenta para seguir el loop y va primero en "revisa tú".
 11. **Fuentes web guardadas** (R-42). Cada página que se use como fuente se guarda como archivo antes de auditar, con un índice de URL y fecha de consulta; el árbitro coteja contra esa copia.
 12. **Corregir no es rellenar** (R-43). Nada se agrega a un entregable o al contrato solo para que un revisor lo apruebe. En el plan y los encargos, el contexto que le falta a un lector le falta al mecánico, y se agrega.
+13. **Pre-vuelo del listón** (R-44). Antes de pedir la aprobación, quien redacta el contrato ejecuta una vez el método de cada criterio con las herramientas del árbitro y anota el resultado en la línea "Pre-vuelo:". Un ✘ cambia de método o pasa a revisión humana antes de aprobar. En L y XL va antes de los lectores.
+14. **Criterio defectuoso** (R-45). El árbitro marca DEFECTUOSO un criterio que admite dos lecturas con veredictos opuestos, o que no puede pasar con lo que existe ni con lo que el contrato hará existir, y lo demuestra con evidencia. Sale del loop como un ESCALADO: no cuenta para seguir el loop ni para R-27 y va primero en "revisa tú". Solo el árbitro lo declara, y solo el usuario cambia el criterio, porque el listón sigue congelado.
+15. **Mecánico vivo entre rondas** (R-46). En el modo A, el Jefe de pits devuelve los fallos al mismo mecánico continuando su subagente; solo lanza uno nuevo si ya no responde o si R-27 sube el modelo. El árbitro sigue siendo nuevo en cada ronda. Depende de H11.
 
 ## 11. Frenos
 
@@ -284,11 +287,11 @@ Las reglas que el repo implementa tienen un ID. La skill y los archivos de refer
 | R-25 | Un árbitro que no corrió no cuenta como aprobación; un reintento | 10 |
 | R-26 | Sin subagentes: modo degradado, declarado como AUDITORÍA NO INDEPENDIENTE | 10 |
 | R-27 | Un criterio que falla dos rondas seguidas: cambio de enfoque y un nivel más de modelo | 7 |
-| R-28 | Una disputa exige evidencia que el árbitro pueda abrir | 10 |
+| R-28 | Una disputa exige evidencia que el árbitro pueda abrir; la resuelve un árbitro nuevo, el de la ronda siguiente o uno exprés | 10 |
 | R-29 | L y XL: un criterio de coherencia por cada dato maestro que aparece en más de un entregable | 10 |
 | R-30 | Freno: al 80 % de la ventana de 5 horas, o con la palabra "freno", no se despacha; cada mecánico escribe su avance y se detiene | 11 |
 | R-31 | El Jefe de pits no lee entregables completos; compacta solo al cambiar de fase y con el estado escrito | 11 |
-| R-32 | Cierre: entregables, resumen de auditoría y "revisa tú" | 12 |
+| R-32 | Cierre: entregables, resumen de auditoría y "revisa tú" (primero ESCALADOS y DEFECTUOSOS) | 12 |
 | R-33 | Aprendizaje: candidatos a norma con veredicto de cuatro salidas; aprueba el usuario | 12 |
 | R-34 | Si el entregable es código, instrucciones para otra IA o una especificación de software, el encargo sigue `references/software.md` | 13 |
 | R-35 | NO VERIFICABLE bloquea igual que NO PASA, salvo que el contrato lo marque como revisión humana | 10 |
@@ -300,6 +303,9 @@ Las reglas que el repo implementa tienen un ID. La skill y los archivos de refer
 | R-41 | Una prueba que el árbitro no puede abrir se escala: NO PASA marcado ESCALADO, fuera del loop y de R-27, primero en "revisa tú" | 10 |
 | R-42 | Toda página web usada como fuente se guarda como archivo, con índice de URL y fecha, y el árbitro coteja contra la copia | 5, 10 |
 | R-43 | Corregir no es rellenar: nada se agrega solo para el revisor; en el plan y los encargos, el contexto que falta a un lector se agrega | 10 |
+| R-44 | Pre-vuelo del listón: el método de cada criterio se ejecuta una vez antes de aprobar; un ✘ cambia de método o pasa a revisión humana | 5, 10 |
+| R-45 | Un criterio que el árbitro marca DEFECTUOSO, con evidencia, sale del loop como un ESCALADO; solo el usuario lo cambia | 10 |
+| R-46 | Modo A: los fallos vuelven al mismo mecánico (se continúa su subagente); disputa exprés si lo único pendiente son disputas y el entregable no cambió | 8, 10 |
 
 ## 16. Decisiones de diseño y sus porqués
 
@@ -311,6 +317,9 @@ Las reglas que el repo implementa tienen un ID. La skill y los archivos de refer
 | **Paralelo solo entre encargos cuya superficie de escritura no se solapa**; en serie cuando comparten archivo | Dos ejecutores sobre el mismo archivo se pisan; entregables separados pueden avanzar a la vez sin riesgo |
 | **Tope de 3 rondas**; si un criterio falla dos seguidas, otro enfoque y un nivel más de modelo | Decisión del autor (2026-10-14). Pasadas tres rondas, las correcciones tienden a ser cosméticas; insistir con el mismo enfoque y el mismo modelo repite el mismo fallo |
 | **Cada ronda re-audita todo el listón** | Con 5 a 12 criterios cuesta poco y atrapa regresiones: una corrección puede romper lo que antes pasaba |
+| **El listón se prueba antes de aprobarlo** (pre-vuelo, R-44) | Un criterio que el árbitro no puede verificar sale NO VERIFICABLE y no se arregla editando el entregable: gasta las 3 rondas. Detectarlo antes de aprobar cuesta una ejecución por criterio |
+| **Un criterio mal escrito tiene salida** (DEFECTUOSO, R-45) y el listón sigue congelado | El listón congelado impide mover la portería, pero sin esta salida un criterio ambiguo o imposible gira hasta el tope de rondas. Lo declara solo el árbitro, con evidencia, y lo decide el usuario, así que el constructor no gana una vía para esquivar un criterio |
+| **Árbitro nuevo, mecánico vivo** (R-46) | La independencia la necesita quien juzga, no quien corrige. Relanzar al mecánico en cada ronda le hace leer todo de nuevo; continuarlo conserva lo que ya probó. Una disputa sola, sin cambios en el entregable, no justifica re-auditar todo el listón |
 | **Preguntas en un solo bloque** de hasta 4, cada una con opción recomendada; lo menor se decide y se anota. 2 o 3 enfoques solo si hay una elección real de diseño | Un bloque ahorra paradas, y lo anotado sigue siendo vetable |
 | **Sonnet redacta y analiza**; Haiku solo si el encargo trae el texto ya decidido; Opus solo para diseño difícil | Un documento con criterio no es "estructura simple". El modelo barato toma más turnos cuando tiene que interpretar, y eso cuesta más que su precio por token |
 | **Listón binario**, no puntajes | Lo binario se verifica; un puntaje lo pone el mismo que construyó y no dice qué falla |
@@ -419,6 +428,7 @@ Después vinieron el paso 11 (gauntlet V2.1), la revisión integral del 2026-11-
 | H8 | `CLAUDE_CODE_EFFORT_LEVEL` y `CLAUDE_CODE_SUBAGENT_MODEL` no están fijadas | R-38 en cada despacho | Quitarlas, con tu aprobación, o aceptar que el enrutamiento por agente no aplica | Se comprueba en cada trabajo |
 | H9 | El plugin en `~/.claude/skills/pit-lane/` carga con sus 7 agentes también en la app de escritorio | Sesión nueva | Declarar la carpeta en `CLAUDE_CODE_PLUGIN_DIRS` | **Se cumple** en el equipo del autor; sin comprobar en otros |
 | H10 | Un mecánico lanzado como subagente puede lanzar a su vez el árbitro | Piloto, modo A | El Jefe de pits lanza los árbitros | No se cuenta con ello: en modo A el Jefe de pits lanza los árbitros (decisión 2026-11-14) |
+| H11 | Continuar un subagente con SendMessage conserva su contexto en Claude Code (R-46) | Prueba del 2026-11-21 y uso en modo A | Volver a relanzar al mecánico en frío, con la línea de arranque | **Se cumple** en la prueba del 2026-11-21: el subagente terminó su turno, se continuó con SendMessage y recordó el dato del primer turno. Falta confirmarlo en un encargo real |
 
 ---
 

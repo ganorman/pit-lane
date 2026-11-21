@@ -39,9 +39,14 @@ Cumple el requisito de que el Jefe de pits despache tras la aprobación del usua
 4. Lanza los mecánicos por oleadas de hasta 2 (R-14), como subagentes, con el agente que corresponda según la tabla de enrutamiento (`pit-lane:mecanico`, `pit-lane:mecanico-experto` o `pit-lane:mecanico-auxiliar`) y con el modelo y el esfuerzo del plan escritos en el despacho (R-12). El despacho contiene la línea de arranque (R-15).
 5. Cada mecánico construye, prueba sobre el archivo real y devuelve uno de los cuatro estados más "auditoría: pendiente", en 15 líneas o menos (R-16).
 6. Por cada encargo, el Jefe de pits lanza `pit-lane:arbitro` con el modelo y el esfuerzo de la línea "Árbitro:" del encargo, lleva la bitácora, devuelve los fallos al mecánico y repite hasta aprobar o llegar a 3 rondas (R-24, R-39; ver "Quién lanza cada auditoría").
+   - **Los fallos van al mismo mecánico** (R-46): el Jefe de pits continúa el subagente que construyó, con SendMessage y el ID del agente, y le pasa la tabla de fallos. El mecánico conserva lo que ya leyó y probó, así que no vuelve a empezar de cero. Solo se lanza un mecánico nuevo si el anterior ya no responde o si R-27 obliga a subir de modelo; ese mecánico nuevo retoma desde "Avance" (R-17, R-20).
+   - **El árbitro, en cambio, es nuevo en cada ronda** (R-24): la independencia la necesita quien juzga, no quien corrige.
+   - **Disputa exprés** (R-46): si lo único pendiente son disputas y el entregable no cambió desde la ronda auditada, el Jefe de pits lanza un árbitro nuevo solo para los criterios disputados. No es una ronda completa ni consume una de las 3. Si el entregable cambió, la ronda siguiente es completa, como siempre.
 7. El Jefe de pits actualiza `estado.md` leyendo los encargos (R-18).
 
-**Escalada en el modo A** (R-27): si un criterio falla dos rondas seguidas, el Jefe de pits relanza el encargo con el modelo de un nivel superior y un enfoque distinto.
+**Escalada en el modo A** (R-27): si un criterio falla dos rondas seguidas, el Jefe de pits relanza el encargo con el modelo de un nivel superior y un enfoque distinto. Aquí sí se lanza un mecánico nuevo, porque cambia el modelo.
+
+**Si continuar al mecánico no funciona** (hipótesis H11): si SendMessage no llega al subagente o este ya no recuerda el encargo, el Jefe de pits vuelve a lanzar uno nuevo con la línea de arranque (R-15) y lo anota en la bitácora.
 
 **Cómo se entera el Jefe de pits de que un mecánico terminó:** el resultado vuelve solo.
 
